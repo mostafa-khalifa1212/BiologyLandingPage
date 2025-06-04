@@ -1,3 +1,4 @@
+/*ToDo: change the page style to be more dark and cooler, use fonts like Gotham and Rubik for the text, use a more constant color palette for the page*/
 body {
     padding-top: 70px; /* Adjust based on actual header height */
     font-family: sans-serif; /* Basic font */
@@ -17,7 +18,17 @@ header {
     align-items: center;
     z-index: 1000;
 }
-
+.outcomes {
+    color: #2E8B57; /* Sea Green - a brand color */
+}
+.outcomes:hover{
+    @keyframes identifier {
+        /*make an animation that changes the color to a lighter one smoothly*/
+    }
+}
+.outcomes:active{
+    color:#20603c ; /* Brand color for active state */
+}
 .logo {
     font-size: 1.5rem; /* Example size */
     font-weight: bold;
