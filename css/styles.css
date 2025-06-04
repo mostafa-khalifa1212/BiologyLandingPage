@@ -1,32 +1,34 @@
 /* Global Resets and Base Styles */
 body {
     padding-top: 70px; /* Adjust based on actual header height */
-    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-family: "Rubik", "Gotham", "Helvetica Neue", Arial, sans-serif;
     margin: 0;
     line-height: 1.6;
-    color: #333; /* Default text color */
+    background-color: #1a1a2e; /* --dark-bg */
+    color: #e0e0e0; /* --light-text */
 }
 
 a {
-    color: #1E90FF; /* Default link color - brand blue */
+    color: #1E90FF; /* --accent-blue */
     text-decoration: none;
 }
 
 a:hover {
-    color: #187bcd; /* Darker shade for hover on general links */
+    color: #58a6ff; /* Lighter blue for hover */
     text-decoration: underline;
 }
 
 p {
-    color: #555; /* Default paragraph color */
-    margin-bottom: 1rem; /* Consistent bottom margin for paragraphs */
+    color: #e0e0e0; /* --light-text, ensuring override of previous #555 */
+    margin-bottom: 1rem;
 }
 
-/* Headings - General consistency, specific overrides where needed */
+/* Headings */
 h1, h2, h3, h4, h5, h6 {
-    color: #333; /* Default heading color */
+    font-family: "Gotham", "Rubik", "Helvetica Neue", Arial, sans-serif;
+    color: #ffffff; /* White for headings */
     margin-top: 0;
-    margin-bottom: 1rem; /* Consistent bottom margin */
+    margin-bottom: 1rem;
 }
 
 /* Header & Navigation */
@@ -35,19 +37,20 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #fff;
+    background-color: #1e1e3f; /* --medium-dark-bg */
     padding: 1rem 2rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Adjusted shadow */
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
+    border-bottom: 1px solid #2c2c4c; /* Subtle border */
 }
 
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #333; /* Logo text color */
+    color: #ffffff;
 }
 
 nav ul {
@@ -63,18 +66,18 @@ nav li {
 
 nav a {
     text-decoration: none;
-    color: #333; /* Navigation link color */
+    color: #e0e0e0; /* --light-text */
     font-weight: bold;
 }
 
 nav a:hover {
-    color: #1E90FF; /* Brand color for nav link hover */
-    text-decoration: none; /* Nav links typically don't get underlined */
+    color: #58a6ff; /* Lighter blue */
+    text-decoration: none;
 }
 
 /* Hero Section */
 #hero {
-    background-image: url('../assets/hero.jpg');
+    background-image: url('../assets/hero.jpg'); /* Keep background image */
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -82,18 +85,18 @@ nav a:hover {
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #fff;
+    color: #ffffff; /* Ensure text is white for contrast against overlay */
     position: relative;
 }
 
-#hero::before {
+#hero::before { /* Dark overlay for readability */
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6); /* Slightly increased overlay */
     z-index: 1;
 }
 
@@ -101,50 +104,53 @@ nav a:hover {
     position: relative;
     z-index: 2;
     max-width: 800px;
-    padding: 1rem; /* Adjusted padding for smaller screens */
+    padding: 1rem;
 }
 
 #hero h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
-    color: #fff; /* Hero title color */
+    color: #ffffff;
 }
 
 #hero p {
     font-size: 1.5rem;
     margin-bottom: 2rem;
-    color: #fff; /* Hero paragraph color */
+    color: #f0f0f0; /* Slightly off-white for sub-text if needed */
 }
 
 /* Buttons */
 .btn-primary {
     display: inline-block;
     padding: 1rem 2rem;
-    background-color: #1E90FF;
-    color: #fff;
+    background-color: #1E90FF; /* --accent-blue */
+    color: #ffffff;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none; /* Remove default border if any */
 }
 
 .btn-primary:hover {
-    background-color: #187bcd;
-    color: #fff; /* Ensure text color remains white */
-    text-decoration: none; /* Buttons typically don't get underlined */
-    transform: translateY(-2px); /* Slight lift effect */
+    background-color: #187bcd; /* Slightly darker blue */
+    color: #ffffff;
+    text-decoration: none;
+    transform: translateY(-2px);
 }
 
 /* Page Section Generic Styles */
 .page-section {
     padding: 4rem 2rem;
     text-align: center;
+    /* background-color is inherited from body or set per section */
 }
 
 /* About Section */
-#about h2 { /* Uses default h2 color #333 */
+#about h2 {
     font-size: 2.5rem;
     margin-bottom: 2rem;
+    color: #ffffff;
 }
 
 .tutor-photo {
@@ -154,39 +160,41 @@ nav a:hover {
     object-fit: cover;
     margin: 0 auto 1.5rem auto;
     display: block;
-    border: 3px solid #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border: 3px solid #1a1a2e; /* --dark-bg, or use an accent like #4f4f7a */
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
-#about p { /* Bio paragraph uses default p color #555 */
+#about p {
     max-width: 700px;
     margin: 0 auto 1.5rem auto;
+    color: #e0e0e0; /* --light-text */
 }
 
 .social-icons {
     margin-bottom: 1.5rem;
 }
 
-.social-icons a { /* Uses general 'a' styles, color overridden if needed */
+.social-icons a {
     margin: 0 0.5rem;
     font-size: 1.2rem;
+    color: #1E90FF; /* --accent-blue */
 }
 
 .social-icons a:hover {
-    color: #187bcd; /* Darker brand blue for social icon hover */
+    color: #58a6ff; /* Lighter blue */
     text-decoration: none;
 }
 
-
-#about h3 { /* Uses default h3 color #333 */
+#about h3 {
     margin-top: 2rem;
     margin-bottom: 1rem;
     font-size: 1.5rem;
+    color: #ffffff;
 }
 
 #about ul {
     list-style: disc;
-    padding-left: 20px; /* Indent for bullets */
+    padding-left: 20px;
     max-width: 500px;
     margin: 0 auto 1.5rem auto;
     text-align: left;
@@ -194,86 +202,119 @@ nav a:hover {
 
 #about ul li {
     margin-bottom: 0.5rem;
-    color: #555; /* List item color */
+    color: #e0e0e0; /* --light-text */
 }
 
 /* Free Notes Section (Registration Form) */
-#free-notes h2 { /* Uses default h2 color #333 */
+#free-notes h2 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
+    color: #ffffff;
 }
 
-#free-notes p { /* Uses default p color #555 */
+#free-notes p {
     max-width: 700px;
-    margin: 0 auto 2rem auto;
+    margin: 0 auto 1rem auto;
+    color: #e0e0e0; /* --light-text */
+}
+
+#show-registration-form-btn {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
 #registration-form {
+    display: none;
     max-width: 600px;
     margin: 2rem auto;
-    padding: 2rem;
-    background-color: #f9f9f9;
+    padding: 2.5rem;
+    background-color: #1e1e3f; /* --medium-dark-bg */
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5); /* Enhanced shadow */
     text-align: left;
 }
 
-#registration-form div { /* Form field group */
-    margin-bottom: 1rem;
+.form-field-group {
+    position: relative;
+    margin-bottom: 2rem;
 }
 
-#registration-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-    color: #333; /* Label text color */
-}
-
-#registration-form input[type="text"],
-#registration-form input[type="email"],
-#registration-form input[type="tel"],
-#registration-form select {
+.form-field-group input,
+.form-field-group select {
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ccc;
+    padding: 0.8rem 0.75rem 0.4rem 0.75rem;
+    border: 1px solid #4f4f7a; /* --input-border */
     border-radius: 4px;
     box-sizing: border-box;
-    font-size: 1rem; /* Consistent font size */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1rem;
+    background-color: #2c2c4c; /* --input-bg */
+    color: #e0e0e0; /* --light-text for input text */
+    transition: border-color 0.2s ease-in-out;
 }
 
-#registration-form input[type="text"]:focus,
-#registration-form input[type="email"]:focus,
-#registration-form input[type="tel"]:focus,
-#registration-form select:focus {
-    border-color: #1E90FF; /* Brand color */
-    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25); /* Subtle glow */
+/* Placeholder text color */
+#registration-form input::placeholder,
+#registration-form select::placeholder { color: #8a8a9e; opacity: 1; } /* Adjusted placeholder color */
+#registration-form input::-moz-placeholder,
+#registration-form select::-moz-placeholder { color: #8a8a9e; opacity: 1; }
+#registration-form input::-ms-input-placeholder,
+#registration-form select::-ms-input-placeholder { color: #8a8a9e; opacity: 1; }
+#registration-form input:-moz-placeholder,
+#registration-form select:-moz-placeholder { color: #8a8a9e; opacity: 1; }
+
+
+.form-field-group label {
+    position: absolute;
+    left: 0.85rem;
+    top: 0.75rem;
+    color: #aaa; /* Initial label color */
+    pointer-events: none;
+    transition: all 0.2s ease-out;
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0;
+    background-color: transparent;
+    padding: 0;
+}
+
+.form-field-group input:focus + label,
+.form-field-group input:not(:placeholder-shown) + label,
+.form-field-group select:focus + label,
+.form-field-group select.has-value + label,
+.form-field-group select:valid + label {
+    top: -0.75rem;
+    left: 0.6rem;
+    font-size: 0.70rem;
+    color: #1E90FF; /* --accent-blue for active label */
+    background-color: #1e1e3f; /* Match form background --medium-dark-bg */
+    padding: 0 0.25rem;
+    border-radius: 2px;
+}
+
+.form-field-group input:focus,
+.form-field-group select:focus {
+    border-color: #1E90FF; /* --accent-blue */
+    box-shadow: 0 0 0 0.15rem rgba(30, 144, 255, 0.35); /* Adjusted glow */
     outline: none;
 }
 
-#registration-form button[type="submit"] { /* Uses .btn-primary styles */
+#registration-form button[type="submit"] {
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
 }
 
 #thank-you-message {
     display: none;
-    padding: 1rem;
-    margin-top: 1.5rem;
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    border-radius: 4px;
-    text-align: center;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 /* Features Section */
-#features h2 { /* Uses default h2 color #333 */
+#features {
+    background-color: #1a1a2e; /* Ensure section bg if needed, or remove if body bg is enough */
+}
+#features h2 {
     font-size: 2.5rem;
     margin-bottom: 2rem;
+    color: #ffffff;
 }
 
 .features-container {
@@ -285,11 +326,11 @@ nav a:hover {
 }
 
 .feature-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: #1e1e3f; /* --medium-dark-bg */
+    border: 1px solid #4f4f7a; /* --input-border or similar */
     border-radius: 8px;
     padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4); /* Darker shadow */
     text-align: center;
     flex-basis: calc(33.333% - 2rem);
     min-width: 280px;
@@ -298,12 +339,27 @@ nav a:hover {
 
 .feature-card h3 {
     font-size: 1.5rem;
-    color: #2E8B57; /* Sea Green - specific brand color for feature titles */
     margin-bottom: 1rem;
+    color: #ffffff; /* Default for h3 if no link */
 }
 
-.feature-card p { /* Uses default p color #555 */
-    line-height: 1.5; /* Slightly different from global 1.6, can unify if desired */
+.outcomes {
+    color: #2E8B57; /* --accent-green */
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.outcomes:hover {
+    color: #3CB371; /* Lighter green */
+}
+
+.outcomes:active {
+    color: #20603c; /* Darker green */
+}
+
+.feature-card p {
+    line-height: 1.5;
+    color: #e0e0e0; /* --light-text */
 }
 
 /* Modal Styles */
@@ -314,21 +370,22 @@ nav a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.75); /* Darker overlay for modal */
     z-index: 2000;
     justify-content: center;
     align-items: center;
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: #1e1e3f; /* --medium-dark-bg */
     padding: 2rem 3rem;
     border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
     text-align: center;
     position: relative;
     max-width: 500px;
     width: 90%;
+    border: 1px solid #4f4f7a;
 }
 
 .modal-close-btn {
@@ -344,53 +401,53 @@ nav a:hover {
 }
 
 .modal-close-btn:hover {
-    color: #333;
+    color: #ffffff; /* White for hover on dark */
     text-decoration: none;
 }
 
 .modal-content h2 {
     margin-top: 0;
     margin-bottom: 1rem;
-    color: #1E90FF; /* Brand color for modal title */
+    color: #1E90FF; /* --accent-blue */
     font-size: 1.8rem;
 }
 
-.modal-content p { /* Uses default p color #555 */
+.modal-content p {
     margin-bottom: 1.5rem;
     font-size: 1rem;
-}
-
-#modal-register-button { /* Uses .btn-primary styles */
-    display: inline-block;
+    color: #e0e0e0; /* --light-text */
 }
 
 /* Countdown Timer Section */
 #countdown-section {
-    /* Uses .page-section styles for padding and text-align */
-    background-color: #f0f0f0;
+    background-color: #1a1a2e; /* --dark-bg or slightly different like #161628 */
+    border-top: 1px solid #2c2c4c;
+    border-bottom: 1px solid #2c2c4c;
 }
 
 .countdown-display {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #2E8B57; /* Sea Green - specific brand color */
+    color: #2E8B57; /* --accent-green, check contrast */
     padding: 1rem;
-    background-color: #fff;
+    background-color: #1e1e3f; /* --medium-dark-bg */
     border-radius: 8px;
     display: inline-block;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    border: 1px solid #4f4f7a;
 }
 
 /* Footer */
-.site-footer { /* ID #contact also used */
-    background-color: #333;
-    color: #fff;
+.site-footer {
+    background-color: #0d0d1f; /* Even darker for footer */
+    color: #e0e0e0; /* --light-text */
     padding: 3rem 2rem;
     text-align: center;
+    border-top: 1px solid #2c2c4c;
 }
 
-.site-footer p { /* Override default p color for footer */
-    color: #fff;
+.site-footer p {
+    color: #e0e0e0;
 }
 
 .footer-social-icons {
@@ -398,13 +455,13 @@ nav a:hover {
 }
 
 .footer-social-icons a {
-    color: #fff; /* Footer links are white */
+    color: #e0e0e0;
     margin: 0 0.75rem;
     font-size: 1.3rem;
 }
 
 .footer-social-icons a:hover {
-    color: #1E90FF; /* Brand color for hover */
+    color: #58a6ff; /* Lighter blue */
     text-decoration: none;
 }
 
@@ -413,80 +470,88 @@ nav a:hover {
 }
 
 .contact-info a {
-    color: #fff; /* Footer links are white */
+    color: #e0e0e0;
 }
 
 .contact-info a:hover {
-    text-decoration: underline; /* Underline for contact links on hover */
+    text-decoration: underline;
 }
 
 .copyright p {
     margin-top: 1.5rem;
     font-size: 0.9rem;
-    color: #ccc; /* Copyright text is lighter */
+    color: #aaa; /* Lighter gray for copyright */
 }
 
 .site-footer .copyright p:last-child a {
-    color: #ccc; /* Privacy link matches copyright text */
+    color: #aaa;
 }
 
 .site-footer .copyright p:last-child a:hover {
-    color: #fff; /* Lighter on hover */
+    color: #e0e0e0;
     text-decoration: underline;
 }
 
+/* Base style for the message area (shared by success/error/submitting states) */
+/* JS controls display:block/none on the #thank-you-message ID itself */
+#thank-you-message {
+    display: none; /* Initially hidden, JS will change this to 'block' */
+    padding: 1rem;
+    margin-top: 1.5rem;
+    border-radius: 4px;
+    text-align: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    border-width: 1px; /* Define border width here if consistent */
+    border-style: solid; /* Define border style here if consistent */
+}
+
 /* Styling for different states of the thank-you message div used by JS */
-/* Note: The original #thank-you-message style acts as a default or base */
 .thank-you-message-success {
-    display: block !important; /* Ensure it's visible, overriding display:none from #thank-you-message */
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    /* Preserves padding, margin, border-radius, text-align, max-width from #thank-you-message if not overridden */
+    background-color: #2E8B57; /* --accent-green */
+    color: #ffffff;
+    border-color: #20603c; /* Darker green border */
 }
 
 .thank-you-message-error {
-    display: block !important; /* Ensure it's visible */
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+    background-color: #c0392b; /* Darker red */
+    color: #ffffff;
+    border-color: #a03020; /* Darker red border */
 }
 
-.thank-you-message-submitting { /* Optional: Neutral style for submitting state */
-    display: block !important; /* Ensure it's visible */
-    background-color: #e2e3e5;
-    color: #383d41;
-    border: 1px solid #d6d8db;
+.thank-you-message-submitting {
+    background-color: #4f4f7a; /* --input-border like color */
+    color: #e0e0e0; /* --light-text */
+    border-color: #3a3a5a; /* Darker variant */
 }
 
-/* Responsive Adjustments */
-@media (max-width: 992px) { /* Tablet and smaller desktops */
+/* Responsive Adjustments - Keep these at the end */
+@media (max-width: 992px) {
     .feature-card {
         flex-basis: calc(50% - 1rem);
     }
     header {
-        padding: 1rem; /* Reduce header padding */
+        padding: 1rem;
     }
     nav li {
-        margin-left: 1rem; /* Reduce nav spacing */
+        margin-left: 1rem;
     }
 }
 
-@media (max-width: 768px) { /* Mobile devices */
+@media (max-width: 768px) {
     body {
-        padding-top: 60px; /* Adjust for potentially smaller header */
+        padding-top: 60px;
     }
     header {
-        padding: 0.8rem 1rem; /* Further reduce header padding */
+        padding: 0.8rem 1rem;
     }
     .logo {
         font-size: 1.3rem;
     }
     nav ul {
-        /* Basic wrapping for nav links if they become too crowded.
-           A proper hamburger menu is a larger JS/CSS task. */
         flex-wrap: wrap;
-        justify-content: center; /* Center wrapped items */
+        justify-content: center;
     }
     nav li {
         margin-left: 0.5rem;
@@ -500,7 +565,7 @@ nav a:hover {
         font-size: 1.2rem;
     }
     .hero-content {
-        padding: 0.5rem; /* Reduce padding on small screens */
+        padding: 0.5rem;
     }
 
     .page-section {
@@ -508,7 +573,7 @@ nav a:hover {
     }
 
     #about h2, #free-notes h2, #features h2 {
-        font-size: 2rem; /* Reduce section title font size */
+        font-size: 2rem;
     }
 
     .feature-card {
@@ -532,19 +597,19 @@ nav a:hover {
         padding: 2rem 1rem;
     }
     .footer-social-icons a {
-        font-size: 1.1rem; /* Adjust social icon text size */
+        font-size: 1.1rem;
         margin: 0 0.5rem;
     }
 }
 
-@media (max-width: 480px) { /* Extra small devices */
+@media (max-width: 480px) {
     #hero h1 {
         font-size: 1.8rem;
     }
     #hero p {
         font-size: 1rem;
     }
-    .btn-primary { /* Reduce button padding on very small screens */
+    .btn-primary {
         padding: 0.8rem 1.5rem;
     }
     #registration-form {

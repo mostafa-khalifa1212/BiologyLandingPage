@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form Elements
     const registrationForm = document.getElementById('registration-form');
     const thankYouMessage = document.getElementById('thank-you-message'); // This element will be used for success/error messages
+    const showFormButton = document.getElementById('show-registration-form-btn');
 
     // Modal Logic
     if (modalOverlay && modalCloseButton && modalRegisterButton) {
@@ -37,6 +38,18 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!modalRegisterButton) console.error("Modal register button (#modal-register-button) not found!");
     }
 
+    // Show/Hide Registration Form Logic
+    if (showFormButton && registrationForm) {
+        showFormButton.addEventListener('click', function() {
+            showFormButton.style.display = 'none'; // Hide the button
+            registrationForm.style.display = 'block'; // Show the form
+        });
+    } else {
+        if (!showFormButton) console.error("Show registration form button (#show-registration-form-btn) not found!");
+        // Error for registrationForm already handled below
+    }
+
+
     // Form Submission Handling with Fetch API
     if (registrationForm && thankYouMessage) {
         registrationForm.addEventListener('submit', function(event) {
@@ -55,12 +68,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 interest: registrationForm.interest.value
             };
 
-            // Optional: Add a loading state to the UI here
-            // For example, disable the submit button and show a spinner
             const submitButton = registrationForm.querySelector('button[type="submit"]');
             if(submitButton) submitButton.disabled = true;
             thankYouMessage.textContent = 'Submitting...';
-            thankYouMessage.className = 'thank-you-message-submitting'; // A neutral class
+            thankYouMessage.className = 'thank-you-message-submitting';
             thankYouMessage.style.display = 'block';
 
 
@@ -72,42 +83,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify(formData),
             })
             .then(response => {
-                // Check if the response is ok (status in the range 200-299)
-                // Then parse it as JSON
                 if (!response.ok) {
-                    // If not OK, parse JSON to get error message, then throw an error to be caught by .catch
                     return response.json().then(errData => {
-                        // Use errData.message if available, otherwise a default server error message
                         throw new Error(errData.message || `Server error: ${response.status}`);
                     });
                 }
-                return response.json(); // If OK, parse JSON for success message
+                return response.json();
             })
-            .then(data => { // This 'data' is the parsed JSON from a successful response (status 201)
-                registrationForm.style.display = 'none'; // Hide the form
+            .then(data => {
+                registrationForm.style.display = 'none';
                 thankYouMessage.textContent = data.message || 'Thank you for registering! Your download will start shortly.';
-                thankYouMessage.className = 'thank-you-message-success'; // Apply success class
+                thankYouMessage.className = 'thank-you-message-success';
                 thankYouMessage.style.display = 'block';
 
-
-                // Trigger PDF download
                 const link = document.createElement('a');
                 link.href = 'assets/free_chapter1.pdf';
                 link.download = 'Chapter1-Respiration-Energy-Notes.pdf';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-
-                // No need to re-enable submitButton here as the form is hidden
             })
             .catch(error => {
                 console.error('Error submitting form:', error);
-                // Display the error message (from server or network error)
                 thankYouMessage.textContent = error.message || 'An error occurred. Please try again.';
-                thankYouMessage.className = 'thank-you-message-error'; // Apply error class
+                thankYouMessage.className = 'thank-you-message-error';
                 thankYouMessage.style.display = 'block';
 
-                if(submitButton) submitButton.disabled = false; // Re-enable submit button on error
+                if(submitButton) submitButton.disabled = false;
             });
         });
     } else {

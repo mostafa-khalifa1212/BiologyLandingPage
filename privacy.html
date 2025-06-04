@@ -6,66 +6,70 @@
     <title>Privacy Policy | A2 Biology - Mostafa Khalifa</title>
     <link rel="stylesheet" href="css/styles.css"> <!-- Link to main stylesheet -->
     <style>
-        /* Minimal additional styles for privacy page */
-        body {
-            padding-top: 0; /* Resetting padding-top from main styles.css as this page has its own header */
-            font-family: "Helvetica Neue", Arial, sans-serif; /* Consistent font */
+        /* Minimal additional styles for privacy page - Dark Theme Aligned */
+        body.privacy-page-body { /* Specific class to avoid conflict if main styles.css body has dark bg */
+            padding-top: 0;
+            font-family: "Rubik", "Gotham", "Helvetica Neue", Arial, sans-serif; /* Updated font stack */
             line-height: 1.6;
-            color: #333;
+            background-color: #1a1a2e; /* --dark-bg */
+            color: #e0e0e0; /* --light-text */
         }
         .privacy-header {
             text-align: center;
-            padding: 1rem 0;
-            background-color: #f8f8f8;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
+            padding: 1.5rem 1rem; /* Increased padding */
+            background-color: #1e1e3f; /* --medium-dark-bg */
+            margin-bottom: 30px; /* Increased margin */
+            border-bottom: 1px solid #4f4f7a; /* --input-border like color */
         }
         .privacy-header h1 a {
             text-decoration:none;
-            color: #1E90FF;
+            color: #ffffff; /* White for title */
+            font-family: "Gotham", "Rubik", "Helvetica Neue", Arial, sans-serif; /* Heading font */
             font-weight:bold;
-            font-size: 1.8rem; /* Site title size */
+            font-size: 2rem;
         }
         .privacy-container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 1rem 2rem 2rem 2rem; /* Adjusted padding */
+            padding: 1rem 2rem 2rem 2rem;
         }
         .privacy-container > h1 { /* Page Title "Privacy Policy" */
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #333;
+            font-size: 2.8rem; /* Slightly larger */
+            margin-bottom: 1.5rem;
+            color: #ffffff;
             text-align: center;
+            font-family: "Gotham", "Rubik", "Helvetica Neue", Arial, sans-serif; /* Heading font */
         }
         .privacy-container h2 { /* Section Headings */
-            font-size: 1.8rem;
+            font-size: 2rem; /* Slightly larger */
             margin-top: 2.5rem;
             margin-bottom: 1rem;
-            color: #444;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 0.3rem;
+            color: #ffffff;
+            border-bottom: 1px solid #4f4f7a; /* --input-border like color */
+            padding-bottom: 0.5rem; /* Increased padding */
+            font-family: "Gotham", "Rubik", "Helvetica Neue", Arial, sans-serif; /* Heading font */
         }
         .privacy-container p {
-            line-height: 1.6;
-            color: #555;
-            margin-bottom: 1rem;
+            line-height: 1.7; /* Slightly increased line height for readability */
+            color: #e0e0e0; /* --light-text */
+            margin-bottom: 1.2rem;
         }
         .privacy-container p.last-updated {
             text-align: center;
             font-style: italic;
-            color: #777;
-            margin-bottom: 2rem;
+            color: #aaa; /* Lighter gray for less emphasis */
+            margin-bottom: 2.5rem;
         }
          .privacy-footer {
             text-align: center;
-            padding: 2rem 0;
-            margin-top: 3rem;
+            padding: 2rem 1rem;
+            margin-top: 4rem; /* Increased margin */
             font-size: 0.9rem;
-            color: #777;
-            border-top: 1px solid #eee;
+            color: #aaa; /* Lighter gray */
+            border-top: 1px solid #4f4f7a; /* --input-border like color */
         }
          .privacy-footer a {
-            color: #1E90FF;
+            color: #58a6ff; /* Lighter blue for links in footer */
             text-decoration: none;
         }
         .privacy-footer a:hover {
@@ -73,7 +77,7 @@
         }
     </style>
 </head>
-<body>
+<body class="privacy-page-body"> {/* Added class to body for specific styling */}
     <header class="privacy-header">
         <h1><a href="index.html">A2 Biology | Mostafa Khalifa</a></h1>
     </header>

@@ -38,45 +38,46 @@
         </div>
         <h3>Credentials:</h3>
         <ul>
-            <li>Credential 1: Top Achiever in AL Biology (A*) - Nov 2024</li>
-            <li>Credential 2: Top Achiever in AL Biology (A*) - June 2025</li>
-            <li>Credential 3: Dentistry Student at Ain Shams University</li>
-            <li>Credential 4: Extensive Experience in A2 Biology Tutoring</li>
+            <li>Easy to work with and available 24/7</li>
+            <li>Worked as an assistant for Dr Nihal Gabr</li>
+            <li>Have long experience in teaching biology and breaking down complex concepts</li>
+            <li>Dentistry Student at Ain Shams University</li>
         </ul>
     </section>
 
     <section id="free-notes" class="page-section">
         <h2>Free Chapter 1: Respiration & Energy</h2>
         <p>Register below to get your free PDF copy—exam-ready notes aligned with learning outcomes.</p>
+        <button id="show-registration-form-btn" class="btn-primary">Register for Free Chapter</button>
         <form id="registration-form">
-            <div>
+            <div class="form-field-group">
+                <input type="text" id="name" name="name" placeholder=" " required>
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
             </div>
-            <div>
+            <div class="form-field-group">
+                <input type="email" id="email" name="email" placeholder=" " required>
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
             </div>
-            <div>
+            <div class="form-field-group">
+                <input type="tel" id="phone" name="phone" placeholder=" " required>
                 <label for="phone">Phone:</label>
-                <input type="tel" id="phone" name="phone" required>
             </div>
-            <div>
+            <div class="form-field-group">
+                <input type="text" id="school" name="school" placeholder=" " required>
                 <label for="school">School:</label>
-                <input type="text" id="school" name="school" required>
             </div>
-            <div>
-                <label for="interest">Interest:</label>
-                <select id="interest" name="interest" required>
-                    <option value="" disabled selected>Select your interest</option>
+            <div class="form-field-group">
+                <select id="interest" name="interest" required placeholder=" "> {/* Placeholder on select might not work as expected for CSS, but required helps */}
+                    <option value="" disabled selected></option> {/* Empty value, disabled, selected for placeholder effect */}
                     <option value="A2 Only">A2 Only</option>
                     <option value="Full A-Level">Full A-Level</option>
                 </select>
+                <label for="interest">Interest:</label>
             </div>
             <button type="submit" class="btn-primary">Get My Free Notes</button>
         </form>
         <div id="thank-you-message">
-            Thank you for registering! Your download will start shortly.
+            {/* This div is used by JS to show success/error messages. Initial content can be empty or a default. */}
         </div>
     </section>
 
@@ -84,7 +85,7 @@
         <h2>Why Choose This Course?</h2>
         <div class="features-container">
             <div class="feature-card">
-                <h3>Outcome-Based Notes</h3>
+                <h3><a href="https://www.cambridgeinternational.org/Images/664560-2025-2027-syllabus.pdf" target="_blank" class="outcomes">Learning Outcome</a>-Based Notes</h3>
                 <p>Detailed notes precisely aligned with A2 Biology learning outcomes, ensuring comprehensive syllabus coverage.</p>
             </div>
             <div class="feature-card">
@@ -98,7 +99,7 @@
         </div>
     </section>
 
-    <section id="countdown-section" class="page-section" style="background-color: #f0f0f0;">
+    <section id="countdown-section" class="page-section">
         <div id="countdown-timer-display" class="countdown-display">Loading countdown...</div>
     </section>
 
@@ -109,7 +110,7 @@
             <a href="http://www.youtube.com/@MostafaKhalifaa" target="_blank" aria-label="YouTube">YouTube</a>
         </div>
         <div class="contact-info">
-            <p>Email: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
+            <p>Email: <a href="mailto:mostafakhalifaa1212@gmail.com">mostafakhalifaa1212@gmail.com</a></p>
             <p>Phone: <a href="tel:+201550881126">+20 155 088 1126</a></p>
         </div>
         <div class="copyright">
