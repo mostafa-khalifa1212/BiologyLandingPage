@@ -1,0 +1,11 @@
+# Node.js server dependencies
+server/node_modules/
+server/package-lock.json
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS generated files
+.DS_Store
+Thumbs.db

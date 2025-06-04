@@ -1,71 +1,117 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Modal Elements
     const modalOverlay = document.getElementById('popup-modal');
     const modalCloseButton = document.getElementById('modal-close-button');
-    const modalRegisterButton = document.getElementById('modal-register-button'); // Button inside modal
+    const modalRegisterButton = document.getElementById('modal-register-button');
 
-    if (!modalOverlay) {
-        console.error("Modal overlay element (#popup-modal) not found!");
-        return; // Stop if main modal element is missing
-    }
-    if (!modalCloseButton) {
-        console.error("Modal close button (#modal-close-button) not found!");
-        // Optionally, still allow modal to show, but log error
-    }
-    if (!modalRegisterButton) {
-        console.error("Modal register button (#modal-register-button) not found!");
-        // Optionally, still allow modal to show, but log error
-    }
+    // Form Elements
+    const registrationForm = document.getElementById('registration-form');
+    const thankYouMessage = document.getElementById('thank-you-message'); // This element will be used for success/error messages
 
-    // Function to show the modal
-    const showModal = () => {
-        if (modalOverlay) { // Check again in case it was initially missing but now available (less likely with DOMContentLoaded)
-            modalOverlay.style.display = 'flex'; // Use flex to center content
-        }
-    };
+    // Modal Logic
+    if (modalOverlay && modalCloseButton && modalRegisterButton) {
+        const showModal = () => {
+            modalOverlay.style.display = 'flex';
+        };
 
-    // Function to hide the modal
-    const hideModal = () => {
-        if (modalOverlay) {
+        const hideModal = () => {
             modalOverlay.style.display = 'none';
-        }
-    };
+        };
 
-    // Show modal on page load
-    // Consider adding a delay or localStorage check here for better UX in a real application
-    // For now, show it directly as per subtask.
-    showModal();
+        showModal();
 
-    // Event listener for the close button
-    if (modalCloseButton) {
         modalCloseButton.addEventListener('click', hideModal);
-    }
 
-    // Event listener for the "Register Now" button inside the modal
-    if (modalRegisterButton) {
         modalRegisterButton.addEventListener('click', function() {
             hideModal();
-            // The href="#free-notes" on the anchor tag will handle the navigation
         });
-    }
 
-    // Optional: Close modal if user clicks outside the modal content
-    if (modalOverlay) {
         modalOverlay.addEventListener('click', function(event) {
-            if (event.target === modalOverlay) { // Check if the click is on the overlay itself
+            if (event.target === modalOverlay) {
                 hideModal();
             }
         });
+    } else {
+        if (!modalOverlay) console.error("Modal overlay element (#popup-modal) not found!");
+        if (!modalCloseButton) console.error("Modal close button (#modal-close-button) not found!");
+        if (!modalRegisterButton) console.error("Modal register button (#modal-register-button) not found!");
     }
 
-    // Placeholder for form submission handling (from a potential future subtask)
-    // const registrationForm = document.getElementById('registration-form');
-    // if (registrationForm) {
-    //     registrationForm.addEventListener('submit', function(event) {
-    //         event.preventDefault(); // Prevent default form submission
-    //         // Add form processing logic here
-    //         console.log('Form submitted (not really, this is a placeholder)');
-    //         // document.getElementById('thank-you-message').style.display = 'block';
-    //         // registrationForm.reset();
-    //     });
-    // }
+    // Form Submission Handling with Fetch API
+    if (registrationForm && thankYouMessage) {
+        registrationForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            if (!registrationForm.checkValidity()) {
+                registrationForm.reportValidity(); // Show native browser validation errors
+                return;
+            }
+
+            const formData = {
+                name: registrationForm.name.value,
+                email: registrationForm.email.value,
+                phone: registrationForm.phone.value,
+                school: registrationForm.school.value,
+                interest: registrationForm.interest.value
+            };
+
+            // Optional: Add a loading state to the UI here
+            // For example, disable the submit button and show a spinner
+            const submitButton = registrationForm.querySelector('button[type="submit"]');
+            if(submitButton) submitButton.disabled = true;
+            thankYouMessage.textContent = 'Submitting...';
+            thankYouMessage.className = 'thank-you-message-submitting'; // A neutral class
+            thankYouMessage.style.display = 'block';
+
+
+            fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+            .then(response => {
+                // Check if the response is ok (status in the range 200-299)
+                // Then parse it as JSON
+                if (!response.ok) {
+                    // If not OK, parse JSON to get error message, then throw an error to be caught by .catch
+                    return response.json().then(errData => {
+                        // Use errData.message if available, otherwise a default server error message
+                        throw new Error(errData.message || `Server error: ${response.status}`);
+                    });
+                }
+                return response.json(); // If OK, parse JSON for success message
+            })
+            .then(data => { // This 'data' is the parsed JSON from a successful response (status 201)
+                registrationForm.style.display = 'none'; // Hide the form
+                thankYouMessage.textContent = data.message || 'Thank you for registering! Your download will start shortly.';
+                thankYouMessage.className = 'thank-you-message-success'; // Apply success class
+                thankYouMessage.style.display = 'block';
+
+
+                // Trigger PDF download
+                const link = document.createElement('a');
+                link.href = 'assets/free_chapter1.pdf';
+                link.download = 'Chapter1-Respiration-Energy-Notes.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // No need to re-enable submitButton here as the form is hidden
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
+                // Display the error message (from server or network error)
+                thankYouMessage.textContent = error.message || 'An error occurred. Please try again.';
+                thankYouMessage.className = 'thank-you-message-error'; // Apply error class
+                thankYouMessage.style.display = 'block';
+
+                if(submitButton) submitButton.disabled = false; // Re-enable submit button on error
+            });
+        });
+    } else {
+        if (!registrationForm) console.error("Registration form (#registration-form) not found!");
+        if (!thankYouMessage) console.error("Thank you message element (#thank-you-message) not found for form status!");
+    }
 });

@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "name": "Test User 2",
+    "email": "test2@example.com",
+    "phone": "0987654321",
+    "school": "Test School 2",
+    "interest": "Full A-Level",
+    "timestamp": "2025-06-04T10:12:53.453Z"
+  }
+]

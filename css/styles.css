@@ -1,10 +1,35 @@
-/*ToDo: change the page style to be more dark and cooler, use fonts like Gotham and Rubik for the text, use a more constant color palette for the page*/
+/* Global Resets and Base Styles */
 body {
     padding-top: 70px; /* Adjust based on actual header height */
-    font-family: sans-serif; /* Basic font */
+    font-family: "Helvetica Neue", Arial, sans-serif;
     margin: 0;
+    line-height: 1.6;
+    color: #333; /* Default text color */
 }
 
+a {
+    color: #1E90FF; /* Default link color - brand blue */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #187bcd; /* Darker shade for hover on general links */
+    text-decoration: underline;
+}
+
+p {
+    color: #555; /* Default paragraph color */
+    margin-bottom: 1rem; /* Consistent bottom margin for paragraphs */
+}
+
+/* Headings - General consistency, specific overrides where needed */
+h1, h2, h3, h4, h5, h6 {
+    color: #333; /* Default heading color */
+    margin-top: 0;
+    margin-bottom: 1rem; /* Consistent bottom margin */
+}
+
+/* Header & Navigation */
 header {
     position: fixed;
     top: 0;
@@ -18,20 +43,11 @@ header {
     align-items: center;
     z-index: 1000;
 }
-.outcomes {
-    color: #2E8B57; /* Sea Green - a brand color */
-}
-.outcomes:hover{
-    @keyframes identifier {
-        /*make an animation that changes the color to a lighter one smoothly*/
-    }
-}
-.outcomes:active{
-    color:#20603c ; /* Brand color for active state */
-}
+
 .logo {
-    font-size: 1.5rem; /* Example size */
+    font-size: 1.5rem;
     font-weight: bold;
+    color: #333; /* Logo text color */
 }
 
 nav ul {
@@ -47,26 +63,27 @@ nav li {
 
 nav a {
     text-decoration: none;
-    color: #333;
+    color: #333; /* Navigation link color */
     font-weight: bold;
 }
 
 nav a:hover {
-    color: #007bff; /* Example hover color */
+    color: #1E90FF; /* Brand color for nav link hover */
+    text-decoration: none; /* Nav links typically don't get underlined */
 }
 
-/* Hero Section Styles */
+/* Hero Section */
 #hero {
     background-image: url('../assets/hero.jpg');
     background-size: cover;
     background-position: center;
-    height: 100vh; /* Full-screen height */
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #fff; /* Assuming dark background image, text should be light */
-    position: relative; /* For overlay positioning */
+    color: #fff;
+    position: relative;
 }
 
 #hero::before {
@@ -76,40 +93,46 @@ nav a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
 
 .hero-content {
     position: relative;
-    z-index: 2; /* To sit on top of the pseudo-element overlay */
-    max-width: 800px; /* Or appropriate width */
-    padding: 20px;
+    z-index: 2;
+    max-width: 800px;
+    padding: 1rem; /* Adjusted padding for smaller screens */
 }
 
 #hero h1 {
-    font-size: 3rem; /* Adjust as needed */
+    font-size: 3rem;
     margin-bottom: 1rem;
+    color: #fff; /* Hero title color */
 }
 
 #hero p {
-    font-size: 1.5rem; /* Adjust as needed */
+    font-size: 1.5rem;
     margin-bottom: 2rem;
+    color: #fff; /* Hero paragraph color */
 }
 
+/* Buttons */
 .btn-primary {
     display: inline-block;
     padding: 1rem 2rem;
-    background-color: #1E90FF; /* Brand color */
+    background-color: #1E90FF;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .btn-primary:hover {
-    background-color: #187bcd; /* A slightly darker shade */
+    background-color: #187bcd;
+    color: #fff; /* Ensure text color remains white */
+    text-decoration: none; /* Buttons typically don't get underlined */
+    transform: translateY(-2px); /* Slight lift effect */
 }
 
 /* Page Section Generic Styles */
@@ -118,75 +141,71 @@ nav a:hover {
     text-align: center;
 }
 
-/* About Section Styles */
-#about h2 {
+/* About Section */
+#about h2 { /* Uses default h2 color #333 */
     font-size: 2.5rem;
     margin-bottom: 2rem;
-    color: #333;
 }
 
-.tutor-photo-placeholder {
+.tutor-photo {
     width: 150px;
     height: 150px;
-    background-color: #ccc; /* Placeholder color */
-    border-radius: 50%; /* For a circle */
-    margin: 0 auto 1.5rem auto; /* Center it */
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1.5rem auto;
+    display: block;
+    border: 3px solid #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-#about p { /* More specific selector for bio if needed */
+#about p { /* Bio paragraph uses default p color #555 */
     max-width: 700px;
-    margin: 0 auto 1.5rem auto; /* Center it */
-    line-height: 1.6;
-    color: #555;
+    margin: 0 auto 1.5rem auto;
 }
 
 .social-icons {
     margin-bottom: 1.5rem;
 }
 
-.social-icons a {
+.social-icons a { /* Uses general 'a' styles, color overridden if needed */
     margin: 0 0.5rem;
-    text-decoration: none;
-    color: #1E90FF; /* Brand color */
-    font-size: 1.2rem; /* Adjust if using actual icons */
+    font-size: 1.2rem;
 }
 
 .social-icons a:hover {
-    text-decoration: underline;
+    color: #187bcd; /* Darker brand blue for social icon hover */
+    text-decoration: none;
 }
 
-#about h3 {
+
+#about h3 { /* Uses default h3 color #333 */
     margin-top: 2rem;
     margin-bottom: 1rem;
     font-size: 1.5rem;
-    color: #333;
 }
 
 #about ul {
-    list-style: disc; /* Use 'none' if you prefer no bullets or will use custom icons */
-    padding-left: 0; /* Reset padding if using margin auto for centering */
+    list-style: disc;
+    padding-left: 20px; /* Indent for bullets */
     max-width: 500px;
-    margin: 0 auto 1.5rem auto; /* Center the list block */
-    text-align: left; /* Align text to the left within the list items */
+    margin: 0 auto 1.5rem auto;
+    text-align: left;
 }
 
 #about ul li {
     margin-bottom: 0.5rem;
-    color: #555;
+    color: #555; /* List item color */
 }
 
-/* Free Notes Section Styles */
-#free-notes h2 { /* Assuming similar styling to #about h2 */
+/* Free Notes Section (Registration Form) */
+#free-notes h2 { /* Uses default h2 color #333 */
     font-size: 2.5rem;
-    margin-bottom: 1rem; /* Adjusted for closer description */
-    color: #333;
+    margin-bottom: 1rem;
 }
 
-#free-notes p { /* Assuming similar styling to #about p for description */
+#free-notes p { /* Uses default p color #555 */
     max-width: 700px;
-    margin: 0 auto 2rem auto; /* Increased bottom margin before form */
-    line-height: 1.6;
-    color: #555;
+    margin: 0 auto 2rem auto;
 }
 
 #registration-form {
@@ -196,18 +215,18 @@ nav a:hover {
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: left;
 }
 
-#registration-form div { /* Styling for form field groups */
+#registration-form div { /* Form field group */
     margin-bottom: 1rem;
-    text-align: left;
 }
 
 #registration-form label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
-    color: #333;
+    color: #333; /* Label text color */
 }
 
 #registration-form input[type="text"],
@@ -218,41 +237,50 @@ nav a:hover {
     padding: 0.75rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Important for width calculation */
+    box-sizing: border-box;
+    font-size: 1rem; /* Consistent font size */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-#registration-form button[type="submit"] {
-    width: 100%; /* Make button full width */
-    padding: 1rem; /* Adjust padding if needed, inherits from .btn-primary */
-    margin-top: 1rem; /* Add some space above the button */
+#registration-form input[type="text"]:focus,
+#registration-form input[type="email"]:focus,
+#registration-form input[type="tel"]:focus,
+#registration-form select:focus {
+    border-color: #1E90FF; /* Brand color */
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25); /* Subtle glow */
+    outline: none;
+}
+
+#registration-form button[type="submit"] { /* Uses .btn-primary styles */
+    width: 100%;
+    margin-top: 1rem;
 }
 
 #thank-you-message {
-    display: none; /* Hidden by default */
+    display: none;
     padding: 1rem;
-    margin-top: 1.5rem; /* Space from form or button */
-    background-color: #d4edda; /* Greenish for success */
+    margin-top: 1.5rem;
+    background-color: #d4edda;
     color: #155724;
     border: 1px solid #c3e6cb;
     border-radius: 4px;
     text-align: center;
-    max-width: 600px; /* Match form width */
+    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* Features Section Styles */
-#features h2 { /* Assuming similar styling to other section titles */
+/* Features Section */
+#features h2 { /* Uses default h2 color #333 */
     font-size: 2.5rem;
     margin-bottom: 2rem;
-    color: #333;
 }
 
 .features-container {
     display: flex;
-    justify-content: space-around; /* Distributes space around items */
+    justify-content: space-around;
     flex-wrap: wrap;
-    gap: 2rem; /* Space between cards */
+    gap: 2rem;
     margin-top: 2rem;
 }
 
@@ -263,42 +291,33 @@ nav a:hover {
     padding: 2rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     text-align: center;
-    flex-basis: calc(33.333% - 2rem); /* For three cards, accounting for gap. */
-    min-width: 280px; /* Minimum width before wrapping or shrinking too much */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    flex-basis: calc(33.333% - 2rem);
+    min-width: 280px;
+    box-sizing: border-box;
 }
 
 .feature-card h3 {
     font-size: 1.5rem;
-    color: #2E8B57; /* Sea Green - a brand color */
+    color: #2E8B57; /* Sea Green - specific brand color for feature titles */
     margin-bottom: 1rem;
 }
 
-.feature-card p {
-    color: #555;
-    line-height: 1.5;
-}
-
-/* Media Queries for Features Section Responsiveness */
-@media (max-width: 992px) {
-    .feature-card {
-        flex-basis: calc(50% - 1rem); /* 2 cards per row, adjusting for gap */
-    }
+.feature-card p { /* Uses default p color #555 */
+    line-height: 1.5; /* Slightly different from global 1.6, can unify if desired */
 }
 
 /* Modal Styles */
 .modal-overlay {
-    display: none; /* Hidden by default, shown by JS */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
-    z-index: 2000; /* Above other content */
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
     justify-content: center;
     align-items: center;
-    /* display: flex; is set by JS when shown to enable justify/align */
 }
 
 .modal-content {
@@ -307,9 +326,9 @@ nav a:hover {
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     text-align: center;
-    position: relative; /* For positioning the close button */
+    position: relative;
     max-width: 500px;
-    width: 90%; /* Responsive width */
+    width: 90%;
 }
 
 .modal-close-btn {
@@ -321,55 +340,57 @@ nav a:hover {
     background: none;
     border: none;
     cursor: pointer;
-    line-height: 1; /* Prevents button being too tall */
+    line-height: 1;
 }
 
 .modal-close-btn:hover {
     color: #333;
+    text-decoration: none;
 }
 
 .modal-content h2 {
     margin-top: 0;
     margin-bottom: 1rem;
-    color: #1E90FF; /* Brand color */
-    font-size: 1.8rem; /* Adjust as needed */
+    color: #1E90FF; /* Brand color for modal title */
+    font-size: 1.8rem;
 }
 
-.modal-content p {
+.modal-content p { /* Uses default p color #555 */
     margin-bottom: 1.5rem;
-    color: #555;
-    font-size: 1rem; /* Adjust as needed */
+    font-size: 1rem;
 }
 
-/* The .btn-primary style is reused for the modal's register button */
-#modal-register-button {
-    display: inline-block; /* Ensure it behaves like a button */
+#modal-register-button { /* Uses .btn-primary styles */
+    display: inline-block;
 }
 
-/* Countdown Timer Section Styles */
+/* Countdown Timer Section */
 #countdown-section {
-    padding: 2rem 1rem; /* Already part of .page-section, but can be overridden if needed */
-    text-align: center; /* Already part of .page-section */
-    background-color: #f0f0f0; /* Specific background for this section */
+    /* Uses .page-section styles for padding and text-align */
+    background-color: #f0f0f0;
 }
 
 .countdown-display {
-    font-size: 1.8rem; /* Adjust as needed */
+    font-size: 1.8rem;
     font-weight: bold;
-    color: #2E8B57; /* Sea Green, or choose another brand color */
+    color: #2E8B57; /* Sea Green - specific brand color */
     padding: 1rem;
     background-color: #fff;
     border-radius: 8px;
-    display: inline-block; /* Allows centering with text-align on parent and keeps content width */
+    display: inline-block;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Footer Styles */
-.site-footer { /* Targets footer by class, can also use footer#contact */
-    background-color: #333; /* Dark background for footer */
-    color: #fff; /* Light text color */
+/* Footer */
+.site-footer { /* ID #contact also used */
+    background-color: #333;
+    color: #fff;
     padding: 3rem 2rem;
     text-align: center;
+}
+
+.site-footer p { /* Override default p color for footer */
+    color: #fff;
 }
 
 .footer-social-icons {
@@ -377,14 +398,14 @@ nav a:hover {
 }
 
 .footer-social-icons a {
-    color: #fff;
+    color: #fff; /* Footer links are white */
     margin: 0 0.75rem;
-    text-decoration: none;
-    font-size: 1.3rem; /* Adjust if using text, larger if using icons */
+    font-size: 1.3rem;
 }
 
 .footer-social-icons a:hover {
     color: #1E90FF; /* Brand color for hover */
+    text-decoration: none;
 }
 
 .contact-info p {
@@ -392,32 +413,141 @@ nav a:hover {
 }
 
 .contact-info a {
-    color: #fff;
-    text-decoration: none;
+    color: #fff; /* Footer links are white */
 }
 
 .contact-info a:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* Underline for contact links on hover */
 }
 
 .copyright p {
     margin-top: 1.5rem;
     font-size: 0.9rem;
-    color: #ccc;
+    color: #ccc; /* Copyright text is lighter */
 }
 
-.site-footer .copyright p:last-child a { /* More specific selector for privacy link */
-    color: #ccc;
-    text-decoration: none;
+.site-footer .copyright p:last-child a {
+    color: #ccc; /* Privacy link matches copyright text */
 }
 
 .site-footer .copyright p:last-child a:hover {
-    color: #fff;
+    color: #fff; /* Lighter on hover */
     text-decoration: underline;
 }
 
-@media (max-width: 768px) {
+/* Styling for different states of the thank-you message div used by JS */
+/* Note: The original #thank-you-message style acts as a default or base */
+.thank-you-message-success {
+    display: block !important; /* Ensure it's visible, overriding display:none from #thank-you-message */
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    /* Preserves padding, margin, border-radius, text-align, max-width from #thank-you-message if not overridden */
+}
+
+.thank-you-message-error {
+    display: block !important; /* Ensure it's visible */
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.thank-you-message-submitting { /* Optional: Neutral style for submitting state */
+    display: block !important; /* Ensure it's visible */
+    background-color: #e2e3e5;
+    color: #383d41;
+    border: 1px solid #d6d8db;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) { /* Tablet and smaller desktops */
     .feature-card {
-        flex-basis: 100%; /* 1 card per row */
+        flex-basis: calc(50% - 1rem);
+    }
+    header {
+        padding: 1rem; /* Reduce header padding */
+    }
+    nav li {
+        margin-left: 1rem; /* Reduce nav spacing */
+    }
+}
+
+@media (max-width: 768px) { /* Mobile devices */
+    body {
+        padding-top: 60px; /* Adjust for potentially smaller header */
+    }
+    header {
+        padding: 0.8rem 1rem; /* Further reduce header padding */
+    }
+    .logo {
+        font-size: 1.3rem;
+    }
+    nav ul {
+        /* Basic wrapping for nav links if they become too crowded.
+           A proper hamburger menu is a larger JS/CSS task. */
+        flex-wrap: wrap;
+        justify-content: center; /* Center wrapped items */
+    }
+    nav li {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+
+    #hero h1 {
+        font-size: 2.2rem;
+    }
+    #hero p {
+        font-size: 1.2rem;
+    }
+    .hero-content {
+        padding: 0.5rem; /* Reduce padding on small screens */
+    }
+
+    .page-section {
+        padding: 2rem 1rem;
+    }
+
+    #about h2, #free-notes h2, #features h2 {
+        font-size: 2rem; /* Reduce section title font size */
+    }
+
+    .feature-card {
+        flex-basis: 100%;
+    }
+
+    .modal-content {
+        padding: 1.5rem;
+        width: 95%;
+    }
+    .modal-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .countdown-display {
+        font-size: 1.5rem;
+        padding: 0.8rem;
+    }
+
+    .site-footer {
+        padding: 2rem 1rem;
+    }
+    .footer-social-icons a {
+        font-size: 1.1rem; /* Adjust social icon text size */
+        margin: 0 0.5rem;
+    }
+}
+
+@media (max-width: 480px) { /* Extra small devices */
+    #hero h1 {
+        font-size: 1.8rem;
+    }
+    #hero p {
+        font-size: 1rem;
+    }
+    .btn-primary { /* Reduce button padding on very small screens */
+        padding: 0.8rem 1.5rem;
+    }
+    #registration-form {
+        padding: 1.5rem;
     }
 }
