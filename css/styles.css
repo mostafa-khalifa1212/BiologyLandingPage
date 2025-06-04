@@ -1,52 +1,61 @@
 /* Global Resets and Base Styles */
 body {
-    padding-top: 70px; /* Adjust based on actual header height */
-    font-family: "Rubik", "Gotham", "Helvetica Neue", Arial, sans-serif;
-    margin: 0;
-    line-height: 1.6;
-    background-color: #1a1a2e; /* --dark-bg */
-    color: #e0e0e0; /* --light-text */
+    /* padding-top: 70px; /* Replaced by Tailwind class pt-[70px] on body */
+    /* font-family: "Rubik", "Gotham", "Helvetica Neue", Arial, sans-serif; /* Handled by Tailwind font-sans config */
+    margin: 0; /* Retain margin reset */
+    line-height: 1.6; /* This can be a base style or Tailwind leading-relaxed */
+    /* background-color: #1a1a2e; /* Handled by Tailwind bg class on body */
+    /* color: #e0e0e0; /* Handled by Tailwind text class on body */
 }
 
+/* Global link styles removed, will be utility-based or component-specific */
+/*
 a {
-    color: #1E90FF; /* --accent-blue */
+    color: #1E90FF;
     text-decoration: none;
 }
 
 a:hover {
-    color: #58a6ff; /* Lighter blue for hover */
+    color: #58a6ff;
     text-decoration: underline;
 }
+*/
 
 p {
-    color: #e0e0e0; /* --light-text, ensuring override of previous #555 */
+    /* color: #e0e0e0; /* Inherits from body or specific component */
     margin-bottom: 1rem;
 }
 
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Gotham", "Rubik", "Helvetica Neue", Arial, sans-serif;
-    color: #ffffff; /* White for headings */
+    /* font-family: "Gotham", "Rubik", "Helvetica Neue", Arial, sans-serif; /* Handled by Tailwind font-headings config, applied via classes */
+    /* color: #ffffff; /* Will be utility-based, e.g., text-white or text-gray-100 */
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 1rem; /* Retain for now, can be replaced by Tailwind `mt-0 mb-4` etc. */
 }
 
 /* Header & Navigation */
+/* Tailwind classes are now on the <header> tag for basic bg, text color, position, z-index, shadow. */
+/* Flex layout and specific padding will be part of header component refactor. */
+/*
 header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #1e1e3f; /* --medium-dark-bg */
+    background-color: #1e1e3f;
     padding: 1rem 2rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Adjusted shadow */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
-    border-bottom: 1px solid #2c2c4c; /* Subtle border */
+    border-bottom: 1px solid #2c2c4c;
 }
+*/
 
+/* Old .logo, nav ul, nav li, nav a, nav a:hover styles removed as Tailwind classes are now applied directly in HTML */
+/*
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
@@ -66,18 +75,20 @@ nav li {
 
 nav a {
     text-decoration: none;
-    color: #e0e0e0; /* --light-text */
+    color: #e0e0e0;
     font-weight: bold;
 }
 
 nav a:hover {
-    color: #58a6ff; /* Lighter blue */
+    color: #58a6ff;
     text-decoration: none;
 }
+*/
 
-/* Hero Section */
+/* Hero Section Styles Removed - Now handled by Tailwind CSS in HTML */
+/*
 #hero {
-    background-image: url('../assets/hero.jpg'); /* Keep background image */
+    background-image: url('../assets/hero.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -85,18 +96,18 @@ nav a:hover {
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #ffffff; /* Ensure text is white for contrast against overlay */
+    color: #ffffff;
     position: relative;
 }
 
-#hero::before { /* Dark overlay for readability */
+#hero::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Slightly increased overlay */
+    background-color: rgba(0, 0, 0, 0.6);
     z-index: 1;
 }
 
@@ -116,37 +127,45 @@ nav a:hover {
 #hero p {
     font-size: 1.5rem;
     margin-bottom: 2rem;
-    color: #f0f0f0; /* Slightly off-white for sub-text if needed */
+    color: #f0f0f0;
 }
+*/
 
 /* Buttons */
+/* .btn-primary styling is now primarily handled by Tailwind utility classes on the elements. */
+/* This class might be used for @apply later if common button styles are needed beyond utilities. */
+/*
 .btn-primary {
     display: inline-block;
     padding: 1rem 2rem;
-    background-color: #1E90FF; /* --accent-blue */
+    background-color: #1E90FF;
     color: #ffffff;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    border: none; /* Remove default border if any */
+    border: none;
 }
 
 .btn-primary:hover {
-    background-color: #187bcd; /* Slightly darker blue */
+    background-color: #187bcd;
     color: #ffffff;
     text-decoration: none;
     transform: translateY(-2px);
 }
+*/
 
 /* Page Section Generic Styles */
+/* Removed .page-section as padding/text-align are now on <section> tags in HTML via Tailwind */
+/*
 .page-section {
     padding: 4rem 2rem;
     text-align: center;
-    /* background-color is inherited from body or set per section */
 }
+*/
 
-/* About Section */
+/* About Section Styles Removed - Now handled by Tailwind CSS in HTML */
+/*
 #about h2 {
     font-size: 2.5rem;
     margin-bottom: 2rem;
@@ -160,14 +179,14 @@ nav a:hover {
     object-fit: cover;
     margin: 0 auto 1.5rem auto;
     display: block;
-    border: 3px solid #1a1a2e; /* --dark-bg, or use an accent like #4f4f7a */
+    border: 3px solid #1a1a2e;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
 #about p {
     max-width: 700px;
     margin: 0 auto 1.5rem auto;
-    color: #e0e0e0; /* --light-text */
+    color: #e0e0e0;
 }
 
 .social-icons {
@@ -177,11 +196,11 @@ nav a:hover {
 .social-icons a {
     margin: 0 0.5rem;
     font-size: 1.2rem;
-    color: #1E90FF; /* --accent-blue */
+    color: #1E90FF;
 }
 
 .social-icons a:hover {
-    color: #58a6ff; /* Lighter blue */
+    color: #58a6ff;
     text-decoration: none;
 }
 
@@ -202,8 +221,9 @@ nav a:hover {
 
 #about ul li {
     margin-bottom: 0.5rem;
-    color: #e0e0e0; /* --light-text */
+    color: #e0e0e0;
 }
+*/
 
 /* Free Notes Section (Registration Form) */
 #free-notes h2 {
@@ -307,9 +327,10 @@ nav a:hover {
     display: none;
 }
 
-/* Features Section */
+/* Features Section Styles Removed - Now handled by Tailwind CSS in HTML */
+/*
 #features {
-    background-color: #1a1a2e; /* Ensure section bg if needed, or remove if body bg is enough */
+    background-color: #1a1a2e;
 }
 #features h2 {
     font-size: 2.5rem;
@@ -326,11 +347,11 @@ nav a:hover {
 }
 
 .feature-card {
-    background-color: #1e1e3f; /* --medium-dark-bg */
-    border: 1px solid #4f4f7a; /* --input-border or similar */
+    background-color: #1e1e3f;
+    border: 1px solid #4f4f7a;
     border-radius: 8px;
     padding: 2rem;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.4); /* Darker shadow */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
     text-align: center;
     flex-basis: calc(33.333% - 2rem);
     min-width: 280px;
@@ -340,21 +361,27 @@ nav a:hover {
 .feature-card h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    color: #ffffff; /* Default for h3 if no link */
+    color: #ffffff;
 }
 
+.feature-card p {
+    line-height: 1.5;
+    color: #e0e0e0;
+}
+*/
+/* .outcomes style is kept as it's a specific link style not directly replaced by card utilities */
 .outcomes {
-    color: #fff; /* white*/
+    color: #2E8B57; /* --accent-green */
     text-decoration: none;
     transition: color 0.3s ease-in-out;
 }
 
 .outcomes:hover {
-    color: #fff; /* white */
+    color: #3CB371; /* Lighter green */
 }
 
 .outcomes:active {
-    color: #8a8a8a; /* dark grey */
+    color: #20603c; /* Darker green */
 }
 
 .feature-card p {
@@ -428,7 +455,7 @@ nav a:hover {
 .countdown-display {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #ffffff; /* --accent-green, check contrast */
+    color: #2E8B57; /* --accent-green, check contrast */
     padding: 1rem;
     background-color: #1e1e3f; /* --medium-dark-bg */
     border-radius: 8px;

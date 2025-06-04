@@ -4,48 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A2 Biology | Mostafa Khalifa</title>
+
+    <!-- Google Fonts: Inter and Rubik -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind CSS Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Rubik', 'ui-sans-serif', 'system-ui', 'sans-serif'], // Default body font
+              headings: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] // For headings
+            }
+          }
+        }
+      }
+    </script>
+
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
-    <header>
-        <div class="logo">A2 Biology | Mostafa Khalifa</div>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#free-notes">Free Notes</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+<body class="font-sans bg-[#1a1a2e] text-[#e0e0e0] pt-[70px]"> {/* Keep pt-[70px] for now, adjust if header height changes */}
+    <header id="main-header" class="text-white fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="logo font-headings text-xl md:text-2xl font-bold">A2 Biology | Mostafa Khalifa</div>
+            <nav>
+                <ul class="flex space-x-4 md:space-x-6">
+                    <li><a href="#about" class="font-headings text-gray-300 hover:text-white transition-colors duration-300 ease-in-out pb-1 hover:border-b-2 hover:border-white">About</a></li>
+                    <li><a href="#free-notes" class="font-headings text-gray-300 hover:text-white transition-colors duration-300 ease-in-out pb-1 hover:border-b-2 hover:border-white">Free Notes</a></li>
+                    <li><a href="#features" class="font-headings text-gray-300 hover:text-white transition-colors duration-300 ease-in-out pb-1 hover:border-b-2 hover:border-white">Features</a></li>
+                    <li><a href="#contact" class="font-headings text-gray-300 hover:text-white transition-colors duration-300 ease-in-out pb-1 hover:border-b-2 hover:border-white">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <section id="hero">
-        <div class="hero-content">
-            <h1>Unlock Your A* in A2 Biology—Free Chapter 1 Notes!</h1>
-            <p>Register below and download your first chapter now.</p>
-            <a href="#free-notes" class="btn-primary">Get Free Notes</a>
+    {/* Hero Section - Full screen, specific layout */}
+    <section id="hero" class="min-h-screen bg-[url('../assets/hero.jpg')] bg-cover bg-center flex items-center justify-center relative text-white">
+        <div class="absolute inset-0 bg-gradient-to-b from-[#1a1a2e]/90 via-[#1a1a2e]/50 to-transparent z-10"></div>
+        <div class="hero-content relative z-20 text-center max-w-3xl mx-auto px-4">
+            <h1 class="font-headings text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">Unlock Your A* in A2 Biology—Free Chapter 1 Notes!</h1>
+            <p class="text-lg sm:text-xl md:text-2xl text-gray-200 mb-10">Register below and download your first chapter now.</p>
+            <a href="#free-notes" id="hero-cta-button" class="font-headings bg-[#1E90FF] hover:bg-[#187bcd] text-white font-bold py-3 px-8 md:py-4 md:px-10 rounded-lg text-lg md:text-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out">Get Free Notes</a>
         </div>
     </section>
 
-    <section id="about" class="page-section">
-        <h2>Meet Your Teacher</h2>
-        <img src="assets/pfp.jpg" alt="Mostafa Khalifa - A2 Biology Tutor" class="tutor-photo">
-        <p>Hi, I’m Mostafa Khalifa, A2 Biology teacher with a 99% student success rate. In November 2024 and June 2025, my students and I all achieved A* in AL Biology. Now I am a dentistry student at Ain shams University Alhamdulillah, passionate about helping ambitious people succeed. I created this course to share the strategies that worked for us, and to help you achieve the A*.</p>
-        <div class="social-icons">
-            <a href="https://www.instagram.com/mostafa_khalifabio?igsh=OXc0N25wa29ucG5j" target="_blank">Instagram</a>
-            <a href="http://www.youtube.com/@MostafaKhalifaa" target="_blank">YouTube</a>
-            <a href="https://wa.me/+201550881126" target="_blank">WhatsApp</a>
+    <section id="about" class="bg-[#161628] py-16 md:py-20 lg:py-24 px-6">
+        <div class="container mx-auto">
+            <h2 class="font-headings text-3xl md:text-4xl font-bold mb-12 text-center text-white">Meet Your Teacher</h2>
+            <div class="grid md:grid-cols-5 gap-8 lg:gap-12 items-center">
+                <div class="md:col-span-2">
+                    <img src="assets/pfp.jpg" alt="Mostafa Khalifa - A2 Biology Tutor" class="w-48 h-48 md:w-64 md:h-64 mx-auto rounded-full shadow-2xl border-4 border-gray-700 object-cover">
+                </div>
+                <div class="md:col-span-3 text-center md:text-left">
+                    <p class="font-sans text-lg text-gray-300 mb-6 leading-relaxed">Hi, I’m Mostafa Khalifa, A2 Biology teacher with a 99% student success rate. In November 2024 and June 2025, my students and I all achieved A* in AL Biology. Now I am a dentistry student at Ain shams University Alhamdulillah, passionate about helping ambitious people succeed. I created this course to share the strategies that worked for us, and to help you achieve the A*.</p>
+                    <div class="social-icons mb-6 text-center md:text-left">
+                        <a href="https://www.instagram.com/mostafa_khalifabio?igsh=OXc0N25wa29ucG5j" target="_blank" class="inline-block text-[#1E90FF] hover:text-[#58a6ff] mx-2 transition-colors text-2xl" aria-label="Instagram">Instagram</a>
+                        <a href="http://www.youtube.com/@MostafaKhalifaa" target="_blank" class="inline-block text-[#1E90FF] hover:text-[#58a6ff] mx-2 transition-colors text-2xl" aria-label="YouTube">YouTube</a>
+                        <a href="https://wa.me/+201550881126" target="_blank" class="inline-block text-[#1E90FF] hover:text-[#58a6ff] mx-2 transition-colors text-2xl" aria-label="WhatsApp">WhatsApp</a>
+                    </div>
+                    <h3 class="font-headings text-2xl font-semibold mb-4 text-white">Credentials:</h3>
+                    <ul class="list-disc list-inside text-gray-400 space-y-2 font-sans">
+                        <li>Easy to work with and available 24/7</li>
+                        <li>Worked as an assistant for Dr Nihal Gabr</li>
+                        <li>Have long experience in teaching biology and breaking down complex concepts</li>
+                        <li>Dentistry Student at Ain Shams University</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <h3>Credentials:</h3>
-        <ul>
-            <li>Easy to work with and available 24/7</li>
-            <li>Worked as an assistant for Dr Nihal Gabr</li>
-            <li>Have long experience in teaching biology and breaking down complex concepts</li>
-            <li>Dentistry Student at Ain Shams University</li>
-        </ul>
     </section>
 
-    <section id="free-notes" class="page-section">
+    <section id="free-notes" class="py-16 md:py-20 text-center container mx-auto px-6">
+        {/* Existing free-notes content will be refactored with Tailwind later */}
         <h2>Free Chapter 1: Respiration & Energy</h2>
         <p>Register below to get your free PDF copy—exam-ready notes aligned with learning outcomes.</p>
         <button id="show-registration-form-btn" class="btn-primary">Register for Free Chapter</button>
@@ -67,8 +103,8 @@
                 <label for="school">School:</label>
             </div>
             <div class="form-field-group">
-                <select id="interest" name="interest" required placeholder=" "> {/* Placeholder on select might not work as expected for CSS, but required helps */}
-                    <option value="" disabled selected></option> {/* Empty value, disabled, selected for placeholder effect */}
+                <select id="interest" name="interest" required placeholder=" ">
+                    <option value="" disabled selected></option>
                     <option value="A2 Only">A2 Only</option>
                     <option value="Full A-Level">Full A-Level</option>
                 </select>
@@ -77,33 +113,55 @@
             <button type="submit" class="btn-primary">Get My Free Notes</button>
         </form>
         <div id="thank-you-message">
-            {/* This div is used by JS to show success/error messages. Initial content can be empty or a default. */}
+            {/* This div is used by JS to show success/error messages. */}
         </div>
     </section>
 
-    <section id="features" class="page-section">
-        <h2>Why Choose This Course?</h2>
-        <div class="features-container">
-            <div class="feature-card">
-                <h3><a href="https://www.cambridgeinternational.org/Images/664560-2025-2027-syllabus.pdf" target="_blank" class="outcomes">Learning Outcome</a>-Based Notes</h3>
-                <p>Detailed notes precisely aligned with A2 Biology learning outcomes, ensuring comprehensive syllabus coverage.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Exam-Ready Practice</h3>
-                <p>Extensive practice questions, past paper analysis, and mock exams to build your confidence and exam technique.</p>
-            </div>
-            <div class="feature-card">
-                <h3>On-Demand Revision Videos</h3>
-                <p>Access a library of video lessons anytime, anywhere, perfect for revision and clarifying complex topics.</p>
+    <section id="features" class="bg-[#1a1a2e] py-16 md:py-20 lg:py-24 px-6">
+        <div class="container mx-auto">
+            <h2 class="font-headings text-3xl md:text-4xl font-bold mb-16 text-center text-white">Why Choose This Course?</h2> {/* Increased mb */}
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"> {/* Added lg:gap-10 */}
+
+                <div class="feature-card-item bg-[#1e1e3f] p-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out text-center flex flex-col items-center"> {/* Added flex for icon centering */}
+                    <div class="text-[#1E90FF] text-5xl mb-6"> {/* Placeholder for icon, increased size & mb */}
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                        </svg>
+                    </div>
+                    <h3 class="font-headings text-xl font-semibold mb-3 text-white"><a href="https://www.cambridgeinternational.org/Images/664560-2025-2027-syllabus.pdf" target="_blank" class="outcomes hover:underline">Learning Outcome</a>-Based Notes</h3>
+                    <p class="text-gray-400 leading-relaxed flex-grow">Detailed notes precisely aligned with A2 Biology learning outcomes, ensuring comprehensive syllabus coverage.</p> {/* Added flex-grow */}
+                </div>
+
+                <div class="feature-card-item bg-[#1e1e3f] p-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out text-center flex flex-col items-center">
+                    <div class="text-[#1E90FF] text-5xl mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                        </svg>
+                    </div>
+                    <h3 class="font-headings text-xl font-semibold mb-3 text-white">Exam-Ready Practice</h3>
+                    <p class="text-gray-400 leading-relaxed flex-grow">Extensive practice questions, past paper analysis, and mock exams to build your confidence and exam technique.</p>
+                </div>
+
+                <div class="feature-card-item bg-[#1e1e3f] p-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out text-center flex flex-col items-center">
+                     <div class="text-[#1E90FF] text-5xl mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-headings text-xl font-semibold mb-3 text-white">On-Demand Revision Videos</h3>
+                    <p class="text-gray-400 leading-relaxed flex-grow">Access a library of video lessons anytime, anywhere, perfect for revision and clarifying complex topics.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="countdown-section" class="page-section">
+    <section id="countdown-section" class="py-16 md:py-20 text-center bg-[#161628]"> {/* Slightly different dark bg for variety */}
+        {/* Existing countdown content will be refactored with Tailwind later */}
         <div id="countdown-timer-display" class="countdown-display">Loading countdown...</div>
     </section>
 
-    <footer id="contact" class="site-footer">
+    <footer id="contact" class="bg-[#0d0d1f] text-gray-300 py-12 text-center">
+        {/* Existing footer content will be refactored with Tailwind later */}
         <div class="footer-social-icons">
             <a href="https://www.instagram.com/mostafa_khalifabio?igsh=OXc0N25wa29ucG5j" target="_blank" aria-label="Instagram">Instagram</a>
             <a href="https://facebook.com/yourpage" target="_blank" aria-label="Facebook">Facebook</a>

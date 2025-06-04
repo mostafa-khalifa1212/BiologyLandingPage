@@ -116,4 +116,25 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!registrationForm) console.error("Registration form (#registration-form) not found!");
         if (!thankYouMessage) console.error("Thank you message element (#thank-you-message) not found for form status!");
     }
+
+    // Header scroll effect
+    const header = document.getElementById('main-header');
+    const headerScrollThreshold = 50; // Pixels to scroll before changing header
+
+    if (header) {
+        const handleScroll = () => {
+            if (window.scrollY > headerScrollThreshold) {
+                header.classList.add('bg-[#1e1e3f]', 'shadow-md');
+                // To use backdrop-blur, ensure the background color has alpha, e.g., header.classList.add('bg-[#1e1e3f]/90', 'backdrop-blur-sm');
+            } else {
+                header.classList.remove('bg-[#1e1e3f]', 'shadow-md');
+                // header.classList.remove('bg-[#1e1e3f]/90', 'backdrop-blur-sm');
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Initial check in case page is loaded already scrolled
+    } else {
+        console.error("Header element with ID 'main-header' not found for scroll effect.");
+    }
 });
