@@ -344,17 +344,17 @@ nav a:hover {
 }
 
 .outcomes {
-    color: #2E8B57; /* --accent-green */
+    color: #fff; /* white*/
     text-decoration: none;
     transition: color 0.3s ease-in-out;
 }
 
 .outcomes:hover {
-    color: #3CB371; /* Lighter green */
+    color: #fff; /* white */
 }
 
 .outcomes:active {
-    color: #20603c; /* Darker green */
+    color: #8a8a8a; /* dark grey */
 }
 
 .feature-card p {
@@ -428,7 +428,7 @@ nav a:hover {
 .countdown-display {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #2E8B57; /* --accent-green, check contrast */
+    color: #ffffff; /* --accent-green, check contrast */
     padding: 1rem;
     background-color: #1e1e3f; /* --medium-dark-bg */
     border-radius: 8px;

@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const distance = countDownDate - now;
 
         if (distance < 0) {
-            countdownDisplay.innerHTML = "The event has started!";
+            countdownDisplay.innerHTML = "The course has started!";
             if (interval) { // Check if interval is defined before clearing
                 clearInterval(interval); // Stop the interval
             }
