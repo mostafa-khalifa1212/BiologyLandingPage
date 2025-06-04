@@ -21,10 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        // const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)); // Not required by issue
-        // const seconds = Math.floor((distance % (1000 * 60)) / 1000); // Not required by issue
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            // const seconds = Math.floor((distance % (1000 * 60)) / 1000); // Seconds still not required
 
-        countdownDisplay.innerHTML = `Time Left: ${days}d ${hours}h`;
+            countdownDisplay.innerHTML = `Time Left: ${days}d ${hours}h ${minutes}m`;
     };
 
     // Store interval in a variable that updateCountdown can access for clearing

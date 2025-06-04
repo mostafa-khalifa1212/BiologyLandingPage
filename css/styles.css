@@ -225,7 +225,8 @@ nav a:hover {
 }
 */
 
-/* Free Notes Section (Registration Form) */
+/* Free Notes Section (Registration Form) - Styles Removed or Handled by Tailwind */
+/*
 #free-notes h2 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
@@ -235,7 +236,7 @@ nav a:hover {
 #free-notes p {
     max-width: 700px;
     margin: 0 auto 1rem auto;
-    color: #e0e0e0; /* --light-text */
+    color: #e0e0e0;
 }
 
 #show-registration-form-btn {
@@ -248,9 +249,9 @@ nav a:hover {
     max-width: 600px;
     margin: 2rem auto;
     padding: 2.5rem;
-    background-color: #1e1e3f; /* --medium-dark-bg */
+    background-color: #1e1e3f;
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5); /* Enhanced shadow */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     text-align: left;
 }
 
@@ -263,18 +264,17 @@ nav a:hover {
 .form-field-group select {
     width: 100%;
     padding: 0.8rem 0.75rem 0.4rem 0.75rem;
-    border: 1px solid #4f4f7a; /* --input-border */
+    border: 1px solid #4f4f7a;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 1rem;
-    background-color: #2c2c4c; /* --input-bg */
-    color: #e0e0e0; /* --light-text for input text */
+    background-color: #2c2c4c;
+    color: #e0e0e0;
     transition: border-color 0.2s ease-in-out;
 }
 
-/* Placeholder text color */
 #registration-form input::placeholder,
-#registration-form select::placeholder { color: #8a8a9e; opacity: 1; } /* Adjusted placeholder color */
+#registration-form select::placeholder { color: #8a8a9e; opacity: 1; }
 #registration-form input::-moz-placeholder,
 #registration-form select::-moz-placeholder { color: #8a8a9e; opacity: 1; }
 #registration-form input::-ms-input-placeholder,
@@ -287,7 +287,7 @@ nav a:hover {
     position: absolute;
     left: 0.85rem;
     top: 0.75rem;
-    color: #aaa; /* Initial label color */
+    color: #aaa;
     pointer-events: none;
     transition: all 0.2s ease-out;
     font-size: 1rem;
@@ -305,16 +305,16 @@ nav a:hover {
     top: -0.75rem;
     left: 0.6rem;
     font-size: 0.70rem;
-    color: #1E90FF; /* --accent-blue for active label */
-    background-color: #1e1e3f; /* Match form background --medium-dark-bg */
+    color: #1E90FF;
+    background-color: #1e1e3f;
     padding: 0 0.25rem;
     border-radius: 2px;
 }
 
 .form-field-group input:focus,
 .form-field-group select:focus {
-    border-color: #1E90FF; /* --accent-blue */
-    box-shadow: 0 0 0 0.15rem rgba(30, 144, 255, 0.35); /* Adjusted glow */
+    border-color: #1E90FF;
+    box-shadow: 0 0 0 0.15rem rgba(30, 144, 255, 0.2);
     outline: none;
 }
 
@@ -325,7 +325,35 @@ nav a:hover {
 
 #thank-you-message {
     display: none;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    border-radius: 4px;
+    text-align: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    border-width: 1px;
+    border-style: solid;
 }
+
+.thank-you-message-success {
+    background-color: #2E8B57;
+    color: #ffffff;
+    border-color: #20603c;
+}
+
+.thank-you-message-error {
+    background-color: #c0392b;
+    color: #ffffff;
+    border-color: #a03020;
+}
+
+.thank-you-message-submitting {
+    background-color: #4f4f7a;
+    color: #e0e0e0;
+    border-color: #3a3a5a;
+}
+*/
 
 /* Features Section Styles Removed - Now handled by Tailwind CSS in HTML */
 /*
@@ -445,9 +473,10 @@ nav a:hover {
     color: #e0e0e0; /* --light-text */
 }
 
-/* Countdown Timer Section */
+/* Countdown Timer Section - Styles Removed or Handled by Tailwind */
+/*
 #countdown-section {
-    background-color: #1a1a2e; /* --dark-bg or slightly different like #161628 */
+    background-color: #1a1a2e;
     border-top: 1px solid #2c2c4c;
     border-bottom: 1px solid #2c2c4c;
 }
@@ -455,19 +484,21 @@ nav a:hover {
 .countdown-display {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #2E8B57; /* --accent-green, check contrast */
+    color: #2E8B57;
     padding: 1rem;
-    background-color: #1e1e3f; /* --medium-dark-bg */
+    background-color: #1e1e3f;
     border-radius: 8px;
     display: inline-block;
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     border: 1px solid #4f4f7a;
 }
+*/
 
-/* Footer */
+/* Footer Styles Removed - Now handled by Tailwind CSS in HTML */
+/*
 .site-footer {
-    background-color: #0d0d1f; /* Even darker for footer */
-    color: #e0e0e0; /* --light-text */
+    background-color: #0d0d1f;
+    color: #e0e0e0;
     padding: 3rem 2rem;
     text-align: center;
     border-top: 1px solid #2c2c4c;
@@ -488,7 +519,7 @@ nav a:hover {
 }
 
 .footer-social-icons a:hover {
-    color: #58a6ff; /* Lighter blue */
+    color: #58a6ff;
     text-decoration: none;
 }
 
@@ -507,7 +538,7 @@ nav a:hover {
 .copyright p {
     margin-top: 1.5rem;
     font-size: 0.9rem;
-    color: #aaa; /* Lighter gray for copyright */
+    color: #aaa;
 }
 
 .site-footer .copyright p:last-child a {
@@ -518,6 +549,7 @@ nav a:hover {
     color: #e0e0e0;
     text-decoration: underline;
 }
+*/
 
 /* Base style for the message area (shared by success/error/submitting states) */
 /* JS controls display:block/none on the #thank-you-message ID itself */
