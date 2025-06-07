@@ -10,6 +10,7 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-lucky-lead-458623-k7-55c1421c3b03.json
-
+lucky-lead-458623-k7-8244f0d9ebd8.json
+package-lock.json
+node_modules/
 .env
