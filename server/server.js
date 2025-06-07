@@ -1,8 +1,13 @@
 const express = require('express');
+
 const path = require('path');
 const { appendDataToSheet, isDuplicateEmailOrPhone } = require('../js/sheets'); // Adjust path if needed
 
 const app = express();
+// Add this for serving index.html on root
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'index.html'));
+  });  
 const PORT = process.env.PORT || 3000;
 
 // Middleware to parse JSON and URL-encoded data
