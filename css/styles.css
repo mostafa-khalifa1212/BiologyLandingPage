@@ -585,6 +585,66 @@ nav a:hover {
     border-color: #3a3a5a; /* Darker variant */
 }
 
+/* Custom link style for Learning Outcomes in Features section */
+.outcomes-link {
+  color: #fff;
+  text-decoration: underline dotted 1.5px rgba(30,144,255,0.3);
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+.outcomes-link:hover,
+.outcomes-link:focus {
+  color: #1E90FF;
+  text-decoration-color: #1E90FF;
+}
+.outcomes-link:active {
+  color: #187bcd;
+  text-decoration-color: #187bcd;
+}
+
+/* Countdown text color override */
+.countdown-text {
+  color: #fff !important;
+}
+
+/* Countdown Popup Custom Styles */
+#countdown-popup {
+  background: #24345a;
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(20,30,60,0.25);
+  transition: transform 0.2s cubic-bezier(.4,2,.6,1), box-shadow 0.2s;
+  position: fixed;
+  top: 80px;
+  right: 1rem;
+  z-index: 1050;
+  cursor: pointer;
+  min-width: 260px;
+  max-width: 350px;
+}
+#countdown-popup:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 40px rgba(20,30,60,0.35);
+}
+#countdown-popup-label {
+  display: none;
+}
+#countdown-popup:hover #countdown-popup-label {
+  display: block;
+}
+#close-countdown-popup {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 2;
+}
+#close-countdown-popup:hover {
+  color: #fff;
+}
+
 /* Responsive Adjustments - Keep these at the end */
 @media (max-width: 992px) {
     .feature-card {
@@ -674,4 +734,96 @@ nav a:hover {
     #registration-form {
         padding: 1.5rem;
     }
+}
+
+/* Secondary Button Style (for Get Free Notes, Register to Access Notes) */
+.btn-secondary {
+  display: inline-block;
+  background: #185a99;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 1rem;
+  padding: 1rem 2.25rem;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 16px rgba(24,90,153,0.10);
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background: #2176c1;
+  color: #fff;
+  transform: scale(1.04);
+  text-decoration: none;
+}
+.btn-secondary:active {
+  background: #144a77;
+  color: #fff;
+}
+
+/* Responsive button tweaks */
+@media (max-width: 768px) {
+  .btn-secondary, .btn-primary {
+    width: 100% !important;
+    display: block;
+    font-size: 1rem;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+}
+@media (max-width: 480px) {
+  .btn-secondary, .btn-primary {
+    font-size: 0.95rem;
+    padding: 0.8rem 0.8rem;
+    border-radius: 0.8rem;
+  }
+}
+
+/* Free Notes Section Card Button */
+.btn-free-notes {
+  display: inline-block;
+  background: #2ea8ff;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 1rem;
+  padding: 1rem 2.25rem;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 16px rgba(46,168,255,0.10);
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+.btn-free-notes:hover,
+.btn-free-notes:focus {
+  background: #53c3ff;
+  color: #fff;
+  transform: scale(1.04);
+  text-decoration: none;
+}
+.btn-free-notes:active {
+  background: #1b7bb3;
+  color: #fff;
+}
+
+/* Card and section padding tweaks for mobile */
+@media (max-width: 768px) {
+  .mx-auto.max-w-2xl.bg-\[\#232f47\] {
+    padding: 1.5rem !important;
+    border-radius: 1.2rem !important;
+  }
+  section {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+}
+@media (max-width: 480px) {
+  .mx-auto.max-w-2xl.bg-\[\#232f47\] {
+    padding: 1rem !important;
+    border-radius: 1rem !important;
+  }
+  section {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
 }

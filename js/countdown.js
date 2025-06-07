@@ -1,10 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
     const countDownDate = new Date("July 15, 2025 00:00:00").getTime();
     const countdownDisplay = document.getElementById("countdown-timer-display");
+    const countdownPopup = document.getElementById('countdown-popup');
+    const closeCountdownBtn = document.getElementById('close-countdown-popup');
 
     if (!countdownDisplay) {
         console.error("Countdown display element not found! Make sure an element with id='countdown-timer-display' exists.");
         return;
+    }
+
+    if (countdownPopup && closeCountdownBtn) {
+        closeCountdownBtn.addEventListener('click', function() {
+            countdownPopup.style.display = 'none';
+        });
     }
 
     const updateCountdown = () => {
