@@ -1,67 +1,70 @@
 const { google } = require('googleapis');
-const path = require('path');
-const fs = require('fs');
 
-// Load client secrets from a local file.
-const KEYFILEPATH = path.join(__dirname, '../lucky-lead-458623-k7-55c1421c3b03.json'); // Update with your JSON file path
-const SCOPES = ['https://www.googleapis.com/auth/spreadsheets']; // Scope for Sheets API
+const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+
+function getGoogleCredentialsFromEnv() {
+    return {
+        type: process.env.GOOGLE_TYPE,
+        project_id: process.env.GOOGLE_PROJECT_ID,
+        private_key_id: process.env.GOOGLE_PRIVATE_KEY_ID,
+        private_key: process.env.GOOGLE_PRIVATE_KEY && process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        auth_uri: process.env.GOOGLE_AUTH_URI,
+        token_uri: process.env.GOOGLE_TOKEN_URI,
+        auth_provider_x509_cert_url: process.env.GOOGLE_AUTH_PROVIDER_X509_CERT_URL,
+        client_x509_cert_url: process.env.GOOGLE_CLIENT_X509_CERT_URL,
+        universe_domain: process.env.GOOGLE_UNIVERSE_DOMAIN,
+        spreadsheetId: process.env.GOOGLE_SHEET_ID
+    };
+}
 
 async function appendDataToSheet(data) {
     const auth = new google.auth.GoogleAuth({
-        keyFile: KEYFILEPATH,
+        credentials: getGoogleCredentialsFromEnv(),
         scopes: SCOPES,
     });
-
     const sheets = google.sheets({ version: 'v4', auth });
-
     const request = {
-        spreadsheetId: '1nCuXO-dPbwbHf4gpKrKmjUQ1WSDMj_cUd-gfrl4DvoM', // Replace with your Google Sheet ID
+        spreadsheetId: process.env.GOOGLE_SHEET_ID,
         range: 'Sheet1!A:D',
         valueInputOption: 'RAW',
         resource: {
-            values: [data], // Data to append
+            values: [data],
         },
     };
-
-    console.log('Appending to sheet:', request);
     try {
         const response = await sheets.spreadsheets.values.append(request);
         console.log('Data appended:', response.data);
     } catch (error) {
         console.error('Error appending data:', error);
     }
-};
+}
 
 async function isDuplicateEmailOrPhone(email, phone) {
     const auth = new google.auth.GoogleAuth({
-        keyFile: KEYFILEPATH,
+        credentials: getGoogleCredentialsFromEnv(),
         scopes: SCOPES,
     });
     const sheets = google.sheets({ version: 'v4', auth });
     const request = {
-        spreadsheetId: '1nCuXO-dPbwbHf4gpKrKmjUQ1WSDMj_cUd-gfrl4DvoM',
+        spreadsheetId: process.env.GOOGLE_SHEET_ID,
         range: 'Sheet1!A:D',
     };
     try {
         const response = await sheets.spreadsheets.values.get(request);
         const rows = response.data.values || [];
-        console.log('Fetched rows:', rows);
-        console.log('Checking for email:', email, 'and phone:', phone);
-        // Skip header row if present
         for (let i = 1; i < rows.length; i++) {
             const row = rows[i];
             const rowPhone = row[2] ? row[2].trim() : '';
             const rowEmail = row[3] ? row[3].trim().toLowerCase() : '';
             if ((rowEmail && rowEmail === email.trim().toLowerCase()) || (rowPhone && rowPhone === phone.trim())) {
-                console.log('Duplicate found at row', i + 1, ':', row);
                 return true;
             }
         }
-        console.log('No duplicate found.');
         return false;
     } catch (error) {
         console.error('Error checking for duplicates:', error);
-        // Fail safe: allow registration if error, but you may want to handle differently
         return false;
     }
 }
