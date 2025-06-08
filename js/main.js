@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
             thankYouMessage.textContent = 'Submitting...';
             thankYouMessage.className = 'thank-you-message-submitting';
             thankYouMessage.style.display = 'block';
-            fetch('https://68450936856308fbdeee49e4--mostafakhbiobackend.netlify.app/.netlify/functions/register', {
+            fetch('https://mostafakhbiobackend.netlify.app/.netlify/functions/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
