@@ -1,0 +1,13 @@
+[build]
+  # We are not publishing static assets for this backend-only deployment
+  publish = "build"
+  command = "cd server && npm install && npm run build:lambda"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/server/:splat"
+  status = 200 
