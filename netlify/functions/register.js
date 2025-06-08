@@ -38,6 +38,7 @@ async function appendDataToSheet(data) {
         console.log('Data appended:', response.data);
     } catch (error) {
         console.error('Error appending data:', error);
+        throw error; // Re-throw to be caught by the main handler
     }
 }
 
@@ -65,14 +66,48 @@ async function isDuplicateEmailOrPhone(email, phone) {
         return false;
     } catch (error) {
         console.error('Error checking for duplicates:', error);
-        return false;
+        throw error; // Re-throw to be caught by the main handler
     }
 }
 
-// Uncomment to test manually
-// (async () => {
-//     const result = await isDuplicateEmailOrPhone('mostafakhalifaa1212@gmail.com', '+201550881126');
-//     console.log('Test duplicate result:', result);
-// })();
+exports.handler = async (event, context) => {
+    if (event.httpMethod !== 'POST') {
+        return {
+            statusCode: 405,
+            body: JSON.stringify({ message: 'Method Not Allowed' }),
+        };
+    }
 
-module.exports = { appendDataToSheet, isDuplicateEmailOrPhone };
+    try {
+        const { name, email, phone } = JSON.parse(event.body);
+        const timestamp = new Date().toISOString();
+
+        if (!name || !email) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: 'Name and Email are required.' }),
+            };
+        }
+
+        const isDuplicate = await isDuplicateEmailOrPhone(email, phone);
+        if (isDuplicate) {
+            return {
+                statusCode: 409,
+                body: JSON.stringify({ message: 'You have already registered with this email or phone number.' }),
+            };
+        }
+
+        await appendDataToSheet([timestamp, name, phone, email]);
+
+        return {
+            statusCode: 201,
+            body: JSON.stringify({ message: 'Registration successful!' }),
+        };
+    } catch (error) {
+        console.error('Function error:', error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: 'Error saving registration data.', error: error.message }),
+        };
+    }
+}; 
