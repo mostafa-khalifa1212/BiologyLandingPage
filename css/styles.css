@@ -742,13 +742,15 @@ nav a:hover {
 
     /* Adjust left/right padding for the navbar container on very small screens */
     #main-header .container {
-        padding-left: 0.5rem; /* Further reduce padding to px-2 */
-        padding-right: 0.5rem; /* Further reduce padding to px-2 */
+        padding-left: 0.25rem; /* Further reduce padding to px-1 */
+        padding-right: 0.25rem; /* Further reduce padding to px-1 */
     }
 
     /* Adjust "Get Free Notes" button width and centering on very small screens */
     .btn-secondary {
         width: fit-content; /* Make button only as wide as its content */
+        max-width: 150px; /* Constrain width further */
+        display: block; /* Ensure margin: auto works for centering */
         margin: 0 auto; /* Center the button horizontally */
     }
 }
