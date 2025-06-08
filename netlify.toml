@@ -1,12 +1,2 @@
 [build]
-  # We are not publishing static assets for this backend-only deployment
-  publish = "netlify/functions"
-
-[functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"
-
-[[redirects]]
-  from = "/api/register"
-  to = "/.netlify/functions/register"
-  status = 200 
+  publish = "." 
