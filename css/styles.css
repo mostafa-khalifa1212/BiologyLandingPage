@@ -734,6 +734,17 @@ nav a:hover {
     #registration-form {
         padding: 1.5rem;
     }
+
+    /* Adjust logo size for very small screens */
+    #main-header .flex.items-left.flex-shrink-0 img {
+        height: 1.25rem; /* Equivalent to h-5 (20px), smaller than h-6 */
+    }
+
+    /* Adjust left/right padding for the navbar container on very small screens */
+    #main-header .container {
+        padding-left: 0.75rem; /* Reduce from px-6 (1.5rem) */
+        padding-right: 0.75rem; /* Reduce from px-6 (1.5rem) */
+    }
 }
 
 /* Secondary Button Style (for Get Free Notes, Register to Access Notes) */
