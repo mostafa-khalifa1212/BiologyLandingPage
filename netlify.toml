@@ -1,6 +1,6 @@
 [build]
   # We are not publishing static assets for this backend-only deployment
-  publish = "build"
+  publish = "netlify/functions"
 
 [functions]
   directory = "netlify/functions"
