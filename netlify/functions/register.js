@@ -74,7 +74,24 @@ exports.handler = async (event, context) => {
     if (event.httpMethod !== 'POST') {
         return {
             statusCode: 405,
+            headers: {
+                'Access-Control-Allow-Origin': 'https://mostafakhbio.netlify.app',
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Methods': 'POST, OPTIONS'
+            },
             body: JSON.stringify({ message: 'Method Not Allowed' }),
+        };
+    }
+
+    if (event.httpMethod === 'OPTIONS') {
+        return {
+            statusCode: 204,
+            headers: {
+                'Access-Control-Allow-Origin': 'https://mostafakhbio.netlify.app',
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Methods': 'POST, OPTIONS'
+            },
+            body: "", // No content for OPTIONS
         };
     }
 
@@ -85,6 +102,9 @@ exports.handler = async (event, context) => {
         if (!name || !email) {
             return {
                 statusCode: 400,
+                headers: {
+                    'Access-Control-Allow-Origin': 'https://mostafakhbio.netlify.app',
+                },
                 body: JSON.stringify({ message: 'Name and Email are required.' }),
             };
         }
@@ -93,6 +113,9 @@ exports.handler = async (event, context) => {
         if (isDuplicate) {
             return {
                 statusCode: 409,
+                headers: {
+                    'Access-Control-Allow-Origin': 'https://mostafakhbio.netlify.app',
+                },
                 body: JSON.stringify({ message: 'You have already registered with this email or phone number.' }),
             };
         }
@@ -101,12 +124,18 @@ exports.handler = async (event, context) => {
 
         return {
             statusCode: 201,
+            headers: {
+                'Access-Control-Allow-Origin': 'https://mostafakhbio.netlify.app',
+            },
             body: JSON.stringify({ message: 'Registration successful!' }),
         };
     } catch (error) {
         console.error('Function error:', error);
         return {
             statusCode: 500,
+            headers: {
+                'Access-Control-Allow-Origin': 'https://mostafakhbio.netlify.app',
+            },
             body: JSON.stringify({ message: 'Error saving registration data.', error: error.message }),
         };
     }
