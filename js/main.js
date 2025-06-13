@@ -111,8 +111,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 thankYouMessage.className = 'thank-you-message-success';
                 thankYouMessage.style.display = 'block';
                 const link = document.createElement('a');
-                link.href = 'assets/Ch1 Respiration&Energy NOTES.pdf';
-                link.download = 'Ch1 Respiration&Energy NOTES.pdf';
+                link.href = 'assets/Ch1 Respiration&Energy FREENOTES.pdf';
+                link.download = 'Ch1 Respiration&Energy FREENOTES.pdf';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
