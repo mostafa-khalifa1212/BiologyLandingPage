@@ -107,20 +107,15 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 registrationForm.style.display = 'none';
-                // Calculate days left until June 10, 2025
-                const today = new Date();
-                const target = new Date('2025-06-10T00:00:00');
-                let daysLeft = Math.ceil((target - today) / (1000 * 60 * 60 * 24));
-                if (daysLeft < 0) daysLeft = 0;
-                thankYouMessage.textContent = `Perfect! The notes are under improvement and will be ready in ${daysLeft} day${daysLeft === 1 ? '' : 's'}, we will be sending you an email once they're ready. Stay tuned!`;
+                thankYouMessage.textContent = `Thank you for registering! Your notes are now available for download.`;
                 thankYouMessage.className = 'thank-you-message-success';
                 thankYouMessage.style.display = 'block';
-                // const link = document.createElement('a');
-                // link.href = 'assets/free_chapter1.pdf';
-                // link.download = 'Chapter1-Respiration-Energy-Notes.pdf';
-                // document.body.appendChild(link);
-                // link.click();
-                // document.body.removeChild(link);
+                const link = document.createElement('a');
+                link.href = 'assets/Ch1 Respiration&Energy NOTES.pdf';
+                link.download = 'Ch1 Respiration&Energy NOTES.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             })
             .catch(error => {
                 console.error('Error submitting form:', error);

@@ -143,7 +143,7 @@
                 Click the button below to register and get your own copy.
             </p>
             <div class="mt-4 mb-2 text-[#1E90FF] bg-[#232f47] bg-opacity-70 rounded-lg px-4 py-2 font-medium text-base md:text-lg max-w-xl mx-auto">
-                Respiration & Energy notes are under improvement and will be ready in a couple days, Register now so you don't miss them when they're out!
+                <span id="thank-you-message"></span>
             </div>
             <div class="flex justify-center mt-8">
                 <button id="show-registration-form-btn" class="btn-free-notes w-full sm:w-auto mt-6">Register to Access Notes</button>
@@ -204,7 +204,7 @@
     </section>
 
     <!-- Countdown Popup -->
-    <div id="countdown-popup" class="fixed top-[80px] right-4 z-50 bg-[#24345a] text-white rounded-xl shadow-xl px-6 py-4 flex flex-col items-start gap-2 countdown-text transition-all duration-300 cursor-pointer group">
+    <div id="countdown-popup" class="fixed top-[80px] right-4 z-50 bg-[#24345a] text-white rounded-xl shadow-xl px-6 py-4 flex flex-col items-start gap-2 countdown-text transition-all duration-300 cursor-pointer group hidden">
         <div id="countdown-popup-label" class="text-base md:text-lg font-semibold mb-1 hidden group-hover:block transition-all duration-200">Time Left For Nov 25 Classes To Start!</div>
         <div id="countdown-timer-display" class="font-headings text-2xl md:text-3xl font-bold">Loading countdown...</div>
         <button id="close-countdown-popup" class="absolute top-2 right-2 text-gray-400 hover:text-white transition-colors text-2xl focus:outline-none" aria-label="Close countdown">
