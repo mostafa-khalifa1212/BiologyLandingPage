@@ -27,6 +27,50 @@ function getGoogleCredentials() {
     privateKey = privateKey.substring(1, privateKey.length - 1);
   }
 
+  privateKey = privateKey.trim();
+
+  // If the key is formatted on a single line (no newlines at all), automatically restore standard PEM lines
+  const headers = ["-----BEGIN PRIVATE KEY-----", "-----BEGIN RSA PRIVATE KEY-----"];
+  const footers = ["-----END PRIVATE KEY-----", "-----END RSA PRIVATE KEY-----"];
+  let matchedHeader = "";
+  let matchedFooter = "";
+
+  for (let i = 0; i < headers.length; i++) {
+    if (privateKey.startsWith(headers[i]) && privateKey.endsWith(footers[i])) {
+      matchedHeader = headers[i];
+      matchedFooter = footers[i];
+      break;
+    }
+  }
+
+  if (matchedHeader && matchedFooter && !privateKey.includes("\n")) {
+    const keyBody = privateKey.slice(matchedHeader.length, -matchedFooter.length).trim();
+    const lines = [];
+    for (let i = 0; i < keyBody.length; i += 64) {
+      lines.push(keyBody.substring(i, i + 64));
+    }
+    privateKey = `${matchedHeader}\n${lines.join("\n")}\n${matchedFooter}`;
+  }
+
+  // Print safe diagnostics in the terminal (does not log the actual secret key content)
+  console.log("== GOOGLE PRIVATE KEY DIAGNOSTICS ==");
+  console.log("- Total Length:", privateKey.length);
+  console.log("- Starts with header:", privateKey.startsWith("-----BEGIN PRIVATE KEY-----"));
+  console.log("- Ends with footer:", privateKey.endsWith("-----END PRIVATE KEY-----"));
+  console.log("- Contains literal '\\n' text:", privateKey.includes("\\n"));
+  console.log("- Number of actual newlines:", (privateKey.match(/\n/g) || []).length);
+  console.log("- First 50 chars:", JSON.stringify(privateKey.substring(0, 50)));
+  console.log("- Last 50 chars:", JSON.stringify(privateKey.substring(privateKey.length - 50)));
+  console.log("====================================");
+
+  // Check for truncation (common when multi-line private keys are in .env without double quotes)
+  if (!privateKey.includes("-----END PRIVATE KEY-----")) {
+    throw new Error(
+      "GOOGLE_PRIVATE_KEY is truncated or invalid (missing '-----END PRIVATE KEY-----'). " +
+      "If you added this to a local .env file, please make sure the entire private key is enclosed in double quotes (e.g., GOOGLE_PRIVATE_KEY=\"-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n\")."
+    );
+  }
+
   return {
     type: process.env.GOOGLE_TYPE || "service_account",
     project_id: process.env.GOOGLE_PROJECT_ID,
