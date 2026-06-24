@@ -29,7 +29,7 @@ A modern, fully responsive landing page for "A2 Biology | Mostafa Khalifa," desi
 ├── privacy.html             // Privacy policy
 ├── assets/                  // Images, PDFs, etc.
 │   ├── hero.jpg
-│   ├── pfp.jpg
+│   ├── pfp.jpeg
 │   └── free_chapter1.pdf
 ├── css/
 │   └── styles.css

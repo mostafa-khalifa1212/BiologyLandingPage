@@ -37,7 +37,7 @@ export default function ModalShell({
           <motion.button
             type="button"
             aria-label="Close modal overlay"
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-ink/60"
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -48,7 +48,8 @@ export default function ModalShell({
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
-            className={`glass-strong relative z-10 w-full ${maxWidthClass[maxWidth]} max-h-[90vh] overflow-y-auto rounded-2xl p-6 sm:p-8 glow-emerald`}
+            className={`relative z-10 w-full ${maxWidthClass[maxWidth]} max-h-[90vh] overflow-y-auto rounded-[4px] border-[1.5px] border-ink bg-cream p-6 sm:p-8`}
+            style={{ boxShadow: "5px 5px 0 #1A1A14" }}
             initial={{ opacity: 0, scale: 0.92, y: 24 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 24 }}
@@ -58,7 +59,7 @@ export default function ModalShell({
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="absolute right-4 top-4 z-10 rounded-lg p-1 text-slate-400 transition-colors hover:bg-white/5 hover:text-white"
+              className="absolute right-4 top-4 z-10 rounded-[4px] p-1 text-ink-muted transition-colors hover:bg-ink/5 hover:text-ink"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               transition={springTransition}
@@ -86,10 +87,10 @@ export default function ModalShell({
 }
 
 export const inputClassName =
-  "w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-2.5 text-slate-100 outline-none transition-colors placeholder:text-slate-500 focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20";
+  "w-full rounded-[4px] border border-border-strong bg-parchment px-4 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-muted focus:border-sage focus:ring-2 focus:ring-sage/20";
 
 export const labelClassName =
-  "mb-1.5 block text-sm font-medium text-slate-300";
+  "mb-1.5 block text-sm font-medium text-ink-medium";
 
 export const optionClassName =
-  "flex cursor-pointer items-center gap-2.5 rounded-lg border border-white/5 bg-slate-900/40 px-3 py-2.5 text-sm text-slate-300 transition-colors hover:border-emerald-500/30 has-[:checked]:border-emerald-500/40 has-[:checked]:bg-emerald-500/10";
+  "flex cursor-pointer items-center gap-2.5 rounded-[4px] border border-border bg-parchment px-3 py-2.5 text-sm text-ink-medium transition-colors hover:border-ink/30 has-[:checked]:border-sage has-[:checked]:bg-sage-bg";

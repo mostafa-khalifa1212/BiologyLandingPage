@@ -1,14 +1,40 @@
 @import "tailwindcss";
 
 @theme {
-  --font-family-sans: var(--font-rubik), ui-sans-serif, system-ui, sans-serif;
-  --font-family-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* ── Font Families ── */
+  --font-sans: var(--font-dm-sans), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-playfair), "Playfair Display", Georgia, serif;
+  --font-accent: var(--font-caveat), "Caveat", cursive;
 
-  --color-slate-950: #020617;
-  --color-emerald-400: #34d399;
-  --color-emerald-500: #10b981;
-  --color-mint-300: #6ee7b7;
-  --color-mint-400: #5eead4;
+  /* ── Parchment Backgrounds ── */
+  --color-parchment: #F5F0E8;
+  --color-parchment-dark: #EDE8DC;
+  --color-cream: #FDFAF4;
+
+  /* ── Ink Text ── */
+  --color-ink: #1A1A14;
+  --color-ink-medium: #4A4540;
+  --color-ink-muted: #8A847C;
+  --color-ink-faint: #C8C4BC;
+
+  /* ── Orange Accent ── */
+  --color-sage: #fe5400;
+  --color-sage-dark: #d04500;
+  --color-sage-light: #ff7833;
+  --color-sage-bg: rgba(254, 84, 0, 0.1);
+
+  /* ── Borders ── */
+  --color-border: #D4CFC4;
+  --color-border-strong: #A09A90;
+
+  /* ── Feedback ── */
+  --color-error: #C84B3C;
+  --color-error-bg: rgba(200, 75, 60, 0.08);
+
+  /* ── Dark Section ── */
+  --color-dark: #1A1A14;
+  --color-dark-surface: #2A2A20;
+  --color-dark-border: #4A4A40;
 }
 
 @layer base {
@@ -17,43 +43,262 @@
   }
 
   body {
-    @apply bg-slate-950 text-slate-200 antialiased;
+    background-image: url('/assets/blackPaperTexture.avif');
+    background-size: 800px 800px;
+    background-repeat: repeat;
+    background-color: #1A1A14;
+    @apply text-ink antialiased font-sans;
   }
 
   ::selection {
-    @apply bg-emerald-500/30 text-emerald-100;
+    background: rgba(122, 139, 111, 0.25);
+    color: #1A1A14;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading;
   }
 }
 
 @layer utilities {
-  .glass {
-    @apply border border-white/10 bg-white/5 backdrop-blur-xl;
+
+  /* ── Paper Texture Overlay ── */
+  .paper-texture {
+    position: relative;
   }
 
-  .glass-strong {
-    @apply border border-white/15 bg-slate-900/60 backdrop-blur-2xl;
+  .paper-texture::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 1;
   }
 
-  .mesh-gradient {
-    background:
-      radial-gradient(ellipse 80% 50% at 20% 40%, rgba(16, 185, 129, 0.15), transparent),
-      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(52, 211, 153, 0.12), transparent),
-      radial-gradient(ellipse 50% 60% at 60% 80%, rgba(94, 234, 212, 0.08), transparent);
+  /* ── Hard Shadow System ── */
+  .hard-shadow {
+    box-shadow: 5px 5px 0 #1A1A14;
   }
 
-  .text-gradient {
-    @apply bg-gradient-to-r from-emerald-300 via-mint-300 to-emerald-400 bg-clip-text text-transparent;
+  .hard-shadow-sage {
+    box-shadow: 4px 4px 0 #fe5400;
   }
 
-  .glow-emerald {
-    box-shadow:
-      0 0 40px rgba(16, 185, 129, 0.15),
-      0 0 80px rgba(16, 185, 129, 0.05);
+  .hard-shadow-sm {
+    box-shadow: 3px 3px 0 #1A1A14;
   }
 
-  .border-glow {
-    box-shadow:
-      inset 0 0 0 1px rgba(52, 211, 153, 0.3),
-      0 0 30px rgba(16, 185, 129, 0.12);
+  /* ── Stamp Card ── */
+  .stamp-card {
+    @apply bg-cream border-[1.5px] border-ink rounded-[4px];
+    box-shadow: 5px 5px 0 #1A1A14;
+  }
+
+  .stamp-card-light {
+    @apply bg-parchment border border-border rounded-[4px];
+  }
+
+  /* ── Stamp Buttons ── */
+  .btn-stamp {
+    @apply bg-ink text-parchment px-7 py-3.5 font-sans text-[15px] font-medium border-2 border-ink rounded-[2px] cursor-pointer;
+    box-shadow: 4px 4px 0 #7A8B6F;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn-stamp:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 #7A8B6F;
+  }
+
+  .btn-stamp:active {
+    transform: translate(0, 0);
+    box-shadow: 2px 2px 0 #7A8B6F;
+  }
+
+  .btn-stamp-outline {
+    @apply bg-transparent text-ink px-7 py-3.5 font-sans text-[15px] font-medium border-2 border-ink rounded-[2px] cursor-pointer;
+    box-shadow: 3px 3px 0 #1A1A14;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn-stamp-outline:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 #1A1A14;
+  }
+
+  .btn-stamp-outline:active {
+    transform: translate(0, 0);
+    box-shadow: 2px 2px 0 #1A1A14;
+  }
+
+  /* ── Editorial Image ── */
+  .editorial-image {
+    @apply border-2 border-ink rounded-[4px];
+    box-shadow: 6px 6px 0 #1A1A14;
+    filter: sepia(8%) contrast(102%);
+  }
+
+  /* ── Dark Section ── */
+  .section-dark {
+    @apply bg-dark text-parchment;
+  }
+
+  /* ── Section Divider ── */
+  .section-divider {
+    @apply w-full overflow-hidden leading-[0];
+  }
+
+  /* ── Doodle Positioning ── */
+  .doodle-underline-wrap {
+    @apply relative inline-block;
+  }
+
+  .doodle-underline-wrap svg {
+    @apply absolute left-0 w-full pointer-events-none;
+    bottom: -4px;
+    height: 8px;
+  }
+
+  .doodle-circle-wrap {
+    @apply relative inline-block;
+  }
+
+  .doodle-circle-wrap svg {
+    @apply absolute pointer-events-none;
+    top: -6px;
+    left: -8px;
+    width: calc(100% + 16px);
+    height: calc(100% + 12px);
+  }
+
+  /* ── Label Style ── */
+  .label-upper {
+    @apply font-sans text-[11px] font-medium uppercase tracking-[0.15em] text-ink-muted;
+  }
+
+  /* ── Logo Invert ── */
+  .logo-dark {
+    filter: invert(1) brightness(0.15);
+  }
+
+  /* ── Background Textures ── */
+  .bg-paper-1 {
+    background-image: url('/assets/paperTexture.avif');
+    background-size: 600px 600px;
+    background-repeat: repeat;
+    background-blend-mode: multiply;
+    background-color: #F5F0E8;
+  }
+
+  .bg-paper-2 {
+    background-image: url('/assets/paperTexture2.avif');
+    background-size: 500px 500px;
+    background-repeat: repeat;
+    background-blend-mode: multiply;
+    background-color: #EDE8DC;
+  }
+
+  .bg-paper-3 {
+    background-image: url('/assets/paperTexture3.avif');
+    background-size: 600px 600px;
+    background-repeat: repeat;
+    background-blend-mode: screen;
+    background-color: #1A1A14;
+  }
+
+  .bg-black-paper {
+    background-image: url('/assets/blackPaperTexture.avif');
+    background-size: 800px 800px;
+    background-repeat: repeat;
+    background-blend-mode: overlay;
+    background-color: #1A1A14;
+  }
+
+  .bg-dotty {
+    background-image: url('/assets/dottyBackground.avif');
+    background-size: 400px 400px;
+    background-repeat: repeat;
+    background-blend-mode: multiply;
+    background-color: #F5F0E8;
+  }
+
+  .bg-paper-grid {
+    background-image: url('/assets/paperGrid.webp');
+    background-size: 300px 300px;
+    background-repeat: repeat;
+    background-blend-mode: multiply;
+    background-color: #FDFAF4;
+  }
+
+  /* ── Cut Paper Dividers ── */
+  .cut-paper-top::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-image: url('/assets/cutPaperTop.avif');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .cut-paper-bottom::after {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-image: url('/assets/cutPaperBottom.avif');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .cut-paper-bottom-clean::after {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-image: url('/assets/cutPaperBottomClean.avif');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* ── Depth Overlays ── */
+  .white-shadow-bg::before {
+    content: '';
+    position: absolute;
+    inset: -60px;
+    background-image: url('/assets/whiteShadow.avif');
+    background-size: cover;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .crumbled-black-bg {
+    position: absolute;
+    width: 280px;
+    height: 180px;
+    background-image: url('/assets/crumbledBlackPaperTexture.avif');
+    background-size: cover;
+    border-radius: 4px;
+    opacity: 0.12;
+    transform: rotate(-3deg);
+    z-index: 0;
   }
 }

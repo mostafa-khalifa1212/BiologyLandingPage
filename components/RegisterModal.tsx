@@ -133,21 +133,21 @@ function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={springTransition}
         >
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-sage/20 text-sage">
             <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 id="register-modal-title" className="font-heading text-2xl font-bold text-white">
+          <h2 id="register-modal-title" className="font-heading text-2xl font-bold text-ink">
             You&apos;re In!
           </h2>
-          <p className="mt-3 text-slate-300">
+          <p className="mt-3 text-ink-medium">
             Thank you for registering! Your notes download should start automatically.
           </p>
           <motion.button
             type="button"
             onClick={handleClose}
-            className="mt-6 w-full rounded-xl bg-emerald-500 px-6 py-3 font-semibold text-slate-950"
+            className="btn-stamp mt-6 w-full px-6 py-3 font-semibold"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             transition={springTransition}
@@ -159,11 +159,11 @@ function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
         <>
           <h2
             id="register-modal-title"
-            className="font-heading pr-8 text-center text-2xl font-bold text-white sm:text-3xl"
+            className="font-heading pr-8 text-center text-2xl font-bold text-ink sm:text-3xl"
           >
             Get Your Free Chapter Notes
           </h2>
-          <p className="mb-6 mt-2 text-center text-sm text-slate-400 sm:text-base">
+          <p className="mb-6 mt-2 text-center text-sm text-ink-muted sm:text-base">
             Enter your details to receive &quot;Respiration &amp; Energy&quot; notes instantly.
           </p>
 
@@ -218,16 +218,16 @@ function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
                 type="checkbox"
                 checked={consent}
                 onChange={(e) => setConsent(e.target.checked)}
-                className="mt-0.5 h-4 w-4 rounded border-white/20 bg-slate-900 text-emerald-500 focus:ring-emerald-500/30"
+                className="mt-0.5 h-4 w-4 rounded border-border bg-parchment text-sage focus:ring-sage/30"
               />
-              <span className="text-sm text-slate-400">
+              <span className="text-sm text-ink-muted">
                 I agree to be contacted about free notes and course updates.
               </span>
             </label>
 
             {formState === "error" && (
               <motion.p
-                className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-400"
+                className="rounded-[4px] bg-error-bg px-3 py-2 text-sm text-error"
                 initial={{ opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={springTransition}
@@ -239,7 +239,8 @@ function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
             <motion.button
               type="submit"
               disabled={!isFormValid || formState === "submitting"}
-              className="relative w-full overflow-hidden rounded-xl bg-emerald-500 px-6 py-3 font-heading font-bold text-slate-950 disabled:cursor-not-allowed disabled:opacity-50"
+              className="relative w-full overflow-hidden rounded-[2px] border-2 border-ink bg-ink px-6 py-3 font-heading font-bold text-parchment disabled:cursor-not-allowed disabled:opacity-50"
+              style={{ boxShadow: "4px 4px 0 #fe5400" }}
               whileHover={isFormValid ? { scale: 1.02 } : undefined}
               whileTap={isFormValid ? { scale: 0.98 } : undefined}
               transition={springTransition}

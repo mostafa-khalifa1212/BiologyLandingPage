@@ -1,19 +1,25 @@
 import type { Metadata } from "next";
-import { Inter, Rubik } from "next/font/google";
+import { Playfair_Display, DM_Sans, Caveat } from "next/font/google";
 import { RegisterProvider } from "@/components/RegisterModal";
 import { CourseRegisterProvider } from "@/components/CourseRegisterModal";
 import PromoModalGate from "@/components/PromoModalGate";
 import "./globals.css";
 
-const inter = Inter({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-playfair",
   display: "swap",
 });
 
-const rubik = Rubik({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-rubik",
+  variable: "--font-dm-sans",
+  display: "swap",
+});
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-caveat",
   display: "swap",
 });
 
@@ -43,7 +49,7 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${inter.variable} ${rubik.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${dmSans.variable} ${caveat.variable}`}>
       <body className="font-sans">
         <RegisterProvider>
           <CourseRegisterProvider>

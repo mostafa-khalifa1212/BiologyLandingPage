@@ -1,7 +1,11 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import NotesPreview from "@/components/NotesPreview";
+import { RoughDivider, DoodleSpiral, DoodleCoil, DoodleZigzag, DoodleDoubleUnderline, DoodleCross, DoodleCheck } from "@/components/Doodles";
 
 const FEATURES = [
   {
@@ -73,6 +77,24 @@ const SOCIAL_LINKS = [
     ),
   },
 ] as const;
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring" as const,
+      stiffness: 70,
+      damping: 16,
+      delay: i * 0.15,
+    },
+  }),
+};
+const FEATURE_DOODLES = [
+  { file: "pencil.avif", classes: "absolute top-8 right-6 w-20 rotate-[15deg] opacity-60 pointer-events-none z-10" },
+  { file: "barChart.avif", classes: "absolute top-8 right-6 w-16 opacity-60 pointer-events-none z-10" },
+  { file: "improvingGraph.avif", classes: "absolute top-8 right-6 w-24 -rotate-6 opacity-60 pointer-events-none z-10" },
+];
 
 export default function LandingPage() {
   return (
@@ -82,137 +104,182 @@ export default function LandingPage() {
         <Hero />
         <NotesPreview />
 
-        <section id="about" className="bg-slate-950 px-4 py-24 sm:px-6">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="font-heading mb-12 text-center text-3xl font-bold text-white sm:text-4xl">
-              Meet Your Teacher
-            </h2>
-            <div className="grid items-center gap-10 md:grid-cols-5 md:gap-12">
-              <div className="md:col-span-2">
-                <div className="relative mx-auto h-64 w-64 overflow-hidden rounded-full border-4 border-emerald-500/30 shadow-2xl glow-emerald md:h-72 md:w-72">
-                  <Image
-                    src="/assets/pfp.jpg"
-                    alt="Mostafa Khalifa - A2 Biology Tutor"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 256px, 288px"
-                  />
-                </div>
+        <section id="about" className="relative bg-transparent px-0 py-24 mb-24">
+          <div className="grid items-stretch md:grid-cols-5 relative w-full">
+            
+            {/* Left Column: Full-Bleed Profile Picture */}
+            <div className="w-full h-[350px] sm:h-[450px] md:h-auto md:col-span-2 relative overflow-hidden rounded-t-[4px] md:rounded-t-none md:rounded-l-[4px] shadow-[0_10px_30px_rgba(0,0,0,0.15)] z-10">
+              <Image
+                src="/assets/pfp.jpeg"
+                alt="Mostafa Khalifa - A2 Biology Tutor"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 800px"
+                priority
+              />
+              {/* Crumpled paper texture overlay on photo */}
+              <div 
+                className="absolute inset-0 bg-repeat opacity-[0.06] mix-blend-mode-multiply pointer-events-none z-10" 
+                style={{ backgroundImage: "url('/assets/crumbledBlackPaperTexture.avif')", backgroundSize: 'cover' }}
+              />
+            </div>
+
+            {/* Right Column: White Paper Sheet with Features */}
+            <div className="w-full md:col-span-3 relative bg-cream p-6 sm:p-8 md:pt-16 md:pb-16 md:pl-16 md:pr-32 lg:pr-48 shadow-[0_-15px_30px_rgba(26,26,20,0.12)] md:shadow-[-15px_0_30px_rgba(26,26,20,0.15)] z-20 -mt-8 md:mt-0 md:-ml-8 rounded-b-[4px] md:rounded-b-none md:rounded-r-[4px] flex flex-col justify-center">
+              {/* Horizontal torn top edge down the middle (Mobile only) */}
+              <div className="absolute -top-[20px] left-0 right-0 h-[40px] pointer-events-none z-30 block md:hidden" style={{ backgroundImage: "url('/assets/cutPaperTop.avif')", backgroundSize: '100% 100%' }}></div>
+              
+              {/* Vertical torn left edge down the middle (Desktop only) */}
+              <div className="absolute -left-[20px] top-0 bottom-0 w-[40px] pointer-events-none z-30 hidden md:block" style={{ backgroundImage: "url('/assets/cutPaperLeft.avif')", backgroundSize: '100% 100%' }}></div>
+              
+              <div className="relative mb-6 self-start">
+                <h2 className="font-heading text-3xl font-bold text-ink sm:text-4xl">
+                  Meet Your Teacher
+                </h2>
+                <DoodleDoubleUnderline className="absolute bottom-[-10px] left-0 right-0 h-3 text-sage" opacity={0.6} />
               </div>
-              <div className="text-center md:col-span-3 md:text-left">
-                <p className="mb-6 text-lg leading-relaxed text-slate-300">
-                  Hi, I&apos;m Mostafa Khalifa, A2 Biology teacher with a 99%
-                  student success rate. In November 2024 and June 2025, my
-                  students and I all achieved A* in AL Biology. Now I am a
-                  dentistry student at Ain Shams University Alhamdulillah,
-                  passionate about helping ambitious people succeed. I created
-                  this course to share the strategies that worked for us, and to
-                  help you achieve the A*.
-                </p>
-                <div className="mb-6 flex justify-center gap-4 md:justify-start">
-                  {SOCIAL_LINKS.map((social) => (
-                    <a
-                      key={social.label}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.label}
-                      className="text-emerald-400 transition-colors hover:text-emerald-300"
+              
+              <p className="mb-6 text-lg leading-relaxed text-ink-medium font-medium">
+                Hi, I&apos;m Mostafa Khalifa, A2 Biology teacher with a 99%
+                student success rate. In November 2024 and June 2025, my
+                students and I all achieved <span className="circled-word text-ink">A*</span> in AL Biology. Now I am a
+                dentistry student at Ain Shams University Alhamdulillah,
+                passionate about helping ambitious people succeed. I created
+                this course to share the strategies that worked for us, and to
+                help you achieve the A*.
+              </p>
+              
+              <div className="mb-6 flex justify-center gap-4 md:justify-start">
+                {SOCIAL_LINKS.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="text-ink-muted transition-colors hover:text-sage"
+                  >
+                    <svg
+                      className="h-7 w-7"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
                     >
-                      <svg
-                        className="h-7 w-7"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        {social.icon}
-                      </svg>
-                    </a>
-                  ))}
-                </div>
-                <h3 className="font-heading mb-4 text-2xl font-semibold text-white">
+                      {social.icon}
+                    </svg>
+                  </a>
+                ))}
+              </div>
+              
+              <div className="relative mb-4 self-start">
+                <h3 className="font-heading text-2xl font-semibold text-ink">
                   Credentials
                 </h3>
-                <ul className="space-y-2 text-slate-400">
-                  {CREDENTIALS.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-emerald-400" />
-                      {item === "Worked as an assistant for Dr Nihal Gabr" ? (
-                        <>
-                          Worked as an assistant for{" "}
-                          <a
-                            href="https://www.instagram.com/drnihalgabr.bioteam?igsh=Y2dqbTFyM2Nocmpj"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-emerald-400 hover:text-emerald-300"
-                          >
-                            Dr Nihal Gabr
-                          </a>
-                        </>
-                      ) : (
-                        item
-                      )}
-                    </li>
-                  ))}
-                </ul>
+                <DoodleCross className="absolute -top-1 -right-8 w-5 h-5 text-sage rotate-12" opacity={0.5} />
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="features" className="relative px-4 py-24 sm:px-6">
-          <div className="absolute inset-0 mesh-gradient opacity-30" />
-          <div className="relative mx-auto max-w-6xl">
-            <h2 className="font-heading mb-16 text-center text-3xl font-bold text-white sm:text-4xl">
-              Why Choose This Course?
-            </h2>
-            <div className="grid gap-6 md:grid-cols-3 md:gap-8">
-              {FEATURES.map((feature) => (
-                <article
-                  key={feature.title}
-                  className="glass group rounded-2xl p-8 text-center transition-colors hover:border-emerald-500/30"
-                >
-                  <div className="mb-6 inline-flex rounded-xl bg-emerald-500/10 p-3 text-emerald-400">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="h-10 w-10"
-                    >
-                      {feature.icon}
-                    </svg>
-                  </div>
-                  <h3 className="font-heading mb-3 text-xl font-semibold text-white">
-                    {"href" in feature ? (
-                      <a
-                        href={feature.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="transition-colors hover:text-emerald-300"
-                      >
-                        {feature.title}
-                      </a>
+              
+              <ul className="space-y-2 text-ink-muted">
+                {CREDENTIALS.map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-sage" />
+                    {item === "Worked as an assistant for Dr Nihal Gabr" ? (
+                      <>
+                        Worked as an assistant for{" "}
+                        <a
+                          href="https://www.instagram.com/drnihalgabr.bioteam?igsh=Y2dqbTFyM2Nocmpj"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sage hover:text-sage-dark font-medium underline decoration-sage/30 underline-offset-4"
+                        >
+                          Dr Nihal Gabr
+                        </a>
+                      </>
                     ) : (
-                      feature.title
+                      item
                     )}
-                  </h3>
-                  <p className="leading-relaxed text-slate-400">
-                    {feature.description}
-                  </p>
-                </article>
-              ))}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Idea bulb doodle */}
+              <Image src="/assets/ideaBulb.avif" alt="" width={80} height={80} className="absolute -right-8 -bottom-8 pointer-events-none rotate-12 hidden md:block z-30" />
+            </div>
+            
+          </div>
+        </section>
+
+        <section id="features" className="relative bg-paper-grid px-4 py-24 sm:px-6 cut-paper-top cut-paper-bottom mb-24">
+          <div className="relative mx-auto max-w-6xl z-20 flex flex-col items-center">
+            <div className="relative mb-20">
+              <h2 className="font-heading text-center text-3xl font-bold text-ink sm:text-4xl">
+                Why Choose This Course?
+              </h2>
+              <DoodleCoil className="absolute -top-10 -left-12 hidden md:block rotate-[-12deg]" opacity={0.5} />
+              <DoodleCheck className="absolute -bottom-8 -right-12 hidden md:block rotate-[15deg] w-8 h-8" opacity={0.6} />
+            </div>
+            <div className="grid w-full gap-8 md:grid-cols-3 md:gap-10">
+              {FEATURES.map((feature, i) => {
+                const doodleConfig = FEATURE_DOODLES[i];
+                const rotation = i === 0 ? -2 : i === 1 ? 1.5 : -1;
+                const bgClass = i === 1 ? "bg-paper-2" : "bg-paper-1";
+
+                return (
+                  <motion.article
+                    key={feature.title}
+                    custom={i}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-80px" }}
+                    variants={cardVariants}
+                    className={`relative rounded-[4px] p-8 pt-16 text-left shadow-[0_10px_30px_rgba(26,26,20,0.06)] overflow-hidden ${bgClass}`}
+                    style={{ rotate: rotation }}
+                  >
+                    {/* Offset Black Tape at Top Center */}
+                    <div className="absolute -top-[14px] left-1/2 -translate-x-1/2 w-[85px] h-[28px] z-20 pointer-events-none">
+                      <Image src="/assets/blackTape.avif" alt="" fill className="object-cover opacity-90" />
+                      <span className="absolute inset-0 flex items-center justify-center font-heading text-xs font-bold text-white tracking-widest pt-[2px]">
+                        {`0${i + 1}`}
+                      </span>
+                    </div>
+
+                    {/* Feature Doodle */}
+                    <img 
+                      src={`/assets/${doodleConfig.file}`} 
+                      className={doodleConfig.classes} 
+                      alt="" 
+                    />
+
+                    <h3 className="font-heading mb-4 text-2xl font-bold text-ink leading-tight pr-16 mt-4">
+                      {"href" in feature ? (
+                        <a
+                          href={feature.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="transition-colors hover:text-sage"
+                        >
+                          {feature.title}
+                        </a>
+                      ) : (
+                        feature.title
+                      )}
+                    </h3>
+                    
+                    <p className="leading-relaxed text-ink-medium text-[14px]">
+                      {feature.description}
+                    </p>
+                  </motion.article>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        <section id="video-section" className="bg-slate-950 px-4 py-20 sm:px-6">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="font-heading mb-8 text-3xl font-bold text-white sm:text-4xl">
+        <section id="video-section" className="relative bg-transparent text-parchment px-4 py-32 sm:px-6">
+          <div className="relative mx-auto max-w-6xl z-20">
+            <h2 className="font-heading mb-12 text-3xl font-bold text-parchment sm:text-4xl text-center md:text-left">
               How I Got an A* in A2 Biology
             </h2>
-            <div className="grid gap-8 md:grid-cols-2">
-              <div className="overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+            <div className="grid gap-8 md:grid-cols-2 items-center">
+              <div className="relative overflow-hidden rounded-[2px] border-4 border-parchment/10 hard-shadow">
                 <iframe
                   className="aspect-video w-full"
                   src="https://www.youtube.com/embed/3lgWLww-jFY"
@@ -221,8 +288,9 @@ export default function LandingPage() {
                   allowFullScreen
                 />
               </div>
-              <div className="flex flex-col justify-center">
-                <p className="text-lg leading-relaxed text-slate-300">
+              <div className="flex flex-col justify-center relative">
+                <Image src="/assets/whiteLeftArrow.png" alt="" width={60} height={60} className="absolute -left-16 top-0 hidden md:block" />
+                <p className="text-lg leading-relaxed text-parchment/80 font-medium">
                   In this video, I share my journey and strategies that helped
                   me achieve an A* in A2 Biology. Watch to learn more about my
                   study techniques and tips for success!
@@ -233,24 +301,24 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer id="contact" className="border-t border-white/5 bg-black px-4 py-16 sm:px-6">
+      <footer id="contact" className="relative bg-paper-2 px-4 py-24 sm:px-6 z-0 cut-paper-top">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-12 grid gap-10 text-center md:grid-cols-3 md:text-left">
+          <div className="mb-16 grid gap-10 text-center md:grid-cols-3 md:text-left">
             <div>
               <Image
                 src="/assets/output-onlinepngtools.png"
                 alt="A2 Biology Logo"
                 width={180}
                 height={60}
-                className="mx-auto mb-4 h-14 w-auto md:mx-0"
+                className="logo-dark mx-auto mb-6 h-14 w-auto md:mx-0"
               />
-              <p className="text-sm leading-relaxed text-slate-500">
+              <p className="text-sm leading-relaxed text-ink-medium font-medium">
                 Unlock your A* potential with comprehensive notes, engaging live
                 classes, and dedicated support.
               </p>
             </div>
             <div>
-              <h4 className="font-heading mb-4 text-lg font-semibold text-white">
+              <h4 className="font-heading mb-6 text-xl font-bold text-ink">
                 Connect With Us
               </h4>
               <div className="flex justify-center gap-4 md:justify-start">
@@ -261,7 +329,7 @@ export default function LandingPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="text-slate-500 transition-colors hover:text-emerald-400"
+                    className="text-ink transition-colors hover:text-sage"
                   >
                     <svg
                       className="h-6 w-6"
@@ -275,13 +343,13 @@ export default function LandingPage() {
               </div>
             </div>
             <div>
-              <h4 className="font-heading mb-4 text-lg font-semibold text-white">
+              <h4 className="font-heading mb-6 text-xl font-bold text-ink">
                 Contact Us
               </h4>
-              <p className="mb-1">
+              <p className="mb-2">
                 <a
                   href="mailto:mostafakhalifaa1212@gmail.com"
-                  className="text-slate-500 transition-colors hover:text-emerald-400"
+                  className="text-ink-medium font-medium transition-colors hover:text-sage"
                 >
                   mostafakhalifaa1212@gmail.com
                 </a>
@@ -289,23 +357,24 @@ export default function LandingPage() {
               <p>
                 <a
                   href="tel:+201550881126"
-                  className="text-slate-500 transition-colors hover:text-emerald-400"
+                  className="text-ink-medium font-medium transition-colors hover:text-sage"
                 >
                   +20 155 088 1126
                 </a>
               </p>
             </div>
           </div>
-          <div className="border-t border-white/5 pt-8 text-center text-sm text-slate-600">
-            <p className="mb-1">
+          <div className="border-t border-ink/10 pt-8 text-center text-sm font-medium text-ink-muted flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>
               &copy; {new Date().getFullYear()} A2 Biology | Mostafa Khalifa.
               All Rights Reserved.
             </p>
-            <a href="/privacy" className="transition-colors hover:text-slate-400">
+            <a href="/privacy" className="transition-colors hover:text-ink">
               Privacy Policy
             </a>
           </div>
         </div>
+        <DoodleSpiral className="absolute bottom-8 right-8 hidden md:block rotate-12 opacity-50" />
       </footer>
     </>
   );

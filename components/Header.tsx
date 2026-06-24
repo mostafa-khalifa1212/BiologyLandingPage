@@ -17,15 +17,38 @@ const NAV_LINKS = [
 ] as const;
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { openRegister } = useRegisterModal();
   const { openCourseRegister } = useCourseRegisterModal();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const updateHeader = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY <= 0) {
+        setVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setVisible(false); // Scrolling down
+      } else if (currentScrollY < lastScrollY) {
+        setVisible(true); // Scrolling up
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    };
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -38,10 +61,14 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass-strong shadow-lg" : "bg-transparent"
+      className={`fixed left-0 right-0 top-0 z-50 transition-transform duration-300 ease-in-out bg-[#fef9f5] shadow-sm ${
+        visible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
+      <div 
+        className="absolute -bottom-[20px] left-0 right-0 h-[40px] pointer-events-none -z-10" 
+        style={{ backgroundImage: "url('/assets/cutPaperBottom.avif')", backgroundSize: '100% 100%' }}
+      />
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
         <Link href="/" className="flex-shrink-0">
           <Image
@@ -49,7 +76,7 @@ export default function Header() {
             alt="A2 Biology Logo"
             width={160}
             height={40}
-            className="h-8 w-auto md:h-10"
+            className="h-8 w-auto md:h-10 logo-dark"
             priority
           />
         </Link>
@@ -59,7 +86,7 @@ export default function Header() {
             <a
               key={link.href}
               href={link.href}
-              className="font-heading text-sm text-slate-300 transition-colors hover:text-emerald-300"
+              className="font-sans text-sm text-ink-medium transition-colors hover:text-ink"
             >
               {link.label}
             </a>
@@ -67,9 +94,10 @@ export default function Header() {
           <motion.button
             type="button"
             onClick={openCourseRegister}
-            className="rounded-xl bg-emerald-500 px-5 py-2 font-heading text-sm font-bold text-slate-950"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            className="bg-ink text-parchment px-5 py-2 font-sans text-sm font-bold border-2 border-ink rounded-[2px]"
+            style={{ boxShadow: '3px 3px 0 #fe5400' }}
+            whileHover={{ x: -2, y: -2 }}
+            whileTap={{ x: 0, y: 0 }}
             transition={springTransition}
           >
             Register for Full Course
@@ -80,7 +108,7 @@ export default function Header() {
           <motion.button
             type="button"
             onClick={openRegister}
-            className="rounded-lg bg-white/10 px-3 py-1.5 text-xs font-bold text-white"
+            className="rounded-[4px] bg-ink/10 px-3 py-1.5 text-xs font-bold text-ink"
             whileTap={{ scale: 0.95 }}
             transition={springTransition}
           >
@@ -90,13 +118,13 @@ export default function Header() {
             type="button"
             aria-label="Open menu"
             onClick={() => setMobileOpen(true)}
-            className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-full border border-white/10 bg-slate-900/80"
+            className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-[4px] border border-border bg-parchment-dark/80"
             whileTap={{ scale: 0.95 }}
             transition={springTransition}
           >
-            <span className="block h-0.5 w-5 rounded-full bg-white" />
-            <span className="block h-0.5 w-5 rounded-full bg-white" />
-            <span className="block h-0.5 w-5 rounded-full bg-white" />
+            <span className="block h-0.5 w-5 rounded-full bg-ink" />
+            <span className="block h-0.5 w-5 rounded-full bg-ink" />
+            <span className="block h-0.5 w-5 rounded-full bg-ink" />
           </motion.button>
         </div>
       </div>
@@ -105,14 +133,14 @@ export default function Header() {
         {mobileOpen && (
           <>
             <motion.div
-              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-40 bg-ink/50 md:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setMobileOpen(false)}
             />
             <motion.nav
-              className="fixed right-0 top-0 z-50 flex h-full w-72 max-w-[85vw] flex-col bg-slate-900 p-6 shadow-2xl md:hidden"
+              className="fixed right-0 top-0 z-50 flex h-full w-72 max-w-[85vw] flex-col bg-parchment p-6 shadow-2xl md:hidden"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -122,7 +150,7 @@ export default function Header() {
                 type="button"
                 aria-label="Close menu"
                 onClick={() => setMobileOpen(false)}
-                className="self-end text-2xl text-slate-400 hover:text-white"
+                className="self-end text-2xl text-ink-muted hover:text-ink"
               >
                 ×
               </button>
@@ -132,7 +160,7 @@ export default function Header() {
                     <a
                       href={link.href}
                       onClick={() => setMobileOpen(false)}
-                      className="font-heading text-lg text-slate-300 hover:text-emerald-300"
+                      className="font-sans text-lg text-ink-medium hover:text-sage"
                     >
                       {link.label}
                     </a>
@@ -145,7 +173,7 @@ export default function Header() {
                       setMobileOpen(false);
                       openCourseRegister();
                     }}
-                    className="block w-full rounded-xl bg-emerald-500 py-2.5 text-center font-bold text-slate-950"
+                    className="block w-full rounded-[2px] bg-ink py-2.5 text-center font-bold text-parchment"
                   >
                     Register for Full Course
                   </button>

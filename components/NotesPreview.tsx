@@ -1,14 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import { useRegisterModal } from "@/components/RegisterModal";
 import { useCourseRegisterModal } from "@/components/CourseRegisterModal";
-import {
-  fadeUpVariant,
-  springTransition,
-  staggerContainer,
-} from "@/lib/motion";
 
 type Chapter = {
   id: string;
@@ -179,262 +174,335 @@ const A2_CHAPTERS: Chapter[] = [
   },
 ];
 
-function spanClass(span: Chapter["span"]) {
-  switch (span) {
-    case "wide":
-      return "md:col-span-2";
-    case "tall":
-      return "md:row-span-2";
-    default:
-      return "";
+const CARD_CONFIGS = [
+  { 
+    bgClass: "bg-paper-1", 
+    tapeRot: -1.5, 
+    doodle: "pencil.avif", 
+    rot: 0, 
+    doodleClasses: "bottom-12 right-6 w-24 rotate-[45deg]",
+    sideRot: -10,
+    sideXOffset: -15,
+    sideYOffset: 30
+  },
+  { 
+    bgClass: "bg-paper-2", 
+    tapeRot: 2, 
+    doodle: "ideaBulb.avif", 
+    rot: 0.5, 
+    doodleClasses: "bottom-12 right-6 w-20",
+    sideRot: -4,
+    sideXOffset: 15,
+    sideYOffset: 15
+  },
+  { 
+    bgClass: "bg-paper-1", 
+    tapeRot: -0.5, 
+    doodle: "barChart.avif", 
+    rot: -0.8, 
+    doodleClasses: "bottom-12 right-6 w-16 -rotate-3",
+    sideRot: 6,
+    sideXOffset: -5,
+    sideYOffset: -10
+  },
+  { 
+    bgClass: "bg-paper-1", 
+    tapeRot: 1.8, 
+    doodle: "rocket.avif", 
+    rot: 0.4, 
+    doodleClasses: "bottom-12 right-6 w-24 rotate-[20deg]",
+    sideRot: -2,
+    sideXOffset: 10,
+    sideYOffset: -25
+  },
+  { 
+    bgClass: "bg-paper-2", 
+    tapeRot: -2.5, 
+    doodle: "improvingGraph.avif", 
+    rot: -0.6, 
+    doodleClasses: "bottom-12 right-6 w-32 -rotate-3",
+    sideRot: 5,
+    sideXOffset: -10,
+    sideYOffset: -45
+  },
+];
+
+const getResponsiveConfig = (width: number) => {
+  if (width >= 1024) {
+    return {
+      sideX: -360,
+      sideY: 20,
+      sideScale: 0.85,
+      activeScale: 1.0,
+    };
+  } else if (width >= 768) {
+    return {
+      sideX: -260,
+      sideY: 15,
+      sideScale: 0.75,
+      activeScale: 0.9,
+    };
+  } else {
+    return {
+      sideX: -100,
+      sideY: 10,
+      sideScale: 0.6,
+      activeScale: 0.75,
+    };
   }
-}
-
-const gridVariants = {
-  hidden: { opacity: 0, x: 100 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      type: "spring" as const,
-      stiffness: 100,
-      damping: 15,
-      staggerChildren: 0.05,
-    },
-  },
-  exit: {
-    opacity: 0,
-    x: -100,
-    transition: {
-      duration: 0.25,
-    },
-  },
 };
-
-function ChapterCard({
-  chapter,
-  isHovered,
-  onHover,
-}: {
-  chapter: Chapter;
-  isHovered: boolean;
-  onHover: (id: string | null) => void;
-}) {
-  const { openRegister } = useRegisterModal();
-
-  const handleClick = () => {
-    if (chapter.isFree) {
-      openRegister();
-    }
-  };
-
-  return (
-    <motion.article
-      layout
-      variants={fadeUpVariant}
-      onHoverStart={() => onHover(chapter.id)}
-      onHoverEnd={() => onHover(null)}
-      onClick={handleClick}
-      className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/50 p-6 ${spanClass(chapter.span)} ${chapter.isFree ? "cursor-pointer" : "cursor-default opacity-85"}`}
-      whileHover={{
-        scale: chapter.isFree ? 1.02 : 1.01,
-        transition: springTransition,
-      }}
-      animate={{
-        borderColor: isHovered
-          ? "rgba(52, 211, 153, 0.5)"
-          : "rgba(255, 255, 255, 0.1)",
-        boxShadow: isHovered
-          ? "inset 0 0 0 1px rgba(52, 211, 153, 0.3), 0 0 30px rgba(16, 185, 129, 0.15)"
-          : "none",
-      }}
-      transition={springTransition}
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-
-      <div className="relative z-10 flex h-full flex-col">
-        <div className="mb-4 flex items-start justify-between">
-          <span className="font-heading text-sm font-semibold text-emerald-400">
-            {chapter.number}
-          </span>
-          {chapter.isFree ? (
-            <span className="rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-emerald-300">
-              Free
-            </span>
-          ) : (
-            <span className="rounded-full bg-slate-700/50 px-2.5 py-0.5 text-xs font-medium text-slate-400">
-              Full Course
-            </span>
-          )}
-        </div>
-
-        <h3 className="font-heading text-xl font-bold text-white sm:text-2xl">
-          {chapter.title}
-        </h3>
-
-        <p className="mt-2 text-sm leading-relaxed text-slate-400">
-          {chapter.brief}
-        </p>
-
-        <ul className="mt-4 flex flex-wrap gap-2">
-          {chapter.topics.map((topic) => (
-            <li
-              key={topic}
-              className="rounded-lg bg-white/5 px-2.5 py-1 text-xs text-slate-400"
-            >
-              {topic}
-            </li>
-          ))}
-        </ul>
-
-        {chapter.isFree && (
-          <motion.p
-            className="mt-auto pt-6 text-sm font-medium text-emerald-400"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isHovered ? 1 : 0.7 }}
-          >
-            Click to register &amp; download →
-          </motion.p>
-        )}
-      </div>
-    </motion.article>
-  );
-}
 
 export default function NotesPreview() {
   const [activeTab, setActiveTab] = useState<"AS" | "A2">("A2");
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const { openRegister } = useRegisterModal();
   const { openCourseRegister } = useCourseRegisterModal();
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const dragHintRef = useRef<HTMLDivElement>(null);
 
   const chaptersToRender = activeTab === "AS" ? AS_CHAPTERS : A2_CHAPTERS;
 
+  // Clear out the refs when changing tabs so we don't hold stale DOM nodes
+  cardsRef.current = [];
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    let rafId: number;
+
+    const onScroll = () => {
+      rafId = requestAnimationFrame(() => {
+        const rect = section.getBoundingClientRect();
+        const sectionH = section.offsetHeight;
+        const viewH = window.innerHeight;
+        const width = window.innerWidth;
+        
+        let progress = 0;
+        if (rect.top <= 0) {
+          progress = Math.min(1, -rect.top / (sectionH - viewH));
+        }
+
+        // Fade out the drag hint quickly
+        if (dragHintRef.current) {
+          const dragOpacity = Math.max(0, 1 - progress / 0.15);
+          dragHintRef.current.style.opacity = String(dragOpacity);
+          dragHintRef.current.style.visibility = dragOpacity === 0 ? "hidden" : "visible";
+        }
+
+        const totalCards = 5;
+        const respConfig = getResponsiveConfig(width);
+
+        cardsRef.current.forEach((card, i) => {
+          if (!card) return;
+          const cardConfig = CARD_CONFIGS[i];
+          
+          const cardStart = i / totalCards;
+          const cardEnd = (i + 1) / totalCards;
+          const cardProg = Math.max(0, Math.min(1, (progress - cardStart) / (cardEnd - cardStart)));
+
+          // Smooth step easing
+          const easeT = cardProg * cardProg * (3 - 2 * cardProg);
+
+          // Calculate offset target based on screen width
+          const targetX = respConfig.sideX + cardConfig.sideXOffset * (width < 768 ? 0.4 : 1.0);
+          const targetY = respConfig.sideY + cardConfig.sideYOffset * (width < 768 ? 0.4 : 1.0);
+
+          const currentX = 0 + easeT * (targetX - 0);
+          const currentY = (i * 12) + easeT * (targetY - (i * 12));
+          const currentScale = respConfig.activeScale + easeT * (respConfig.sideScale - respConfig.activeScale);
+          const currentRot = cardConfig.rot + easeT * (cardConfig.sideRot - cardConfig.rot);
+
+          // Manage z-indices dynamically to keep stack order correct
+          let zIndex = 30 - i;
+          if (cardProg > 0 && cardProg < 1) {
+            zIndex = 100;
+          } else if (cardProg === 1) {
+            zIndex = 10 + i;
+          }
+
+          card.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) scale(${currentScale}) rotate(${currentRot}deg)`;
+          card.style.zIndex = String(zIndex);
+        });
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    onScroll();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, [activeTab]);
+
   return (
-    <section id="free-notes" className="relative px-4 py-24 sm:px-6">
-      <div className="absolute inset-0 mesh-gradient opacity-50" />
+    <>
+      <section ref={sectionRef} id="free-notes" className="relative h-[400vh] w-full bg-dotty paper-texture cut-paper-top">
+        {/* Sticky Scroll Container */}
+        <div className="sticky top-0 h-[100vh] w-full flex flex-col items-center overflow-hidden z-10 pt-[12vh]">
+          
+          {/* Header content */}
+          <div className="w-full px-4 max-w-6xl text-center flex-shrink-0 relative z-50 pointer-events-auto">
+            <p className="mb-3 font-sans text-[11px] font-medium uppercase tracking-[0.15em] text-ink-muted">
+              Course Notes Preview
+            </p>
+            <h2 className="font-heading text-3xl font-bold text-ink sm:text-4xl">
+              {activeTab === "AS" ? "AS Biology Chapters" : "A2 Biology Chapters"}
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-ink-muted text-sm sm:text-base">
+              {activeTab === "AS"
+                ? "Comprehensive notes precisely aligned with the Cambridge AS Biology syllabus."
+                : "Detailed notes precisely aligned with the Cambridge A2 Biology syllabus. Chapter 12 is free."}
+            </p>
 
-      <div className="relative mx-auto max-w-6xl">
-        <motion.div
-          className="mb-12 text-center"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-        >
-          <motion.p
-            variants={fadeUpVariant}
-            className="mb-3 text-sm font-semibold uppercase tracking-widest text-emerald-400"
-          >
-            Course Notes Preview
-          </motion.p>
-          <motion.h2
-            variants={fadeUpVariant}
-            className="font-heading text-3xl font-bold text-white sm:text-4xl"
-          >
-            {activeTab === "AS" ? "AS Biology Chapters" : "A2 Biology Chapters"}
-          </motion.h2>
-          <motion.p
-            variants={fadeUpVariant}
-            className="mx-auto mt-4 max-w-2xl text-slate-400"
-          >
-            {activeTab === "AS"
-              ? "Comprehensive notes precisely aligned with the Cambridge AS Biology syllabus. All chapters are available in the full course."
-              : "Detailed notes precisely aligned with the Cambridge A2 Biology syllabus. Chapter 12 (Respiration & Energy) is free — register to get your PDF instantly."}
-          </motion.p>
-        </motion.div>
+            {/* Tab Toggle */}
+            <div className="mt-6 flex justify-center">
+              <div className="relative flex rounded-[4px] bg-cream p-1 border-[1.5px] border-ink shadow-[3px_3px_0_#1A1A14]">
+                <button
+                  onClick={() => setActiveTab("AS")}
+                  className={`relative z-10 px-6 py-2.5 rounded-[2px] text-sm font-semibold transition-colors duration-300 font-heading cursor-pointer ${
+                    activeTab === "AS" ? "text-parchment" : "text-ink-muted hover:text-ink"
+                  }`}
+                >
+                  {activeTab === "AS" && (
+                    <motion.span
+                      layoutId="active-tab"
+                      className="absolute inset-0 bg-ink rounded-[2px] -z-10"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  AS Biology
+                </button>
+                <button
+                  onClick={() => setActiveTab("A2")}
+                  className={`relative z-10 px-6 py-2.5 rounded-[2px] text-sm font-semibold transition-colors duration-300 font-heading cursor-pointer ${
+                    activeTab === "A2" ? "text-parchment" : "text-ink-muted hover:text-ink"
+                  }`}
+                >
+                  {activeTab === "A2" && (
+                    <motion.span
+                      layoutId="active-tab"
+                      className="absolute inset-0 bg-ink rounded-[2px] -z-10"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  A2 Biology
+                </button>
+              </div>
+            </div>
+          </div>
 
-        {/* Tab Toggle */}
-        <div className="flex justify-center mb-10">
-          <div className="relative flex rounded-full bg-slate-900/80 p-1 border border-white/5">
-            <button
-              onClick={() => setActiveTab("AS")}
-              className={`relative z-10 px-6 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300 font-heading cursor-pointer ${
-                activeTab === "AS" ? "text-slate-950" : "text-slate-400 hover:text-white"
-              }`}
-            >
-              {activeTab === "AS" && (
-                <motion.span
-                  layoutId="active-tab"
-                  className="absolute inset-0 bg-emerald-500 rounded-full -z-10"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-              AS Biology
-            </button>
-            <button
-              onClick={() => setActiveTab("A2")}
-              className={`relative z-10 px-6 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300 font-heading cursor-pointer ${
-                activeTab === "A2" ? "text-slate-950" : "text-slate-400 hover:text-white"
-              }`}
-            >
-              {activeTab === "A2" && (
-                <motion.span
-                  layoutId="active-tab"
-                  className="absolute inset-0 bg-emerald-500 rounded-full -z-10"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-              A2 Biology
-            </button>
+          {/* Card Stack Container */}
+          <div className="relative w-[90vw] max-w-[480px] aspect-[3/4] mt-8 sm:mt-12 flex-shrink-0 white-shadow-bg">
+            {/* Paperclip */}
+            <img src="/assets/paperClip.avif" className="absolute -top-[20px] right-[40px] w-[40px] sm:w-[48px] z-[100] pointer-events-none" alt="" />
+            
+            <div className="card-stack relative w-full h-full z-10 perspective-1000">
+              {chaptersToRender.slice(0, 5).map((chapter, i) => {
+                const config = CARD_CONFIGS[i];
+                const zIndex = 50 - i * 10;
+                
+                return (
+                  <div 
+                    key={chapter.id}
+                    ref={(el) => { cardsRef.current[i] = el; }}
+                    className={`note-card absolute inset-0 rounded-[4px] ${config.bgClass} flex flex-col overflow-hidden shadow-[0_10px_30px_rgba(26,26,20,0.08)]`}
+                    style={{ zIndex }}
+                  >
+                    <img src="/assets/cutPaperTop.avif" className="absolute -top-[2px] left-0 w-full h-[40px] object-fill z-[2] pointer-events-none" alt="" />
+                    
+                    <img 
+                      src="/assets/blackTape.avif" 
+                      className="absolute top-[16px] left-1/2 w-[70px] h-[22px] object-cover z-[3] opacity-85 pointer-events-none" 
+                      style={{ transform: `translateX(-50%) rotate(${config.tapeRot}deg)` }}
+                      alt="" 
+                    />
+
+                    <div className="relative z-10 pt-[55px] sm:pt-[70px] px-[20px] sm:px-[36px] pb-[32px] sm:pb-[48px] h-full flex flex-col gap-2 sm:gap-3">
+                      <div className="flex justify-between items-center relative z-20">
+                        <span className="font-sans text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted">
+                          {chapter.number}
+                        </span>
+                        {chapter.isFree ? (
+                          <span className="rounded-[4px] bg-sage/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-sage">
+                            Free
+                          </span>
+                        ) : (
+                          <span className="rounded-[4px] border border-border bg-ink/5 px-2.5 py-0.5 text-xs font-medium text-ink-muted">
+                            Full Course
+                          </span>
+                        )}
+                      </div>
+                      
+                      <h3 className="font-heading text-2xl sm:text-3xl font-bold text-ink leading-[1.15] relative z-20">
+                        {chapter.title}
+                      </h3>
+                      
+                      <p className="font-sans text-[14px] sm:text-[15px] text-ink-medium leading-[1.65] mt-1 pr-12 relative z-20">
+                        {chapter.brief}
+                      </p>
+
+                      <ul className="mt-4 flex flex-wrap gap-2 relative z-20">
+                        {chapter.topics.map((topic) => (
+                          <li
+                            key={topic}
+                            className="rounded-[4px] bg-ink/5 px-2.5 py-1 text-xs text-ink-muted"
+                          >
+                            {topic}
+                          </li>
+                        ))}
+                      </ul>
+
+                      {/* Doodle */}
+                      <img 
+                        src={`/assets/${config.doodle}`} 
+                        className={`absolute pointer-events-none opacity-90 z-10 ${config.doodleClasses}`} 
+                        alt="" 
+                      />
+
+                      {/* AND MORE text for the 5th card */}
+                      {i === 4 && (
+                        <div className="mt-auto pt-6 text-center font-heading text-lg font-bold text-ink-muted opacity-60 relative z-20">
+                          AND MORE...
+                        </div>
+                      )}
+                    </div>
+                    
+                    <img src="/assets/cutPaperBottomClean.avif" className="absolute -bottom-[2px] left-0 w-full h-[40px] object-fill z-[2] pointer-events-none" alt="" />
+                  </div>
+                );
+              })}
+            </div>
+
+            <div ref={dragHintRef} className="absolute -bottom-24 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center pointer-events-none transition-all duration-200">
+              <img src="/assets/dragToSee.avif" className="w-24 opacity-80" alt="Scroll to see more" />
+            </div>
           </div>
         </div>
+      </section>
 
-        <LayoutGroup>
-          <div className="overflow-hidden py-4">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                variants={gridVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="grid auto-rows-fr grid-cols-1 gap-4 md:grid-cols-3 md:gap-5"
-              >
-                {chaptersToRender.map((chapter) => (
-                  <ChapterCard
-                    key={chapter.id}
-                    chapter={chapter}
-                    isHovered={hoveredId === chapter.id}
-                    onHover={setHoveredId}
-                  />
-                ))}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </LayoutGroup>
-
-        <motion.div
-          className="mt-10 flex justify-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={springTransition}
-        >
-          {activeTab === "A2" ? (
-            <motion.button
-              type="button"
-              onClick={openRegister}
-              className="rounded-xl bg-emerald-500 px-8 py-3.5 font-heading font-bold text-slate-950 shadow-lg shadow-emerald-500/20 cursor-pointer"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              transition={springTransition}
-            >
-              Register to Access Free Notes
-            </motion.button>
-          ) : (
-            <motion.button
-              type="button"
-              onClick={openCourseRegister}
-              className="rounded-xl bg-emerald-500 px-8 py-3.5 font-heading font-bold text-slate-950 shadow-lg shadow-emerald-500/20 cursor-pointer"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              transition={springTransition}
-            >
-              Register for Full AS Course
-            </motion.button>
-          )}
-        </motion.div>
+      <div className="w-full bg-parchment-dark py-16 flex justify-center relative z-20 paper-texture cut-paper-bottom mb-24">
+        {activeTab === "A2" ? (
+          <button
+            type="button"
+            onClick={openRegister}
+            className="btn-stamp"
+          >
+            Register to Access Free Notes
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={openCourseRegister}
+            className="btn-stamp"
+          >
+            Register for Full AS Course
+          </button>
+        )}
       </div>
-    </section>
+    </>
   );
 }
