@@ -7,27 +7,45 @@ const COURSE_REGISTRATION_RANGE =
   process.env.GOOGLE_COURSE_SHEET_RANGE ?? "CourseRegistrations!A:K";
 
 function getGoogleCredentials() {
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+  const rawPrivateKey = process.env.GOOGLE_PRIVATE_KEY;
+  const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+
+  if (!rawPrivateKey) {
+    throw new Error("GOOGLE_PRIVATE_KEY environment variable is missing in Vercel settings.");
+  }
+  if (!clientEmail) {
+    throw new Error("GOOGLE_CLIENT_EMAIL environment variable is missing in Vercel settings.");
+  }
+
+  let privateKey = rawPrivateKey.replace(/\\n/g, "\n");
+  
+  // Strip surrounding quotes if Vercel saved them as part of the string
+  if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
+    privateKey = privateKey.substring(1, privateKey.length - 1);
+  }
+  if (privateKey.startsWith("'") && privateKey.endsWith("'")) {
+    privateKey = privateKey.substring(1, privateKey.length - 1);
+  }
 
   return {
-    type: process.env.GOOGLE_TYPE,
+    type: process.env.GOOGLE_TYPE || "service_account",
     project_id: process.env.GOOGLE_PROJECT_ID,
     private_key_id: process.env.GOOGLE_PRIVATE_KEY_ID,
     private_key: privateKey,
-    client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    client_email: clientEmail,
     client_id: process.env.GOOGLE_CLIENT_ID,
-    auth_uri: process.env.GOOGLE_AUTH_URI,
-    token_uri: process.env.GOOGLE_TOKEN_URI,
-    auth_provider_x509_cert_url: process.env.GOOGLE_AUTH_PROVIDER_X509_CERT_URL,
+    auth_uri: process.env.GOOGLE_AUTH_URI || "https://accounts.google.com/o/oauth2/auth",
+    token_uri: process.env.GOOGLE_TOKEN_URI || "https://oauth2.googleapis.com/token",
+    auth_provider_x509_cert_url: process.env.GOOGLE_AUTH_PROVIDER_X509_CERT_URL || "https://www.googleapis.com/oauth2/v1/certs",
     client_x509_cert_url: process.env.GOOGLE_CLIENT_X509_CERT_URL,
-    universe_domain: process.env.GOOGLE_UNIVERSE_DOMAIN,
+    universe_domain: process.env.GOOGLE_UNIVERSE_DOMAIN || "googleapis.com",
   };
 }
 
 function getSpreadsheetId(): string {
   const spreadsheetId = process.env.GOOGLE_SHEET_ID;
   if (!spreadsheetId) {
-    throw new Error("GOOGLE_SHEET_ID is not configured.");
+    throw new Error("GOOGLE_SHEET_ID environment variable is missing in Vercel settings.");
   }
   return spreadsheetId;
 }
