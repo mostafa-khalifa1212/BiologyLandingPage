@@ -106,34 +106,48 @@
   /* ── Stamp Buttons ── */
   .btn-stamp {
     @apply bg-ink text-parchment px-7 py-3.5 font-sans text-[15px] font-medium border-2 border-ink rounded-[2px] cursor-pointer;
-    box-shadow: 4px 4px 0 #7A8B6F;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 4px 4px 0 #fe5400;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
   }
 
-  .btn-stamp:hover {
+  .btn-stamp:hover:not(:disabled) {
     transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0 #7A8B6F;
+    box-shadow: 6px 6px 0 #1A1A14;
+    background-color: #fe5400;
+    color: #FDFAF4;
   }
 
-  .btn-stamp:active {
+  .btn-stamp:active:not(:disabled) {
     transform: translate(0, 0);
-    box-shadow: 2px 2px 0 #7A8B6F;
+    box-shadow: 2px 2px 0 #1A1A14;
+    background-color: #d04500;
+    color: #FDFAF4;
+  }
+
+  .btn-stamp:disabled {
+    @apply opacity-50 cursor-not-allowed bg-ink-muted border-ink-muted text-ink-faint;
+    transform: none;
+    box-shadow: none;
   }
 
   .btn-stamp-outline {
     @apply bg-transparent text-ink px-7 py-3.5 font-sans text-[15px] font-medium border-2 border-ink rounded-[2px] cursor-pointer;
     box-shadow: 3px 3px 0 #1A1A14;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
   }
 
-  .btn-stamp-outline:hover {
+  .btn-stamp-outline:hover:not(:disabled) {
     transform: translate(-1px, -1px);
     box-shadow: 4px 4px 0 #1A1A14;
+    background-color: #fe5400;
+    color: #FDFAF4;
   }
 
-  .btn-stamp-outline:active {
+  .btn-stamp-outline:active:not(:disabled) {
     transform: translate(0, 0);
     box-shadow: 2px 2px 0 #1A1A14;
+    background-color: #d04500;
+    color: #FDFAF4;
   }
 
   /* ── Editorial Image ── */
@@ -300,5 +314,32 @@
     opacity: 0.12;
     transform: rotate(-3deg);
     z-index: 0;
+  }
+
+  /* ── Stop-Motion Wiggle Animation Engine ── */
+  @keyframes wiggle-retro-1 {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+  @keyframes wiggle-retro-2 {
+    0%, 100% { transform: rotate(4deg); }
+    50% { transform: rotate(-2deg); }
+  }
+  @keyframes wiggle-retro-3 {
+    0%, 100% { transform: rotate(-1deg); }
+    50% { transform: rotate(5deg); }
+  }
+
+  .retro-wiggle-fast {
+    animation: wiggle-retro-1 0.25s steps(2) infinite;
+    display: inline-block;
+  }
+  .retro-wiggle-medium {
+    animation: wiggle-retro-2 0.35s steps(2) infinite;
+    display: inline-block;
+  }
+  .retro-wiggle-slow {
+    animation: wiggle-retro-3 0.45s steps(2) infinite;
+    display: inline-block;
   }
 }

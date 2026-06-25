@@ -17,6 +17,11 @@ import {
   DoodleZigzag,
   DoodleDoubleUnderline,
   DoodleCheck,
+  DoodleSmiley,
+  DoodleHeart,
+  DoodleLineScribble,
+  DoodleArrow,
+  DoodleSpiral,
 } from "@/components/Doodles";
 
 const COURSE_START = new Date("July 7, 2026 12:00:00").getTime();
@@ -82,10 +87,10 @@ export default function Hero() {
       rafId = requestAnimationFrame(() => {
         const scrollY = window.scrollY;
         const viewportH = window.innerHeight || 800;
-        
+
         // Progress goes from 0 (at top of page) to 1 (when scrolled by 1 viewport height)
         const progress = Math.min(1, scrollY / viewportH);
-        
+
         // Gradually crop background up to 12% on each side
         const cropX = progress * 12;
 
@@ -105,26 +110,52 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[95vh] items-center justify-center overflow-visible bg-transparent px-4 pt-20 pb-32 mb-24"
+      className="relative flex min-h-[95vh] items-center justify-center overflow-visible bg-transparent px-4 pt-36 sm:pt-44 pb-32 mb-24"
     >
       {/* Subtle paper background sheet that shrinks/crops */}
-      <div 
+      <div
         ref={paperBgRef}
         className="absolute inset-0 bg-paper-1 cut-paper-bottom z-0"
         style={{ clipPath: "inset(0px 0% 0px 0%)" }}
       >
         {/* Accent paper texture 3 overlay (very subtle) */}
-        <div 
-          className="absolute inset-0 bg-repeat opacity-[0.06] mix-blend-mode-multiply pointer-events-none" 
+        <div
+          className="absolute inset-0 bg-repeat opacity-[0.06] mix-blend-mode-multiply pointer-events-none"
           style={{ backgroundImage: "url('/assets/paperTexture3.avif')", backgroundSize: '600px 600px' }}
         />
       </div>
 
       {/* Floating Doodles */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden z-10">
-        <Image src="/assets/rocket.avif" alt="" width={100} height={100} className="absolute right-[10%] top-[15%] rotate-[20deg] hidden lg:block" />
-        <Image src="/assets/improvingGraph.avif" alt="" width={150} height={150} className="absolute left-[8%] bottom-[25%] rotate-[3deg] hidden lg:block" />
-        <Image src="/assets/blackTopRightArrow.avif" alt="" width={50} height={50} className="absolute left-[20%] bottom-[35%] hidden lg:block" />
+        {/* Rocket: Inverted and wiggling */}
+        <div className="absolute right-[10%] top-[15%] hidden lg:block rotate-[20deg]">
+          <Image src="/assets/rocket.avif" alt="" width={100} height={100} className="retro-wiggle-slow invert" />
+        </div>
+        
+        {/* Improving Graph: Inverted and wiggling */}
+        <div className="absolute left-[8%] bottom-[25%] hidden lg:block rotate-[3deg]">
+          <Image src="/assets/improvingGraph.avif" alt="" width={150} height={150} className="retro-wiggle-medium invert" />
+        </div>
+
+        {/* Black Top Right Arrow: Inverted and wiggling */}
+        <div className="absolute left-[20%] bottom-[35%] hidden lg:block">
+          <Image src="/assets/blackTopRightArrow.avif" alt="" width={50} height={50} className="retro-wiggle-fast invert" />
+        </div>
+
+        {/* Microscope: New, wiggling */}
+        <div className="absolute left-[5%] top-[25%] hidden lg:block rotate-[-10deg]">
+          <Image src="/assets/microscope.avif" alt="" width={120} height={120} className="retro-wiggle-slow" />
+        </div>
+
+        {/* Atom: New, wiggling */}
+        <div className="absolute right-[5%] top-[40%] hidden lg:block rotate-[15deg]">
+          <Image src="/assets/atom.avif" alt="" width={110} height={110} className="retro-wiggle-fast" />
+        </div>
+
+        {/* Yellow Light Bulb: New, colored, wiggling */}
+        <div className="absolute right-[15%] bottom-[20%] hidden lg:block rotate-[-8deg]">
+          <Image src="/assets/yellowLightBulb.avif" alt="" width={115} height={115} className="retro-wiggle-medium" />
+        </div>
       </div>
 
       <motion.div
@@ -133,19 +164,6 @@ export default function Hero() {
         initial="hidden"
         animate="visible"
       >
-        <motion.div
-          variants={fadeUpVariant}
-          className="relative mb-8 inline-flex items-center justify-center"
-        >
-          <div className="relative z-10 inline-flex items-center gap-2 rounded-[2px] border-2 border-ink bg-parchment-dark px-4 py-2 text-sm font-bold text-ink-medium hard-shadow-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sage opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-sage" />
-            </span>
-            99% Student Success Rate · A* Results
-          </div>
-        </motion.div>
-
         <motion.h1
           variants={fadeUpVariant}
           className="font-heading relative text-5xl font-bold leading-[1.05] tracking-tight text-ink sm:text-7xl lg:text-8xl"
@@ -158,14 +176,14 @@ export default function Hero() {
           </span>
           <br />
           in AL Biology
+          <DoodleLineScribble className="absolute -bottom-2 left-1/3 right-1/3 h-2 text-sage" opacity={0.6} />
         </motion.h1>
 
         <motion.p
           variants={fadeUpVariant}
-          className="mx-auto mt-8 max-w-2xl text-lg text-ink-medium sm:text-xl font-medium"
+          className="mx-auto mt-8 max-w-2xl text-2xl text-ink-medium font-accent font-medium"
         >
-          Register below and get your first chapter notes for free — built by
-          Mostafa Khalifa, the teacher behind consecutive A* cohorts.
+          Oh hey!! Look who's here, Biology AL is hard yea? well not anymore.
         </motion.p>
 
         <motion.div
@@ -173,33 +191,37 @@ export default function Hero() {
           className="relative mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           {/* Decorative Arrows near CTAs */}
-          <Image src="/assets/blackBottomRightArrow.avif" alt="" width={40} height={40} className="absolute -left-4 -top-8 hidden sm:block pointer-events-none" />
-          <Image src="/assets/pointingFinger.avif" alt="" width={60} height={60} className="absolute -right-12 top-2 hidden lg:block pointer-events-none" />
+          <div className="absolute -left-4 -top-8 hidden sm:block pointer-events-none -rotate-12">
+            <Image src="/assets/blackBottomRightArrow.svg" alt="" width={40} height={40} className="retro-wiggle-slow" />
+          </div>
+          <div className="absolute -right-12 top-2 hidden lg:block pointer-events-none rotate-[12deg]">
+            <Image src="/assets/pointingFinger.avif" alt="" width={60} height={60} className="retro-wiggle-medium invert" />
+          </div>
+          {/* Orange Pencil Doodles */}
+          <DoodleArrow className="absolute left-[35%] -top-16 hidden lg:block rotate-[45deg] text-sage w-12 h-12" opacity={0.7} />
+          <DoodleSpiral className="absolute right-[20%] -bottom-12 hidden lg:block rotate-12 text-sage w-10 h-10" opacity={0.4} />
           <DoodleZigzag className="absolute -bottom-10 right-4 hidden md:block rotate-6" opacity={0.3} />
 
           <motion.button
             type="button"
             onClick={openCourseRegister}
-            className="w-full bg-ink text-parchment px-8 py-4 text-center font-sans text-lg font-bold border-2 border-ink rounded-[2px] sm:w-auto"
-            style={{ boxShadow: '4px 4px 0 #fe5400' }}
-            whileHover={{ x: -2, y: -2 }}
-            whileTap={{ x: 0, y: 0 }}
+            className="btn-stamp w-full py-4 text-center text-lg font-bold sm:w-auto"
             transition={springTransition}
           >
             Register for Nov 2026 Course
           </motion.button>
 
-          <motion.button
-            type="button"
-            onClick={openRegister}
-            className="w-full bg-transparent text-ink px-8 py-4 text-center font-sans text-lg font-bold border-2 border-ink rounded-[2px] sm:w-auto"
-            style={{ boxShadow: '3px 3px 0 #1A1A14' }}
-            whileHover={{ x: -2, y: -2 }}
-            whileTap={{ x: 0, y: 0 }}
-            transition={springTransition}
-          >
-            Get Free Notes
-          </motion.button>
+          <div className="relative w-full sm:w-auto">
+            <DoodleHeart className="absolute -bottom-6 -right-6 hidden md:block rotate-[15deg]" opacity={0.6} />
+            <motion.button
+              type="button"
+              onClick={openRegister}
+              className="btn-stamp-outline w-full py-4 text-center text-lg font-bold"
+              transition={springTransition}
+            >
+              Get Free Notes
+            </motion.button>
+          </div>
         </motion.div>
 
         <motion.div variants={fadeUpVariant} className="mt-14 relative inline-block">

@@ -453,3 +453,253 @@ export function DoodleZigzag({
     </svg>
   );
 }
+
+/* ── Smiley Face ── */
+export function DoodleSmiley({
+  className = "",
+  color = "#fe5400",
+  opacity = 0.3,
+}: DoodleProps) {
+  return (
+    <svg
+      className={`pointer-events-none ${className}`}
+      width="36"
+      height="36"
+      viewBox="0 0 40 40"
+      style={{ opacity }}
+    >
+      <motion.g
+        stroke={color}
+        strokeWidth="1.8"
+        fill="none"
+        strokeLinecap="round"
+      >
+        {/* Head outline */}
+        <motion.path
+          d="M20,2 C10,2 2,10 2,20 C2,30 10,38 20,38 C30,38 38,30 38,20 C38,10 30,2 20,2"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        />
+        {/* Left eye */}
+        <motion.circle
+          cx="14"
+          cy="15"
+          r="1.5"
+          fill={color}
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+        />
+        {/* Right eye */}
+        <motion.circle
+          cx="26"
+          cy="15"
+          r="1.5"
+          fill={color}
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+        />
+        {/* Smile */}
+        <motion.path
+          d="M12,24 C15,29 25,29 28,24"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3, duration: 0.3 }}
+        />
+      </motion.g>
+    </svg>
+  );
+}
+
+/* ── Leaf ── */
+export function DoodleLeaf({
+  className = "",
+  color = "#fe5400",
+  opacity = 0.25,
+}: DoodleProps) {
+  return (
+    <svg
+      className={`pointer-events-none ${className}`}
+      width="32"
+      height="32"
+      viewBox="0 0 30 30"
+      style={{ opacity }}
+    >
+      <motion.g
+        stroke={color}
+        strokeWidth="1.5"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {/* Leaf blade */}
+        <motion.path
+          d="M5,25 C10,12 15,7 25,5 C17,14 13,20 5,25 Z"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        />
+        {/* Center vein */}
+        <motion.path
+          d="M5,25 L20,10"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.3 }}
+        />
+        {/* Side veins */}
+        <motion.path
+          d="M10,20 C13,19 15,19 15,19 M14,16 C17,15 18,15 18,15"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3, duration: 0.3 }}
+        />
+      </motion.g>
+    </svg>
+  );
+}
+
+/* ── Heart ── */
+export function DoodleHeart({
+  className = "",
+  color = "#fe5400",
+  opacity = 0.35,
+}: DoodleProps) {
+  return (
+    <svg
+      className={`pointer-events-none ${className}`}
+      width="30"
+      height="30"
+      viewBox="0 0 30 30"
+      style={{ opacity }}
+    >
+      <motion.path
+        d="M15,8 C12,3 4,4 4,12 C4,20 12,25 15,28 C18,25 26,20 26,12 C26,4 18,3 15,8 Z"
+        stroke={color}
+        strokeWidth="1.8"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        initial={{ pathLength: 0 }}
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      />
+    </svg>
+  );
+}
+
+/* ── Water Droplet ── */
+export function DoodleWaterDrop({
+  className = "",
+  color = "#fe5400",
+  opacity = 0.28,
+}: DoodleProps) {
+  return (
+    <svg
+      className={`pointer-events-none ${className}`}
+      width="24"
+      height="30"
+      viewBox="0 0 30 30"
+      style={{ opacity }}
+    >
+      <motion.path
+        d="M15,2 C15,2 5,12 5,20 C5,25.5 9.5,30 15,30 C20.5,30 25,25.5 25,20 C25,12 15,2 15,2 Z"
+        stroke={color}
+        strokeWidth="1.8"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        initial={{ pathLength: 0 }}
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      />
+    </svg>
+  );
+}
+
+/* ── Simple Line Scribble ── */
+export function DoodleLineScribble({
+  className = "",
+  color = "#fe5400",
+  opacity = 0.3,
+}: DoodleProps) {
+  return (
+    <svg
+      className={`pointer-events-none ${className}`}
+      viewBox="0 0 60 10"
+      preserveAspectRatio="none"
+      style={{ opacity }}
+    >
+      <motion.g
+        stroke={color}
+        strokeWidth="1.8"
+        fill="none"
+        strokeLinecap="round"
+      >
+        <motion.path
+          d="M2,5 C15,3 30,7 45,4 C52,3 58,6 59,5"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+        />
+        <motion.path
+          d="M5,8 C20,6 35,10 50,7"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1, duration: 0.4 }}
+        />
+      </motion.g>
+    </svg>
+  );
+}
+
+/* ── Messy Double-Loop Wavy Circle ── */
+export function DoodleWavyCircle({
+  className = "",
+  color = "#fe5400",
+  opacity = 0.35,
+}: DoodleProps) {
+  return (
+    <svg
+      className={`pointer-events-none ${className}`}
+      width="44"
+      height="44"
+      viewBox="0 0 50 50"
+      style={{ opacity }}
+    >
+      <motion.g
+        stroke={color}
+        strokeWidth="1.6"
+        fill="none"
+        strokeLinecap="round"
+      >
+        <motion.path
+          d="M25,5 C14,5 5,14 5,25 C5,36 14,45 25,45 C36,45 45,36 45,25 C45,14 36,5 25,5"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        />
+        <motion.path
+          d="M27,7 C12,9 8,20 10,32 C12,44 26,46 36,44 C46,42 44,27 41,17 C38,7 29,12 26,14"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.15, duration: 0.6 }}
+        />
+      </motion.g>
+    </svg>
+  );
+}

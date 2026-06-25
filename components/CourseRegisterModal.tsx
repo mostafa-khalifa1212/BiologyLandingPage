@@ -404,10 +404,7 @@ function CourseRegisterModal({ isOpen, onClose }: CourseRegisterModalProps) {
             <motion.button
               type="submit"
               disabled={!isFormValid || formState === "submitting"}
-              className="relative w-full overflow-hidden rounded-[2px] border-2 border-ink bg-ink px-6 py-3 font-heading font-bold text-parchment disabled:cursor-not-allowed disabled:opacity-50"
-              style={{ boxShadow: "4px 4px 0 #fe5400" }}
-              whileHover={isFormValid ? { scale: 1.02 } : undefined}
-              whileTap={isFormValid ? { scale: 0.98 } : undefined}
+              className="btn-stamp w-full py-3 text-center font-heading font-bold"
               transition={springTransition}
             >
               {formState === "submitting" ? (

@@ -10,6 +10,7 @@ const PROMO_STORAGE_KEY = "orientation-promo-dismissed";
 
 export default function PromoModal() {
   const [isOpen, setIsOpen] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(true);
 
   useEffect(() => {
     const dismissed = sessionStorage.getItem(PROMO_STORAGE_KEY);
@@ -17,6 +18,36 @@ export default function PromoModal() {
       const timer = setTimeout(() => setIsOpen(true), 800);
       return () => clearTimeout(timer);
     }
+  }, []);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const updateVisibility = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY <= 0) {
+        setHeaderVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setHeaderVisible(false); // Scrolling down
+      } else if (currentScrollY < lastScrollY) {
+        setHeaderVisible(true); // Scrolling up
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateVisibility);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const handleClose = () => {
@@ -31,7 +62,9 @@ export default function PromoModal() {
           <motion.button
             type="button"
             onClick={() => setIsOpen(true)}
-            className="fixed left-4 top-20 md:left-6 md:top-24 z-40 flex items-center gap-2 rounded-[4px] border-[1.5px] border-ink bg-parchment px-3.5 py-2 font-sans text-xs font-bold text-ink cursor-pointer transition-all hover:-translate-x-px hover:-translate-y-px"
+            className={`fixed left-4 md:left-6 z-40 flex items-center gap-2 rounded-[4px] border-[1.5px] border-ink bg-parchment px-3.5 py-2 font-sans text-xs font-bold text-ink cursor-pointer transition-all duration-300 ease-in-out hover:-translate-x-px hover:-translate-y-px ${
+              headerVisible ? "top-20 md:top-24" : "top-4 md:top-6"
+            }`}
             style={{ boxShadow: "3px 3px 0 #1A1A14" }}
             initial={{ opacity: 0, x: -50, scale: 0.9 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -91,10 +124,9 @@ export default function PromoModal() {
               href={ORIENTATION_MEET_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 rounded-[2px] border-2 border-ink bg-ink px-6 py-3 text-center font-heading font-bold text-parchment cursor-pointer"
-              style={{ boxShadow: "4px 4px 0 #fe5400" }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              className="btn-stamp flex-1 py-3 text-center font-heading font-bold cursor-pointer hover:bg-sage hover:text-parchment active:bg-sage-dark transition-colors duration-200"
+              whileHover={{ x: -2, y: -2 }}
+              whileTap={{ x: 0, y: 0 }}
               transition={springTransition}
               onClick={handleClose}
             >
@@ -103,9 +135,9 @@ export default function PromoModal() {
             <motion.button
               type="button"
               onClick={handleClose}
-              className="btn-stamp-outline flex-1 px-6 py-3 font-heading font-semibold cursor-pointer"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              className="btn-stamp-outline flex-1 py-3 font-heading font-semibold cursor-pointer"
+              whileHover={{ x: -1, y: -1 }}
+              whileTap={{ x: 0, y: 0 }}
               transition={springTransition}
             >
               Maybe Later

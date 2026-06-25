@@ -94,10 +94,7 @@ export default function Header() {
           <motion.button
             type="button"
             onClick={openCourseRegister}
-            className="bg-ink text-parchment px-5 py-2 font-sans text-sm font-bold border-2 border-ink rounded-[2px]"
-            style={{ boxShadow: '3px 3px 0 #fe5400' }}
-            whileHover={{ x: -2, y: -2 }}
-            whileTap={{ x: 0, y: 0 }}
+            className="btn-stamp px-5 py-2 text-sm font-bold"
             transition={springTransition}
           >
             Register for Full Course
@@ -108,8 +105,7 @@ export default function Header() {
           <motion.button
             type="button"
             onClick={openRegister}
-            className="rounded-[4px] bg-ink/10 px-3 py-1.5 text-xs font-bold text-ink"
-            whileTap={{ scale: 0.95 }}
+            className="btn-stamp px-3 py-1 text-xs font-bold"
             transition={springTransition}
           >
             Free Notes
@@ -173,7 +169,7 @@ export default function Header() {
                       setMobileOpen(false);
                       openCourseRegister();
                     }}
-                    className="block w-full rounded-[2px] bg-ink py-2.5 text-center font-bold text-parchment"
+                    className="btn-stamp block w-full py-2.5 text-center font-bold"
                   >
                     Register for Full Course
                   </button>

@@ -1,9 +1,19 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRegisterModal } from "@/components/RegisterModal";
 import { useCourseRegisterModal } from "@/components/CourseRegisterModal";
+import {
+  DoodleDoubleUnderline,
+  DoodleLeaf,
+  DoodleWaterDrop,
+  DoodleSmiley,
+  DoodleCheck,
+  DoodleLineScribble,
+  DoodleHeart,
+} from "@/components/Doodles";
 
 type Chapter = {
   id: string;
@@ -344,14 +354,36 @@ export default function NotesPreview() {
         {/* Sticky Scroll Container */}
         <div className="sticky top-0 h-[100vh] w-full flex flex-col items-center overflow-hidden z-10 pt-[12vh]">
           
+          {/* Floating Margin Doodles */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden z-0">
+             {/* Book Doodle (Left Margin) */}
+             <div className="absolute left-[8%] top-[30%] rotate-[-12deg] hidden lg:block">
+               <Image src="/assets/book.avif" alt="" width={110} height={110} className="retro-wiggle-slow" />
+             </div>
+ 
+             {/* DNA Doodle (Bottom-Left Margin) */}
+             <div className="absolute left-[10%] bottom-[20%] rotate-[15deg] hidden lg:block">
+               <Image src="/assets/dna.avif" alt="" width={110} height={110} className="retro-wiggle-medium" />
+             </div>
+ 
+             {/* Magnifying Glass Doodle (Right Margin) */}
+             <div className="absolute right-[8%] top-[45%] rotate-[8deg] hidden lg:block">
+               <Image src="/assets/magnifyingGlass.avif" alt="" width={100} height={100} className="retro-wiggle-fast" />
+             </div>
+           </div>
+          
           {/* Header content */}
           <div className="w-full px-4 max-w-6xl text-center flex-shrink-0 relative z-50 pointer-events-auto">
             <p className="mb-3 font-sans text-[11px] font-medium uppercase tracking-[0.15em] text-ink-muted">
               Course Notes Preview
             </p>
-            <h2 className="font-heading text-3xl font-bold text-ink sm:text-4xl">
-              {activeTab === "AS" ? "AS Biology Chapters" : "A2 Biology Chapters"}
-            </h2>
+            <div className="relative inline-block mx-auto mb-2">
+              <h2 className="font-heading text-3xl font-bold text-ink sm:text-4xl">
+                {activeTab === "AS" ? "AS Biology Chapters" : "A2 Biology Chapters"}
+              </h2>
+              <DoodleDoubleUnderline className="absolute bottom-[-10px] left-0 right-0 h-3 text-sage" opacity={0.6} />
+              <DoodleLeaf className="absolute -top-6 -right-10 hidden md:block rotate-[25deg] w-7 h-7" opacity={0.5} />
+            </div>
             <p className="mx-auto mt-4 max-w-2xl text-ink-muted text-sm sm:text-base">
               {activeTab === "AS"
                 ? "Comprehensive notes precisely aligned with the Cambridge AS Biology syllabus."
@@ -359,7 +391,7 @@ export default function NotesPreview() {
             </p>
 
             {/* Tab Toggle */}
-            <div className="mt-6 flex justify-center">
+            <div className="mt-6 flex justify-center items-center gap-3">
               <div className="relative flex rounded-[4px] bg-cream p-1 border-[1.5px] border-ink shadow-[3px_3px_0_#1A1A14]">
                 <button
                   onClick={() => setActiveTab("AS")}
@@ -392,6 +424,7 @@ export default function NotesPreview() {
                   A2 Biology
                 </button>
               </div>
+              <DoodleWaterDrop className="hidden md:block rotate-[15deg] w-5 h-6 text-sage" opacity={0.6} />
             </div>
           </div>
 
@@ -427,8 +460,9 @@ export default function NotesPreview() {
                           {chapter.number}
                         </span>
                         {chapter.isFree ? (
-                          <span className="rounded-[4px] bg-sage/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-sage">
+                          <span className="rounded-[4px] bg-sage/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-sage relative">
                             Free
+                            <DoodleCheck className="absolute -top-1.5 -right-3.5 w-3.5 h-3.5 text-sage" opacity={0.8} />
                           </span>
                         ) : (
                           <span className="rounded-[4px] border border-border bg-ink/5 px-2.5 py-0.5 text-xs font-medium text-ink-muted">
@@ -437,19 +471,22 @@ export default function NotesPreview() {
                         )}
                       </div>
                       
-                      <h3 className="font-heading text-2xl sm:text-3xl font-bold text-ink leading-[1.15] relative z-20">
-                        {chapter.title}
-                      </h3>
+                      <div className="relative self-start z-20">
+                        <h3 className="font-heading text-2xl sm:text-3xl font-bold text-ink leading-[1.15]">
+                          {chapter.title}
+                        </h3>
+                        <DoodleLineScribble className="absolute bottom-[-6px] left-0 w-24 h-1.5 text-sage" opacity={0.4} />
+                      </div>
                       
-                      <p className="font-sans text-[14px] sm:text-[15px] text-ink-medium leading-[1.65] mt-1 pr-12 relative z-20">
+                      <p className="font-accent text-[20px] sm:text-[22px] text-ink-medium leading-[1.3] mt-1 pr-12 relative z-20">
                         {chapter.brief}
                       </p>
 
                       <ul className="mt-4 flex flex-wrap gap-2 relative z-20">
                         {chapter.topics.map((topic) => (
                           <li
-                            key={topic}
-                            className="rounded-[4px] bg-ink/5 px-2.5 py-1 text-xs text-ink-muted"
+                             key={topic}
+                             className="rounded-[4px] bg-ink/5 px-2.5 py-1 text-xs text-ink-muted"
                           >
                             {topic}
                           </li>
@@ -465,8 +502,9 @@ export default function NotesPreview() {
 
                       {/* AND MORE text for the 5th card */}
                       {i === 4 && (
-                        <div className="mt-auto pt-6 text-center font-heading text-lg font-bold text-ink-muted opacity-60 relative z-20">
+                        <div className="mt-auto pt-6 text-center font-heading text-lg font-bold text-ink-muted opacity-60 relative z-20 flex items-center justify-center gap-2">
                           AND MORE...
+                          <DoodleSmiley className="w-5 h-5 text-sage" opacity={0.7} />
                         </div>
                       )}
                     </div>

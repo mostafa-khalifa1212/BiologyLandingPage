@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import NotesPreview from "@/components/NotesPreview";
-import { RoughDivider, DoodleSpiral, DoodleCoil, DoodleZigzag, DoodleDoubleUnderline, DoodleCross, DoodleCheck } from "@/components/Doodles";
+import { RoughDivider, DoodleSpiral, DoodleCoil, DoodleZigzag, DoodleDoubleUnderline, DoodleCross, DoodleCheck, DoodleWaterDrop, DoodleLineScribble, DoodleSmiley, DoodleHeart } from "@/components/Doodles";
 
 const FEATURES = [
   {
@@ -78,17 +78,21 @@ const SOCIAL_LINKS = [
   },
 ] as const;
 const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring" as const,
-      stiffness: 70,
-      damping: 16,
-      delay: i * 0.15,
-    },
-  }),
+  hidden: { opacity: 0, y: 100 },
+  visible: (i: number) => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const offsets = isMobile ? [0, 0, 0] : [-20, 20, 60];
+    return {
+      opacity: 1,
+      y: offsets[i] || 0,
+      transition: {
+        type: "spring" as const,
+        stiffness: 70,
+        damping: 16,
+        delay: i * 0.15,
+      },
+    };
+  },
 };
 const FEATURE_DOODLES = [
   { file: "pencil.avif", classes: "absolute top-8 right-6 w-20 rotate-[15deg] opacity-60 pointer-events-none z-10" },
@@ -106,7 +110,7 @@ export default function LandingPage() {
 
         <section id="about" className="relative bg-transparent px-0 py-24 mb-24">
           <div className="grid items-stretch md:grid-cols-5 relative w-full">
-            
+
             {/* Left Column: Full-Bleed Profile Picture */}
             <div className="w-full h-[350px] sm:h-[450px] md:h-auto md:col-span-2 relative overflow-hidden rounded-t-[4px] md:rounded-t-none md:rounded-l-[4px] shadow-[0_10px_30px_rgba(0,0,0,0.15)] z-10">
               <Image
@@ -118,8 +122,8 @@ export default function LandingPage() {
                 priority
               />
               {/* Crumpled paper texture overlay on photo */}
-              <div 
-                className="absolute inset-0 bg-repeat opacity-[0.06] mix-blend-mode-multiply pointer-events-none z-10" 
+              <div
+                className="absolute inset-0 bg-repeat opacity-[0.06] mix-blend-mode-multiply pointer-events-none z-10"
                 style={{ backgroundImage: "url('/assets/crumbledBlackPaperTexture.avif')", backgroundSize: 'cover' }}
               />
             </div>
@@ -128,18 +132,18 @@ export default function LandingPage() {
             <div className="w-full md:col-span-3 relative bg-cream p-6 sm:p-8 md:pt-16 md:pb-16 md:pl-16 md:pr-32 lg:pr-48 shadow-[0_-15px_30px_rgba(26,26,20,0.12)] md:shadow-[-15px_0_30px_rgba(26,26,20,0.15)] z-20 -mt-8 md:mt-0 md:-ml-8 rounded-b-[4px] md:rounded-b-none md:rounded-r-[4px] flex flex-col justify-center">
               {/* Horizontal torn top edge down the middle (Mobile only) */}
               <div className="absolute -top-[20px] left-0 right-0 h-[40px] pointer-events-none z-30 block md:hidden" style={{ backgroundImage: "url('/assets/cutPaperTop.avif')", backgroundSize: '100% 100%' }}></div>
-              
+
               {/* Vertical torn left edge down the middle (Desktop only) */}
               <div className="absolute -left-[20px] top-0 bottom-0 w-[40px] pointer-events-none z-30 hidden md:block" style={{ backgroundImage: "url('/assets/cutPaperLeft.avif')", backgroundSize: '100% 100%' }}></div>
-              
+
               <div className="relative mb-6 self-start">
                 <h2 className="font-heading text-3xl font-bold text-ink sm:text-4xl">
                   Meet Your Teacher
                 </h2>
                 <DoodleDoubleUnderline className="absolute bottom-[-10px] left-0 right-0 h-3 text-sage" opacity={0.6} />
               </div>
-              
-              <p className="mb-6 text-lg leading-relaxed text-ink-medium font-medium">
+
+              <p className="mb-6 text-2xl leading-relaxed text-ink-medium font-accent font-medium">
                 Hi, I&apos;m Mostafa Khalifa, A2 Biology teacher with a 99%
                 student success rate. In November 2024 and June 2025, my
                 students and I all achieved <span className="circled-word text-ink">A*</span> in AL Biology. Now I am a
@@ -148,7 +152,7 @@ export default function LandingPage() {
                 this course to share the strategies that worked for us, and to
                 help you achieve the A*.
               </p>
-              
+
               <div className="mb-6 flex justify-center gap-4 md:justify-start">
                 {SOCIAL_LINKS.map((social) => (
                   <a
@@ -169,14 +173,37 @@ export default function LandingPage() {
                   </a>
                 ))}
               </div>
-              
+
+              {/* Wiggling Lab Equipment Doodles */}
+              <div className="absolute -right-6 top-8 hidden md:block rotate-[15deg] z-30 pointer-events-none">
+                <Image src="/assets/labEquipment.avif" alt="" width={115} height={115} className="retro-wiggle-medium" />
+              </div>
+              <div className="absolute -left-6 -bottom-10 hidden md:block rotate-[-12deg] z-30 pointer-events-none">
+                <Image src="/assets/testTubeRack.avif" alt="" width={120} height={120} className="retro-wiggle-slow" />
+              </div>
+
+              {/* Vintage Lab Equipment Polaroid/Schematic */}
+              <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:block rotate-[4deg] border-4 border-white bg-white p-2 shadow-md z-15 w-44 pointer-events-none">
+                <div className="relative aspect-[3/4] w-full bg-[#1A1A14] overflow-hidden">
+                  <Image 
+                    src="/assets/biggerLabEquipment.jfif" 
+                    alt="Lab Equipment Vintage Illustration" 
+                    fill 
+                    className="object-cover opacity-90"
+                  />
+                </div>
+                <p className="font-accent text-center text-xs mt-1.5 text-ink-medium select-none">
+                  A2 Biology Lab
+                </p>
+              </div>
+
               <div className="relative mb-4 self-start">
                 <h3 className="font-heading text-2xl font-semibold text-ink">
                   Credentials
                 </h3>
                 <DoodleCross className="absolute -top-1 -right-8 w-5 h-5 text-sage rotate-12" opacity={0.5} />
               </div>
-              
+
               <ul className="space-y-2 text-ink-muted">
                 {CREDENTIALS.map((item) => (
                   <li key={item} className="flex items-start gap-2">
@@ -201,9 +228,9 @@ export default function LandingPage() {
               </ul>
 
               {/* Idea bulb doodle */}
-              <Image src="/assets/ideaBulb.avif" alt="" width={80} height={80} className="absolute -right-8 -bottom-8 pointer-events-none rotate-12 hidden md:block z-30" />
+              <Image src="/assets/ideaBulb.avif" alt="" width={110} height={110} className="absolute -right-8 -bottom-8 pointer-events-none rotate-12 hidden md:block z-30" />
             </div>
-            
+
           </div>
         </section>
 
@@ -222,6 +249,13 @@ export default function LandingPage() {
                 const rotation = i === 0 ? -2 : i === 1 ? 1.5 : -1;
                 const bgClass = i === 1 ? "bg-paper-2" : "bg-paper-1";
 
+                // Vary horizontal position and rotation of the black tape
+                const tapePositionClass = i === 0 
+                  ? "top-[15%] -left-[30px] rotate-[-75deg]" 
+                  : i === 1 
+                    ? "-top-[14px] left-[65%] rotate-[6deg]" 
+                    : "top-[20%] -right-[30px] rotate-[75deg]";
+
                 return (
                   <motion.article
                     key={feature.title}
@@ -230,11 +264,11 @@ export default function LandingPage() {
                     whileInView="visible"
                     viewport={{ once: true, margin: "-80px" }}
                     variants={cardVariants}
-                    className={`relative rounded-[4px] p-8 pt-16 text-left shadow-[0_10px_30px_rgba(26,26,20,0.06)] overflow-hidden ${bgClass}`}
+                    className={`relative rounded-[4px] px-8 pt-24 pb-8 text-left shadow-[0_10px_30px_rgba(26,26,20,0.06)] min-h-[580px] flex flex-col ${bgClass}`}
                     style={{ rotate: rotation }}
                   >
-                    {/* Offset Black Tape at Top Center */}
-                    <div className="absolute -top-[14px] left-1/2 -translate-x-1/2 w-[85px] h-[28px] z-20 pointer-events-none">
+                    {/* Offset Black Tape (Varying Position & Rotation) */}
+                    <div className={`absolute w-[85px] h-[28px] z-20 pointer-events-none ${tapePositionClass}`}>
                       <Image src="/assets/blackTape.avif" alt="" fill className="object-cover opacity-90" />
                       <span className="absolute inset-0 flex items-center justify-center font-heading text-xs font-bold text-white tracking-widest pt-[2px]">
                         {`0${i + 1}`}
@@ -242,28 +276,37 @@ export default function LandingPage() {
                     </div>
 
                     {/* Feature Doodle */}
-                    <img 
-                      src={`/assets/${doodleConfig.file}`} 
-                      className={doodleConfig.classes} 
-                      alt="" 
+                    <img
+                      src={`/assets/${doodleConfig.file}`}
+                      className={doodleConfig.classes}
+                      alt=""
                     />
 
-                    <h3 className="font-heading mb-4 text-2xl font-bold text-ink leading-tight pr-16 mt-4">
-                      {"href" in feature ? (
-                        <a
-                          href={feature.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="transition-colors hover:text-sage"
-                        >
-                          {feature.title}
-                        </a>
-                      ) : (
-                        feature.title
-                      )}
-                    </h3>
-                    
-                    <p className="leading-relaxed text-ink-medium text-[14px]">
+                    {i === 2 && (
+                      <div className="absolute bottom-6 right-6 w-6 h-7 text-sage rotate-[-15deg] opacity-40 z-10">
+                        <DoodleWaterDrop />
+                      </div>
+                    )}
+
+                    <div className="relative self-start z-10 mb-6 mt-4">
+                      <h3 className="font-heading text-3xl font-bold text-ink leading-tight pr-8">
+                        {"href" in feature ? (
+                          <a
+                            href={feature.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="transition-colors hover:text-sage"
+                          >
+                            {feature.title}
+                          </a>
+                        ) : (
+                          feature.title
+                        )}
+                      </h3>
+                      <DoodleLineScribble className="absolute bottom-[-10px] left-0 w-32 h-2 text-sage" opacity={0.6} />
+                    </div>
+
+                    <p className="leading-relaxed text-ink-medium text-2xl font-accent font-medium mt-2">
                       {feature.description}
                     </p>
                   </motion.article>
@@ -274,10 +317,29 @@ export default function LandingPage() {
         </section>
 
         <section id="video-section" className="relative bg-transparent text-parchment px-4 py-32 sm:px-6">
+          {/* Floating Margin Doodles */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden z-0">
+            {/* DNA (Left Margin) */}
+            <div className="absolute left-[5%] bottom-[15%] rotate-[12deg] hidden lg:block">
+              <Image src="/assets/dna.avif" alt="" width={120} height={120} className="retro-wiggle-medium" />
+            </div>
+            {/* Magnifying Glass (Right Margin) */}
+            <div className="absolute right-[5%] top-[20%] rotate-[-8deg] hidden lg:block">
+              <Image src="/assets/magnifyingGlass.avif" alt="" width={110} height={110} className="retro-wiggle-fast" />
+            </div>
+            {/* White Lightbulb Doodle (Bottom-Right Margin) */}
+            <div className="absolute right-[8%] bottom-[10%] rotate-[15deg] hidden lg:block">
+              <Image src="/assets/ideaBulb.avif" alt="" width={110} height={110} className="retro-wiggle-slow" />
+            </div>
+          </div>
+
           <div className="relative mx-auto max-w-6xl z-20">
-            <h2 className="font-heading mb-12 text-3xl font-bold text-parchment sm:text-4xl text-center md:text-left">
-              How I Got an A* in A2 Biology
-            </h2>
+            <div className="relative inline-block mb-12 self-start">
+              <h2 className="font-heading text-3xl font-bold text-parchment sm:text-4xl text-center md:text-left">
+                How I Got an A* in A2 Biology
+              </h2>
+              <DoodleSmiley className="absolute -top-8 -right-12 hidden md:block rotate-[15deg] text-sage" opacity={0.6} />
+            </div>
             <div className="grid gap-8 md:grid-cols-2 items-center">
               <div className="relative overflow-hidden rounded-[2px] border-4 border-parchment/10 hard-shadow">
                 <iframe
@@ -290,10 +352,11 @@ export default function LandingPage() {
               </div>
               <div className="flex flex-col justify-center relative">
                 <Image src="/assets/whiteLeftArrow.png" alt="" width={60} height={60} className="absolute -left-16 top-0 hidden md:block" />
-                <p className="text-lg leading-relaxed text-parchment/80 font-medium">
+                <p className="text-2xl leading-relaxed text-parchment/80 font-accent font-medium relative pb-6">
                   In this video, I share my journey and strategies that helped
                   me achieve an A* in A2 Biology. Watch to learn more about my
                   study techniques and tips for success!
+                  <DoodleHeart className="absolute -bottom-6 -right-6 hidden md:block rotate-[-12deg] text-sage" opacity={0.5} />
                 </p>
               </div>
             </div>
@@ -317,10 +380,13 @@ export default function LandingPage() {
                 classes, and dedicated support.
               </p>
             </div>
-            <div>
-              <h4 className="font-heading mb-6 text-xl font-bold text-ink">
-                Connect With Us
-              </h4>
+             <div>
+              <div className="relative inline-block mb-6">
+                <h4 className="font-heading text-xl font-bold text-ink">
+                  Connect With Us
+                </h4>
+                <DoodleHeart className="absolute -top-3 -right-6 w-5 h-5 text-sage rotate-[-15deg]" opacity={0.5} />
+              </div>
               <div className="flex justify-center gap-4 md:justify-start">
                 {SOCIAL_LINKS.map((social) => (
                   <a
@@ -369,8 +435,9 @@ export default function LandingPage() {
               &copy; {new Date().getFullYear()} A2 Biology | Mostafa Khalifa.
               All Rights Reserved.
             </p>
-            <a href="/privacy" className="transition-colors hover:text-ink">
+            <a href="/privacy" className="transition-colors hover:text-ink relative inline-block">
               Privacy Policy
+              <DoodleCheck className="absolute -top-2 -right-6 w-4 h-4 text-sage rotate-12" opacity={0.6} />
             </a>
           </div>
         </div>
