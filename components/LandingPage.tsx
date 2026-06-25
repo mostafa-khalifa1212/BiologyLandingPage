@@ -185,10 +185,10 @@ export default function LandingPage() {
               {/* Vintage Lab Equipment Polaroid/Schematic */}
               <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:block rotate-[4deg] border-4 border-white bg-white p-2 shadow-md z-15 w-44 pointer-events-none">
                 <div className="relative aspect-[3/4] w-full bg-[#1A1A14] overflow-hidden">
-                  <Image 
-                    src="/assets/biggerLabEquipment.jfif" 
-                    alt="Lab Equipment Vintage Illustration" 
-                    fill 
+                  <Image
+                    src="/assets/biggerLabEquipment.jfif"
+                    alt="Lab Equipment Vintage Illustration"
+                    fill
                     className="object-cover opacity-90"
                   />
                 </div>
@@ -252,10 +252,10 @@ export default function LandingPage() {
                 const bgClass = i === 1 ? "bg-paper-2" : "bg-paper-1";
 
                 // Vary horizontal position and rotation of the black tape
-                const tapePositionClass = i === 0 
-                  ? "top-[15%] -left-[30px] rotate-[-75deg]" 
-                  : i === 1 
-                    ? "-top-[14px] left-[65%] rotate-[6deg]" 
+                const tapePositionClass = i === 0
+                  ? "top-[15%] -left-[30px] rotate-[-75deg]"
+                  : i === 1
+                    ? "-top-[14px] left-[65%] rotate-[6deg]"
                     : "top-[20%] -right-[30px] rotate-[75deg]";
 
                 return (
@@ -382,7 +382,7 @@ export default function LandingPage() {
                 classes, and dedicated support.
               </p>
             </div>
-             <div>
+            <div>
               <div className="relative inline-block mb-6">
                 <h4 className="font-heading text-xl font-bold text-ink">
                   Connect With Us
@@ -434,7 +434,7 @@ export default function LandingPage() {
           </div>
           <div className="border-t border-ink/10 pt-8 text-center text-sm font-medium text-ink-muted flex flex-col md:flex-row justify-between items-center gap-4">
             <p>
-              &copy; {new Date().getFullYear()} A2 Biology | Mostafa Khalifa.
+              &copy; {new Date().getFullYear()} AL Biology | Mostafa Khalifa.
               All Rights Reserved.
             </p>
             <a href="/privacy" className="transition-colors hover:text-ink relative inline-block">
