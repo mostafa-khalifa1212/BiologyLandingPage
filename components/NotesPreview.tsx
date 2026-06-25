@@ -249,15 +249,15 @@ const getResponsiveConfig = (width: number) => {
     return {
       sideX: -260,
       sideY: 15,
-      sideScale: 0.75,
-      activeScale: 0.9,
+      sideScale: 0.8,
+      activeScale: 0.95,
     };
   } else {
     return {
       sideX: -100,
       sideY: 10,
-      sideScale: 0.6,
-      activeScale: 0.75,
+      sideScale: 0.75,
+      activeScale: 0.9,
     };
   }
 };
@@ -314,8 +314,11 @@ export default function NotesPreview() {
           // Smooth step easing
           const easeT = cardProg * cardProg * (3 - 2 * cardProg);
 
-          // Calculate offset target based on screen width
-          const targetX = respConfig.sideX + cardConfig.sideXOffset * (width < 768 ? 0.4 : 1.0);
+          // Calculate offset target dynamically so only 1/3 is visible
+          const cardWidth = Math.min(600, width * 0.9);
+          const dynamicSideX = -(width / 2 + (respConfig.sideScale * cardWidth) / 6);
+
+          const targetX = dynamicSideX + cardConfig.sideXOffset * (width < 768 ? 0.4 : 1.0);
           const targetY = respConfig.sideY + cardConfig.sideYOffset * (width < 768 ? 0.4 : 1.0);
 
           const currentX = 0 + easeT * (targetX - 0);
@@ -352,23 +355,23 @@ export default function NotesPreview() {
     <>
       <section ref={sectionRef} id="free-notes" className="relative h-[400vh] w-full bg-dotty paper-texture cut-paper-top">
         {/* Sticky Scroll Container */}
-        <div className="sticky top-0 h-[100vh] w-full flex flex-col items-center overflow-hidden z-10 pt-[12vh]">
+        <div className="sticky top-0 h-[100vh] w-full flex flex-col items-center overflow-hidden z-10 pt-[4vh] sm:pt-[6vh]">
           
           {/* Floating Margin Doodles */}
-          <div className="pointer-events-none absolute inset-0 overflow-hidden z-0">
+          <div className="pointer-events-none absolute inset-0 overflow-hidden z-30">
              {/* Book Doodle (Left Margin) */}
-             <div className="absolute left-[8%] top-[30%] rotate-[-12deg] hidden lg:block">
-               <Image src="/assets/book.avif" alt="" width={110} height={110} className="retro-wiggle-slow" />
+             <div className="absolute left-[2%] top-[30%] rotate-[-12deg] w-14 h-14 sm:w-24 sm:h-24 lg:w-28 lg:h-28">
+               <Image src="/assets/book.avif" alt="" fill className="retro-wiggle-slow object-contain" />
              </div>
  
              {/* DNA Doodle (Bottom-Left Margin) */}
-             <div className="absolute left-[10%] bottom-[20%] rotate-[15deg] hidden lg:block">
-               <Image src="/assets/dna.avif" alt="" width={110} height={110} className="retro-wiggle-medium" />
+             <div className="absolute left-[2%] bottom-[20%] rotate-[15deg] w-14 h-14 sm:w-24 sm:h-24 lg:w-28 lg:h-28">
+               <Image src="/assets/dna.avif" alt="" fill className="retro-wiggle-medium object-contain" />
              </div>
  
              {/* Magnifying Glass Doodle (Right Margin) */}
-             <div className="absolute right-[8%] top-[45%] rotate-[8deg] hidden lg:block">
-               <Image src="/assets/magnifyingGlass.avif" alt="" width={100} height={100} className="retro-wiggle-fast" />
+             <div className="absolute right-[2%] top-[45%] rotate-[8deg] w-14 h-14 sm:w-24 sm:h-24 lg:w-28 lg:h-28">
+               <Image src="/assets/magnifyingGlass.avif" alt="" fill className="retro-wiggle-fast object-contain" />
              </div>
            </div>
           
@@ -429,7 +432,7 @@ export default function NotesPreview() {
           </div>
 
           {/* Card Stack Container */}
-          <div className="relative w-[90vw] max-w-[480px] aspect-[3/4] mt-8 sm:mt-12 flex-shrink-0 white-shadow-bg">
+          <div className="relative w-[90vw] max-w-[600px] aspect-[3/4] mt-4 sm:mt-6 flex-shrink-0 white-shadow-bg">
             {/* Paperclip */}
             <img src="/assets/paperClip.avif" className="absolute -top-[20px] right-[40px] w-[40px] sm:w-[48px] z-[100] pointer-events-none" alt="" />
             
@@ -442,43 +445,36 @@ export default function NotesPreview() {
                   <div 
                     key={chapter.id}
                     ref={(el) => { cardsRef.current[i] = el; }}
-                    className={`note-card absolute inset-0 rounded-[4px] ${config.bgClass} flex flex-col overflow-hidden shadow-[0_10px_30px_rgba(26,26,20,0.08)]`}
+                    className={`note-card absolute inset-0 rounded-[4px] ${config.bgClass} flex flex-col overflow-visible shadow-[0_10px_30px_rgba(26,26,20,0.08)]`}
                     style={{ zIndex }}
                   >
-                    <img src="/assets/cutPaperTop.avif" className="absolute -top-[2px] left-0 w-full h-[40px] object-fill z-[2] pointer-events-none" alt="" />
-                    
-                    <img 
-                      src="/assets/blackTape.avif" 
-                      className="absolute top-[16px] left-1/2 w-[70px] h-[22px] object-cover z-[3] opacity-85 pointer-events-none" 
-                      style={{ transform: `translateX(-50%) rotate(${config.tapeRot}deg)` }}
-                      alt="" 
-                    />
+                    <img src="/assets/cutPaperTop.avif" className="absolute -top-[20px] left-0 w-full h-[40px] object-fill z-[2] pointer-events-none" alt="" />
 
-                    <div className="relative z-10 pt-[55px] sm:pt-[70px] px-[20px] sm:px-[36px] pb-[32px] sm:pb-[48px] h-full flex flex-col gap-2 sm:gap-3">
+                    <div className="relative z-10 pt-[60px] sm:pt-[80px] px-[24px] sm:px-[40px] pb-[40px] sm:pb-[56px] h-full flex flex-col gap-3 sm:gap-4">
                       <div className="flex justify-between items-center relative z-20">
-                        <span className="font-sans text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted">
+                        <span className="font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.12em] text-ink-muted">
                           {chapter.number}
                         </span>
                         {chapter.isFree ? (
-                          <span className="rounded-[4px] bg-sage/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-sage relative">
+                          <span className="rounded-[4px] bg-sage/20 px-3 py-1 text-sm font-bold uppercase tracking-wide text-sage relative">
                             Free
                             <DoodleCheck className="absolute -top-1.5 -right-3.5 w-3.5 h-3.5 text-sage" opacity={0.8} />
                           </span>
                         ) : (
-                          <span className="rounded-[4px] border border-border bg-ink/5 px-2.5 py-0.5 text-xs font-medium text-ink-muted">
+                          <span className="rounded-[4px] border border-border bg-ink/5 px-3 py-1 text-sm font-medium text-ink-muted">
                             Full Course
                           </span>
                         )}
                       </div>
                       
                       <div className="relative self-start z-20">
-                        <h3 className="font-heading text-2xl sm:text-3xl font-bold text-ink leading-[1.15]">
+                        <h3 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-ink leading-[1.1]">
                           {chapter.title}
                         </h3>
-                        <DoodleLineScribble className="absolute bottom-[-6px] left-0 w-24 h-1.5 text-sage" opacity={0.4} />
+                        <DoodleLineScribble className="absolute bottom-[-6px] left-0 w-32 h-1.5 text-sage" opacity={0.4} />
                       </div>
                       
-                      <p className="font-accent text-[20px] sm:text-[22px] text-ink-medium leading-[1.3] mt-1 pr-12 relative z-20">
+                      <p className="font-accent text-[24px] sm:text-[28px] lg:text-[32px] text-ink-medium leading-[1.25] mt-1 pr-12 relative z-20">
                         {chapter.brief}
                       </p>
 
@@ -486,7 +482,7 @@ export default function NotesPreview() {
                         {chapter.topics.map((topic) => (
                           <li
                              key={topic}
-                             className="rounded-[4px] bg-ink/5 px-2.5 py-1 text-xs text-ink-muted"
+                             className="rounded-[4px] bg-ink/5 px-3 py-1.5 text-sm sm:text-base text-ink-medium"
                           >
                             {topic}
                           </li>
@@ -509,7 +505,7 @@ export default function NotesPreview() {
                       )}
                     </div>
                     
-                    <img src="/assets/cutPaperBottomClean.avif" className="absolute -bottom-[2px] left-0 w-full h-[40px] object-fill z-[2] pointer-events-none" alt="" />
+                    <img src="/assets/cutPaperBottomClean.avif" className="absolute -bottom-[20px] left-0 w-full h-[40px] object-fill z-[2] pointer-events-none" alt="" />
                   </div>
                 );
               })}
@@ -522,12 +518,12 @@ export default function NotesPreview() {
         </div>
       </section>
 
-      <div className="w-full bg-parchment-dark py-16 flex justify-center relative z-20 paper-texture cut-paper-bottom mb-24">
+      <div className="w-full bg-parchment-dark py-16 flex justify-center relative z-20 paper-texture cut-paper-bottom mb-24 px-4">
         {activeTab === "A2" ? (
           <button
             type="button"
             onClick={openRegister}
-            className="btn-stamp"
+            className="btn-stamp px-8 py-4 text-lg font-bold text-center w-full sm:w-auto"
           >
             Register to Access Free Notes
           </button>
@@ -535,7 +531,7 @@ export default function NotesPreview() {
           <button
             type="button"
             onClick={openCourseRegister}
-            className="btn-stamp"
+            className="btn-stamp px-8 py-4 text-lg font-bold text-center w-full sm:w-auto"
           >
             Register for Full AS Course
           </button>

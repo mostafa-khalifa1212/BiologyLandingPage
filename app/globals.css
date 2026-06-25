@@ -105,7 +105,7 @@
 
   /* ── Stamp Buttons ── */
   .btn-stamp {
-    @apply bg-ink text-parchment px-7 py-3.5 font-sans text-[15px] font-medium border-2 border-ink rounded-[2px] cursor-pointer;
+    @apply bg-ink text-parchment border-2 border-ink rounded-[2px] cursor-pointer;
     box-shadow: 4px 4px 0 #fe5400;
     transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
   }
@@ -131,7 +131,7 @@
   }
 
   .btn-stamp-outline {
-    @apply bg-transparent text-ink px-7 py-3.5 font-sans text-[15px] font-medium border-2 border-ink rounded-[2px] cursor-pointer;
+    @apply bg-transparent text-ink border-2 border-ink rounded-[2px] cursor-pointer;
     box-shadow: 3px 3px 0 #1A1A14;
     transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
   }

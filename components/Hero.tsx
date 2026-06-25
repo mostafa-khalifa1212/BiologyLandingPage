@@ -128,33 +128,33 @@ export default function Hero() {
       {/* Floating Doodles */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden z-10">
         {/* Rocket: Inverted and wiggling */}
-        <div className="absolute right-[10%] top-[15%] hidden lg:block rotate-[20deg]">
-          <Image src="/assets/rocket.avif" alt="" width={100} height={100} className="retro-wiggle-slow invert" />
+        <div className="absolute right-[10%] top-[15%] rotate-[20deg] w-16 h-16 sm:w-24 sm:h-24 lg:w-28 lg:h-28">
+          <Image src="/assets/rocket.avif" alt="" fill className="retro-wiggle-slow invert object-contain" />
         </div>
         
         {/* Improving Graph: Inverted and wiggling */}
-        <div className="absolute left-[8%] bottom-[25%] hidden lg:block rotate-[3deg]">
-          <Image src="/assets/improvingGraph.avif" alt="" width={150} height={150} className="retro-wiggle-medium invert" />
+        <div className="absolute left-[8%] bottom-[25%] rotate-[3deg] w-20 h-20 sm:w-32 sm:h-32 lg:w-36 lg:h-36">
+          <Image src="/assets/improvingGraph.avif" alt="" fill className="retro-wiggle-medium invert object-contain" />
         </div>
 
         {/* Black Top Right Arrow: Inverted and wiggling */}
-        <div className="absolute left-[20%] bottom-[35%] hidden lg:block">
-          <Image src="/assets/blackTopRightArrow.avif" alt="" width={50} height={50} className="retro-wiggle-fast invert" />
+        <div className="absolute left-[20%] bottom-[35%] w-10 h-10 sm:w-14 sm:h-14 lg:w-16 lg:h-16">
+          <Image src="/assets/blackTopRightArrow.avif" alt="" fill className="retro-wiggle-fast invert object-contain" />
         </div>
 
         {/* Microscope: New, wiggling */}
-        <div className="absolute left-[5%] top-[25%] hidden lg:block rotate-[-10deg]">
-          <Image src="/assets/microscope.avif" alt="" width={120} height={120} className="retro-wiggle-slow" />
+        <div className="absolute left-[5%] top-[25%] rotate-[-10deg] w-14 h-14 sm:w-24 sm:h-24 lg:w-30 lg:h-30">
+          <Image src="/assets/microscope.avif" alt="" fill className="retro-wiggle-slow object-contain" />
         </div>
 
         {/* Atom: New, wiggling */}
-        <div className="absolute right-[5%] top-[40%] hidden lg:block rotate-[15deg]">
-          <Image src="/assets/atom.avif" alt="" width={110} height={110} className="retro-wiggle-fast" />
+        <div className="absolute right-[5%] top-[40%] rotate-[15deg] w-14 h-14 sm:w-22 sm:h-22 lg:w-28 lg:h-28">
+          <Image src="/assets/atom.avif" alt="" fill className="retro-wiggle-fast object-contain" />
         </div>
 
         {/* Yellow Light Bulb: New, colored, wiggling */}
-        <div className="absolute right-[15%] bottom-[20%] hidden lg:block rotate-[-8deg]">
-          <Image src="/assets/yellowLightBulb.avif" alt="" width={115} height={115} className="retro-wiggle-medium" />
+        <div className="absolute right-[15%] bottom-[20%] rotate-[-8deg] w-14 h-14 sm:w-24 sm:h-24 lg:w-28 lg:h-28">
+          <Image src="/assets/yellowLightBulb.avif" alt="" fill className="retro-wiggle-medium object-contain" />
         </div>
       </div>
 
@@ -205,7 +205,7 @@ export default function Hero() {
           <motion.button
             type="button"
             onClick={openCourseRegister}
-            className="btn-stamp w-full py-4 text-center text-lg font-bold sm:w-auto"
+            className="btn-stamp w-full px-8 py-4 text-center text-lg font-bold sm:w-auto"
             transition={springTransition}
           >
             Register for Nov 2026 Course
@@ -216,7 +216,7 @@ export default function Hero() {
             <motion.button
               type="button"
               onClick={openRegister}
-              className="btn-stamp-outline w-full py-4 text-center text-lg font-bold"
+              className="btn-stamp-outline w-full px-8 py-4 text-center text-lg font-bold"
               transition={springTransition}
             >
               Get Free Notes

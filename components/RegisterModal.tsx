@@ -239,7 +239,7 @@ function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
             <motion.button
               type="submit"
               disabled={!isFormValid || formState === "submitting"}
-              className="btn-stamp w-full py-3 text-center font-heading font-bold"
+              className="btn-stamp w-full px-6 py-3 text-center font-heading font-bold"
               transition={springTransition}
             >
               {formState === "submitting" ? (

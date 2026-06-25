@@ -175,11 +175,11 @@ export default function LandingPage() {
               </div>
 
               {/* Wiggling Lab Equipment Doodles */}
-              <div className="absolute -right-6 top-8 hidden md:block rotate-[15deg] z-30 pointer-events-none">
-                <Image src="/assets/labEquipment.avif" alt="" width={115} height={115} className="retro-wiggle-medium" />
+              <div className="absolute -right-4 top-8 rotate-[15deg] z-30 pointer-events-none w-14 h-14 sm:w-20 sm:h-20 lg:w-24 lg:h-24">
+                <Image src="/assets/labEquipment.avif" alt="" fill className="retro-wiggle-medium object-contain" />
               </div>
-              <div className="absolute -left-6 -bottom-10 hidden md:block rotate-[-12deg] z-30 pointer-events-none">
-                <Image src="/assets/testTubeRack.avif" alt="" width={120} height={120} className="retro-wiggle-slow" />
+              <div className="absolute -left-4 -bottom-8 rotate-[-12deg] z-30 pointer-events-none w-14 h-14 sm:w-20 sm:h-20 lg:w-24 lg:h-24">
+                <Image src="/assets/testTubeRack.avif" alt="" fill className="retro-wiggle-slow object-contain" />
               </div>
 
               {/* Vintage Lab Equipment Polaroid/Schematic */}
@@ -228,7 +228,9 @@ export default function LandingPage() {
               </ul>
 
               {/* Idea bulb doodle */}
-              <Image src="/assets/ideaBulb.avif" alt="" width={110} height={110} className="absolute -right-8 -bottom-8 pointer-events-none rotate-12 hidden md:block z-30" />
+              <div className="absolute -right-4 -bottom-6 pointer-events-none rotate-12 z-30 w-14 h-14 sm:w-22 sm:h-22 lg:w-28 lg:h-28">
+                <Image src="/assets/ideaBulb.avif" alt="" fill className="object-contain" />
+              </div>
             </div>
 
           </div>
@@ -318,18 +320,18 @@ export default function LandingPage() {
 
         <section id="video-section" className="relative bg-transparent text-parchment px-4 py-32 sm:px-6">
           {/* Floating Margin Doodles */}
-          <div className="pointer-events-none absolute inset-0 overflow-hidden z-0">
+          <div className="pointer-events-none absolute inset-0 overflow-hidden z-30">
             {/* DNA (Left Margin) */}
-            <div className="absolute left-[5%] bottom-[15%] rotate-[12deg] hidden lg:block">
-              <Image src="/assets/dna.avif" alt="" width={120} height={120} className="retro-wiggle-medium" />
+            <div className="absolute left-[1%] sm:left-[3%] bottom-[12%] rotate-[12deg] w-14 h-14 sm:w-24 sm:h-24 lg:w-30 lg:h-30">
+              <Image src="/assets/dna.avif" alt="" fill className="retro-wiggle-medium object-contain" />
             </div>
             {/* Magnifying Glass (Right Margin) */}
-            <div className="absolute right-[5%] top-[20%] rotate-[-8deg] hidden lg:block">
-              <Image src="/assets/magnifyingGlass.avif" alt="" width={110} height={110} className="retro-wiggle-fast" />
+            <div className="absolute right-[1%] sm:right-[3%] top-[18%] rotate-[-8deg] w-12 h-12 sm:w-20 sm:h-20 lg:w-24 lg:h-24">
+              <Image src="/assets/magnifyingGlass.avif" alt="" fill className="retro-wiggle-fast object-contain" />
             </div>
             {/* White Lightbulb Doodle (Bottom-Right Margin) */}
-            <div className="absolute right-[8%] bottom-[10%] rotate-[15deg] hidden lg:block">
-              <Image src="/assets/ideaBulb.avif" alt="" width={110} height={110} className="retro-wiggle-slow" />
+            <div className="absolute right-[2%] sm:right-[6%] bottom-[8%] rotate-[15deg] w-14 h-14 sm:w-24 sm:h-24 lg:w-28 lg:h-28">
+              <Image src="/assets/ideaBulb.avif" alt="" fill className="retro-wiggle-slow object-contain" />
             </div>
           </div>
 

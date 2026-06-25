@@ -70,13 +70,13 @@ export default function Header() {
         style={{ backgroundImage: "url('/assets/cutPaperBottom.avif')", backgroundSize: '100% 100%' }}
       />
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link href="/" className="flex-shrink-0">
+        <Link href="/" className="flex-shrink-1 min-w-0 max-w-[110px] sm:max-w-none">
           <Image
             src="/assets/output-onlinepngtools (2).png"
             alt="A2 Biology Logo"
             width={160}
             height={40}
-            className="h-8 w-auto md:h-10 logo-dark"
+            className="h-7 w-auto sm:h-8 md:h-10 logo-dark object-contain"
             priority
           />
         </Link>
@@ -101,11 +101,11 @@ export default function Header() {
           </motion.button>
         </nav>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 md:hidden flex-shrink-0">
           <motion.button
             type="button"
             onClick={openRegister}
-            className="btn-stamp px-3 py-1 text-xs font-bold"
+            className="btn-stamp px-2.5 py-1 text-[11px] font-bold whitespace-nowrap"
             transition={springTransition}
           >
             Free Notes
@@ -114,13 +114,13 @@ export default function Header() {
             type="button"
             aria-label="Open menu"
             onClick={() => setMobileOpen(true)}
-            className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-[4px] border border-border bg-parchment-dark/80"
+            className="flex h-10 w-10 flex-row items-center justify-center gap-1 rounded-[4px] border border-border bg-parchment-dark/80 flex-shrink-0"
             whileTap={{ scale: 0.95 }}
             transition={springTransition}
           >
-            <span className="block h-0.5 w-5 rounded-full bg-ink" />
-            <span className="block h-0.5 w-5 rounded-full bg-ink" />
-            <span className="block h-0.5 w-5 rounded-full bg-ink" />
+            <span className="block h-5 w-0.5 rounded-full bg-ink" />
+            <span className="block h-5 w-0.5 rounded-full bg-ink" />
+            <span className="block h-5 w-0.5 rounded-full bg-ink" />
           </motion.button>
         </div>
       </div>
@@ -169,7 +169,7 @@ export default function Header() {
                       setMobileOpen(false);
                       openCourseRegister();
                     }}
-                    className="btn-stamp block w-full py-2.5 text-center font-bold"
+                    className="btn-stamp block w-full px-5 py-2.5 text-center text-sm font-bold"
                   >
                     Register for Full Course
                   </button>
