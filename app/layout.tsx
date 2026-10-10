@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AL Biology | Mostafa Khalifa",
     description:
-      "Register for free chapter notes and the Nov 2026 A2 Biology course.",
+      "Register for free chapter notes and the June 2027 A2 Biology course.",
     type: "website",
   },
 };

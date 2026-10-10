@@ -69,19 +69,18 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed left-0 right-0 top-0 z-50 transition-transform duration-300 ease-in-out bg-[#fef9f5] shadow-sm ${
-        visible ? "translate-y-0" : "-translate-y-full"
-      }`}
+      className={`fixed left-0 right-0 top-0 z-50 transition-transform duration-300 ease-in-out bg-[#fef9f5] shadow-sm ${visible ? "translate-y-0" : "-translate-y-full"
+        }`}
     >
-      <div 
-        className="absolute -bottom-[20px] left-0 right-0 h-[40px] pointer-events-none -z-10" 
+      <div
+        className="absolute -bottom-[20px] left-0 right-0 h-[40px] pointer-events-none -z-10"
         style={{ backgroundImage: "url('/assets/cutPaperBottom.avif')", backgroundSize: '100% 100%' }}
       />
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
         <Link href="/" className="flex-shrink-1 min-w-0 max-w-[110px] sm:max-w-none">
           <Image
-            src="/assets/output-onlinepngtools (2).png"
-            alt="A2 Biology Logo"
+            src="/assets/MostafaKhalifaHeader.png"
+            alt="Mostafa Khalifa Biology Logo"
             width={160}
             height={40}
             className="h-7 w-auto sm:h-8 md:h-10 logo-dark object-contain"

@@ -63,7 +63,7 @@ type CourseRegisterModalProps = {
 type FormState = "idle" | "submitting" | "success" | "error";
 
 const COURSE_OPTIONS = ["AS Biology Cambridge", "A2 Biology Cambridge"] as const;
-const SESSION_OPTIONS = ["November 2026", "June 2027"] as const;
+const SESSION_OPTIONS = ["June 2027", "November 2026"] as const;
 const GRADE_OPTIONS = ["11", "12"] as const;
 const RETAKE_OPTIONS = ["No, First time", "Yes, retake💔"] as const;
 const PREFERENCE_OPTIONS = ["Online", "On Ground (Madinet Nasr)"] as const;

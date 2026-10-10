@@ -24,7 +24,7 @@ import {
   DoodleSpiral,
 } from "@/components/Doodles";
 
-const COURSE_START = new Date("July 7, 2026 12:00:00").getTime();
+const COURSE_START = new Date("October 24, 2026 00:00:00").getTime();
 
 function CountdownClock() {
   const [timeLeft, setTimeLeft] = useState<string>("");
@@ -63,7 +63,7 @@ function CountdownClock() {
       variants={fadeUpVariant}
     >
       <span className="mb-1 text-xs font-medium uppercase tracking-widest text-ink-muted">
-        Nov 2026 Course Starts In
+        June 2027 Course Starts In
       </span>
       <span className="font-heading text-2xl font-bold tabular-nums text-ink sm:text-3xl">
         {timeLeft || "—"}
@@ -208,7 +208,7 @@ export default function Hero() {
             className="btn-stamp w-full px-8 py-4 text-center text-lg font-bold sm:w-auto"
             transition={springTransition}
           >
-            Register for Nov 2026 Course
+            Register for June 2027 Session
           </motion.button>
 
           <div className="relative w-full sm:w-auto">
