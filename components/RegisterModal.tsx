@@ -4,6 +4,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useState,
   type ReactNode,
 } from "react";
@@ -11,11 +12,14 @@ import { motion } from "framer-motion";
 import ModalShell, {
   inputClassName,
   labelClassName,
+  optionClassName,
 } from "@/components/ModalShell";
 import { springTransition } from "@/lib/motion";
 
+export type NotesSubject = "a2" | "as" | "both";
+
 type RegisterContextValue = {
-  openRegister: () => void;
+  openRegister: (defaultSubject?: NotesSubject | React.MouseEvent) => void;
   closeRegister: () => void;
   isOpen: boolean;
 };
@@ -36,14 +40,33 @@ type RegisterProviderProps = {
 
 export function RegisterProvider({ children }: RegisterProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [initialSubject, setInitialSubject] = useState<NotesSubject>("a2");
 
-  const openRegister = useCallback(() => setIsOpen(true), []);
+  const openRegister = useCallback(
+    (defaultSubject?: NotesSubject | React.MouseEvent) => {
+      if (
+        defaultSubject === "as" ||
+        defaultSubject === "a2" ||
+        defaultSubject === "both"
+      ) {
+        setInitialSubject(defaultSubject);
+      } else {
+        setInitialSubject("a2");
+      }
+      setIsOpen(true);
+    },
+    []
+  );
   const closeRegister = useCallback(() => setIsOpen(false), []);
 
   return (
     <RegisterContext.Provider value={{ openRegister, closeRegister, isOpen }}>
       {children}
-      <RegisterModal isOpen={isOpen} onClose={closeRegister} />
+      <RegisterModal
+        isOpen={isOpen}
+        onClose={closeRegister}
+        initialSubject={initialSubject}
+      />
     </RegisterContext.Provider>
   );
 }
@@ -51,16 +74,29 @@ export function RegisterProvider({ children }: RegisterProviderProps) {
 type RegisterModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  initialSubject?: NotesSubject;
 };
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
-const FREE_NOTES_PDF = "/assets/Ch1 Respiration&Energy FREENOTES.pdf";
+const A2_NOTES_PDF = "/assets/Ch1 Respiration&Energy FREENOTES.pdf";
+const AS_NOTES_PDF = "/assets/Ch1 Cell Structure FREENOTES.pdf";
 
-function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
+function RegisterModal({
+  isOpen,
+  onClose,
+  initialSubject = "a2",
+}: RegisterModalProps) {
   const [formState, setFormState] = useState<FormState>("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [consent, setConsent] = useState(false);
+  const [selectedNotes, setSelectedNotes] = useState<NotesSubject>(initialSubject);
+
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedNotes(initialSubject);
+    }
+  }, [isOpen, initialSubject]);
 
   const resetForm = () => {
     setFormState("idle");
@@ -88,10 +124,22 @@ function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
     setErrorMessage("");
 
     try {
+      const notesLabel =
+        selectedNotes === "both"
+          ? "Both AS & A2 Notes"
+          : selectedNotes === "as"
+          ? "AS Biology (Ch01 Cell Structure)"
+          : "A2 Biology (Ch12 Respiration & Energy)";
+
       const response = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone }),
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          notesChoice: notesLabel,
+        }),
       });
 
       const data: { message?: string } = await response.json();
@@ -102,12 +150,27 @@ function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
 
       setFormState("success");
 
-      const link = document.createElement("a");
-      link.href = FREE_NOTES_PDF;
-      link.download = "Ch1 Respiration&Energy FREENOTES.pdf";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      const triggerDownload = (fileUrl: string, fileName: string) => {
+        const link = document.createElement("a");
+        link.href = fileUrl;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+
+      if (selectedNotes === "a2" || selectedNotes === "both") {
+        triggerDownload(A2_NOTES_PDF, "Ch1 Respiration&Energy FREENOTES.pdf");
+      }
+
+      if (selectedNotes === "as" || selectedNotes === "both") {
+        setTimeout(
+          () => {
+            triggerDownload(AS_NOTES_PDF, "Ch1 Cell Structure FREENOTES.pdf");
+          },
+          selectedNotes === "both" ? 400 : 0
+        );
+      }
     } catch (error) {
       setFormState("error");
       setErrorMessage(
@@ -125,6 +188,7 @@ function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
       isOpen={isOpen}
       onClose={handleClose}
       titleId="register-modal-title"
+      maxWidth="lg"
     >
       {formState === "success" ? (
         <motion.div
@@ -141,9 +205,36 @@ function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
           <h2 id="register-modal-title" className="font-heading text-2xl font-bold text-ink">
             You&apos;re In!
           </h2>
-          <p className="mt-3 text-ink-medium">
+          <p className="mt-2 text-sm text-ink-medium">
             Thank you for registering! Your notes download should start automatically.
           </p>
+
+          <div className="mt-5 space-y-2.5 text-left">
+            <span className="text-xs font-semibold uppercase tracking-wider text-ink-muted">
+              Manual Download Links:
+            </span>
+            {(selectedNotes === "as" || selectedNotes === "both") && (
+              <a
+                href={AS_NOTES_PDF}
+                download="Ch1 Cell Structure FREENOTES.pdf"
+                className="btn-stamp-outline flex items-center justify-between px-4 py-2.5 text-xs font-semibold"
+              >
+                <span>📄 AS Chapter 1 Notes (Cell Structure)</span>
+                <span className="font-bold text-sage">Download ↓</span>
+              </a>
+            )}
+            {(selectedNotes === "a2" || selectedNotes === "both") && (
+              <a
+                href={A2_NOTES_PDF}
+                download="Ch1 Respiration&Energy FREENOTES.pdf"
+                className="btn-stamp-outline flex items-center justify-between px-4 py-2.5 text-xs font-semibold"
+              >
+                <span>📄 A2 Chapter 1 Notes (Respiration &amp; Energy)</span>
+                <span className="font-bold text-sage">Download ↓</span>
+              </a>
+            )}
+          </div>
+
           <motion.button
             type="button"
             onClick={handleClose}
@@ -164,13 +255,90 @@ function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
             Get Your Free Chapter Notes
           </h2>
           <p className="mb-6 mt-2 text-center text-sm text-ink-muted sm:text-base">
-            Enter your details to receive &quot;Respiration &amp; Energy&quot; notes instantly.
+            Enter your details to receive Chapter 1 notes instantly.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            <fieldset className="space-y-1.5">
+              <legend className={labelClassName}>Which free notes would you like? *</legend>
+              <div className="space-y-2">
+                <label className={optionClassName}>
+                  <input
+                    type="radio"
+                    name="notesChoice"
+                    value="a2"
+                    checked={selectedNotes === "a2"}
+                    onChange={() => setSelectedNotes("a2")}
+                    className="h-4 w-4 border-border bg-parchment text-sage focus:ring-sage/30"
+                  />
+                  <div className="flex-1 text-left">
+                    <div className="flex items-center justify-between">
+                      <span className="font-heading font-semibold text-ink">
+                        A2 Biology Free Notes
+                      </span>
+                      <span className="rounded bg-ink/10 px-2 py-0.5 text-[10px] font-bold text-ink">
+                        A2
+                      </span>
+                    </div>
+                    <p className="text-xs text-ink-muted">
+                      Chapter 12 · Respiration &amp; Energy
+                    </p>
+                  </div>
+                </label>
+
+                <label className={optionClassName}>
+                  <input
+                    type="radio"
+                    name="notesChoice"
+                    value="as"
+                    checked={selectedNotes === "as"}
+                    onChange={() => setSelectedNotes("as")}
+                    className="h-4 w-4 border-border bg-parchment text-sage focus:ring-sage/30"
+                  />
+                  <div className="flex-1 text-left">
+                    <div className="flex items-center justify-between">
+                      <span className="font-heading font-semibold text-ink">
+                        AS Biology Free Notes
+                      </span>
+                      <span className="rounded bg-sage/15 px-2 py-0.5 text-[10px] font-bold text-sage">
+                        AS
+                      </span>
+                    </div>
+                    <p className="text-xs text-ink-muted">
+                      Chapter 1 · Cell Structure
+                    </p>
+                  </div>
+                </label>
+
+                <label className={optionClassName}>
+                  <input
+                    type="radio"
+                    name="notesChoice"
+                    value="both"
+                    checked={selectedNotes === "both"}
+                    onChange={() => setSelectedNotes("both")}
+                    className="h-4 w-4 border-border bg-parchment text-sage focus:ring-sage/30"
+                  />
+                  <div className="flex-1 text-left">
+                    <div className="flex items-center justify-between">
+                      <span className="font-heading font-semibold text-ink">
+                        Both AS &amp; A2 Free Notes
+                      </span>
+                      <span className="rounded bg-sage/20 px-2 py-0.5 text-[10px] font-bold text-sage">
+                        AS + A2
+                      </span>
+                    </div>
+                    <p className="text-xs text-ink-muted">
+                      Cell Structure + Respiration &amp; Energy
+                    </p>
+                  </div>
+                </label>
+              </div>
+            </fieldset>
+
             <div>
               <label htmlFor="register-name" className={labelClassName}>
-                Full Name
+                Full Name *
               </label>
               <input
                 id="register-name"
@@ -185,7 +353,7 @@ function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
 
             <div>
               <label htmlFor="register-email" className={labelClassName}>
-                Email Address
+                Email Address *
               </label>
               <input
                 id="register-email"
@@ -200,7 +368,7 @@ function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
 
             <div>
               <label htmlFor="register-phone" className={labelClassName}>
-                Phone Number
+                Phone Number *
               </label>
               <input
                 id="register-phone"

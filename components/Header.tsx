@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRegisterModal } from "@/components/RegisterModal";
 import { useCourseRegisterModal } from "@/components/CourseRegisterModal";
+import { useLenis } from "@/components/SmoothScroll";
 import { springTransition } from "@/lib/motion";
 
 const NAV_LINKS = [
@@ -21,6 +22,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { openRegister } = useRegisterModal();
   const { openCourseRegister } = useCourseRegisterModal();
+  const lenis = useLenis();
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -54,10 +56,16 @@ export default function Header() {
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
+    if (mobileOpen) {
+      lenis?.stop();
+    } else {
+      lenis?.start();
+    }
     return () => {
       document.body.style.overflow = "";
+      lenis?.start();
     };
-  }, [mobileOpen]);
+  }, [mobileOpen, lenis]);
 
   return (
     <header
@@ -136,7 +144,8 @@ export default function Header() {
               onClick={() => setMobileOpen(false)}
             />
             <motion.nav
-              className="fixed right-0 top-0 z-50 flex h-full w-72 max-w-[85vw] flex-col bg-parchment p-6 shadow-2xl md:hidden"
+              data-lenis-prevent
+              className="fixed right-0 top-0 z-50 flex h-full w-72 max-w-[85vw] flex-col bg-parchment p-6 shadow-2xl md:hidden overflow-y-auto"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}

@@ -106,7 +106,7 @@ function getSheetsClient() {
 }
 
 export async function appendRegistrationToSheet(
-  data: [string, string, string, string]
+  data: string[]
 ): Promise<void> {
   const sheets = getSheetsClient();
 
@@ -153,6 +153,7 @@ export type RegistrationPayload = {
   name: string;
   email: string;
   phone: string;
+  notesChoice?: string;
 };
 
 export function validateRegistrationPayload(
@@ -162,7 +163,7 @@ export function validateRegistrationPayload(
     return { error: "Invalid request body.", status: 400 };
   }
 
-  const { name, email, phone } = body as Record<string, unknown>;
+  const { name, email, phone, notesChoice } = body as Record<string, unknown>;
 
   if (typeof name !== "string" || !name.trim()) {
     return { error: "Name is required.", status: 400 };
@@ -180,6 +181,7 @@ export function validateRegistrationPayload(
     name: name.trim(),
     email: email.trim(),
     phone: phone.trim(),
+    notesChoice: typeof notesChoice === "string" ? notesChoice.trim() : undefined,
   };
 }
 

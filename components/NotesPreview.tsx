@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRegisterModal } from "@/components/RegisterModal";
 import { useCourseRegisterModal } from "@/components/CourseRegisterModal";
+import { useLenis } from "@/components/SmoothScroll";
 import {
   DoodleDoubleUnderline,
   DoodleLeaf,
@@ -32,7 +33,7 @@ const AS_CHAPTERS: Chapter[] = [
     title: "Cell structure",
     brief: "Discover the micro-architecture of life: microscope types, cell organelles, and the differences between prokaryotic and eukaryotic cells.",
     topics: ["Microscopy", "Organelles", "Prokaryotes vs Eukaryotes"],
-    isFree: false,
+    isFree: true,
     span: "wide",
   },
   {
@@ -275,6 +276,8 @@ export default function NotesPreview() {
   // Clear out the refs when changing tabs so we don't hold stale DOM nodes
   cardsRef.current = [];
 
+  const lenis = useLenis();
+
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -340,16 +343,22 @@ export default function NotesPreview() {
       });
     };
 
+    if (lenis) {
+      lenis.on("scroll", onScroll);
+    }
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
     onScroll();
 
     return () => {
+      if (lenis) {
+        lenis.off("scroll", onScroll);
+      }
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       cancelAnimationFrame(rafId);
     };
-  }, [activeTab]);
+  }, [activeTab, lenis]);
 
   return (
     <>
@@ -389,7 +398,7 @@ export default function NotesPreview() {
             </div>
             <p className="mx-auto mt-4 max-w-2xl text-ink-muted text-sm sm:text-base">
               {activeTab === "AS"
-                ? "Comprehensive notes precisely aligned with the Cambridge AS Biology syllabus."
+                ? "Comprehensive notes precisely aligned with the Cambridge AS Biology syllabus. Chapter 1 is free."
                 : "Detailed notes precisely aligned with the Cambridge A2 Biology syllabus. Chapter 12 is free."}
             </p>
 
@@ -522,19 +531,28 @@ export default function NotesPreview() {
         {activeTab === "A2" ? (
           <button
             type="button"
-            onClick={openRegister}
+            onClick={() => openRegister("a2")}
             className="btn-stamp px-8 py-4 text-lg font-bold text-center w-full sm:w-auto"
           >
             Register to Access Free Notes
           </button>
         ) : (
-          <button
-            type="button"
-            onClick={openCourseRegister}
-            className="btn-stamp px-8 py-4 text-lg font-bold text-center w-full sm:w-auto"
-          >
-            Register for Full AS Course
-          </button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+            <button
+              type="button"
+              onClick={() => openRegister("as")}
+              className="btn-stamp px-8 py-4 text-lg font-bold text-center w-full sm:w-auto"
+            >
+              Get Free AS Chapter 1 Notes
+            </button>
+            <button
+              type="button"
+              onClick={openCourseRegister}
+              className="btn-stamp-outline px-8 py-4 text-lg font-bold text-center w-full sm:w-auto"
+            >
+              Register for Full AS Course
+            </button>
+          </div>
         )}
       </div>
     </>

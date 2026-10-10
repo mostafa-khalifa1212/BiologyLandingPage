@@ -1,20 +1,23 @@
 "use client";
 
+import { useEffect, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { springTransition } from "@/lib/motion";
-import type { ReactNode } from "react";
+import { useLenis } from "@/components/SmoothScroll";
 
 type ModalShellProps = {
   isOpen: boolean;
   onClose: () => void;
   titleId: string;
   children: ReactNode;
-  maxWidth?: "md" | "lg";
+  maxWidth?: "md" | "lg" | "xl" | "2xl";
 };
 
 const maxWidthClass = {
   md: "max-w-md",
   lg: "max-w-lg",
+  xl: "max-w-xl",
+  "2xl": "max-w-2xl",
 };
 
 export default function ModalShell({
@@ -24,6 +27,19 @@ export default function ModalShell({
   children,
   maxWidth = "md",
 }: ModalShellProps) {
+  const lenis = useLenis();
+
+  useEffect(() => {
+    if (isOpen) {
+      lenis?.stop();
+    } else {
+      lenis?.start();
+    }
+    return () => {
+      lenis?.start();
+    };
+  }, [isOpen, lenis]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -48,6 +64,7 @@ export default function ModalShell({
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
+            data-lenis-prevent
             className={`relative z-10 w-full ${maxWidthClass[maxWidth]} max-h-[90vh] overflow-y-auto rounded-[4px] border-[1.5px] border-ink bg-cream p-6 sm:p-8`}
             style={{ boxShadow: "5px 5px 0 #1A1A14" }}
             initial={{ opacity: 0, scale: 0.92, y: 24 }}

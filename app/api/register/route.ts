@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, email, phone } = validated;
+    const { name, email, phone, notesChoice } = validated;
     const isDuplicate = await isDuplicateEmailOrPhone(email, phone);
 
     if (isDuplicate) {
@@ -31,7 +31,13 @@ export async function POST(request: Request) {
     }
 
     const timestamp = new Date().toISOString();
-    await appendRegistrationToSheet([timestamp, name, phone, email]);
+    await appendRegistrationToSheet([
+      timestamp,
+      name,
+      phone,
+      email,
+      notesChoice ?? "A2 Biology",
+    ]);
 
     return NextResponse.json(
       { message: "Registration successful!" },

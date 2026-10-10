@@ -5,8 +5,28 @@ import { motion, AnimatePresence } from "framer-motion";
 import ModalShell from "@/components/ModalShell";
 import { springTransition } from "@/lib/motion";
 
-const ORIENTATION_MEET_LINK = "https://meet.google.com/dyr-zzzc-qbh";
-const PROMO_STORAGE_KEY = "orientation-promo-dismissed";
+const ORIENTATIONS = [
+  {
+    id: "as",
+    level: "AS Biology",
+    session: "June Session",
+    date: "Saturday, October 17th",
+    time: "6:00 PM",
+    meetLink: "https://meet.google.com/pmk-memj-qsw",
+    badgeColor: "bg-sage/15 text-sage",
+  },
+  {
+    id: "a2",
+    level: "A2 Biology",
+    session: "June Session",
+    date: "Wednesday, November 4th",
+    time: "3:00 PM",
+    meetLink: "https://meet.google.com/zec-cnuq-qde",
+    badgeColor: "bg-ink/10 text-ink",
+  },
+] as const;
+
+const PROMO_STORAGE_KEY = "orientation-june-promo-dismissed";
 
 export default function PromoModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -86,56 +106,99 @@ export default function PromoModal() {
         isOpen={isOpen}
         onClose={handleClose}
         titleId="promo-modal-title"
-        maxWidth="md"
+        maxWidth="2xl"
       >
         <div className="text-center">
           <motion.div
-            className="mx-auto mb-4 inline-flex rounded-[4px] bg-sage/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-sage"
+            className="mx-auto mb-3 inline-flex rounded-[4px] bg-sage/15 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-sage"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={springTransition}
           >
-            Free Orientation
+            Upcoming June Session · Free Orientations
           </motion.div>
 
           <h2
             id="promo-modal-title"
             className="font-heading text-2xl font-bold text-ink sm:text-3xl"
           >
-            Join Our Free Online Orientation
+            Free Online Orientations
           </h2>
 
-          <p className="mt-4 text-ink-medium">
+          <p className="mx-auto mt-2 max-w-lg text-sm text-ink-medium sm:text-base">
             Meet Mostafa Khalifa, learn about the course structure, and get your
             questions answered — completely free.
           </p>
 
-          <div className="mt-6 rounded-[4px] border border-border bg-parchment px-5 py-4 text-left">
-            <p className="text-sm text-ink-muted">When</p>
-            <p className="font-heading text-lg font-semibold text-ink">
-              Wednesday, July 1st at 7:00 PM
-            </p>
-            <p className="mt-3 text-sm text-ink-muted">Where</p>
-            <p className="font-medium text-sage">Google Meet (Online)</p>
+          <div className="mt-6 grid grid-cols-1 gap-4 text-left sm:grid-cols-2">
+            {ORIENTATIONS.map((item) => (
+              <div
+                key={item.id}
+                className="flex flex-col justify-between rounded-[4px] border border-border bg-parchment p-5 shadow-[3px_3px_0_#1A1A14]"
+              >
+                <div>
+                  <div className="mb-3 flex items-center justify-between">
+                    <span
+                      className={`inline-block rounded-[4px] px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider ${item.badgeColor}`}
+                    >
+                      {item.level}
+                    </span>
+                    <span className="font-sans text-[11px] font-medium text-ink-muted">
+                      Online Meet
+                    </span>
+                  </div>
+
+                  <h3 className="font-heading text-lg font-bold text-ink sm:text-xl">
+                    {item.level} Orientation
+                  </h3>
+
+                  <div className="mt-4 space-y-2 border-t border-border/60 pt-3">
+                    <div>
+                      <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-muted">
+                        When
+                      </span>
+                      <p className="font-heading text-base font-semibold text-ink">
+                        {item.date}
+                      </p>
+                      <p className="font-sans text-xs font-medium text-ink-medium">
+                        at {item.time}
+                      </p>
+                    </div>
+
+                    <div className="pt-1">
+                      <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-muted">
+                        Where
+                      </span>
+                      <p className="text-sm font-medium text-sage">
+                        Google Meet (Online)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-5">
+                  <motion.a
+                    href={item.meetLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-stamp block w-full px-4 py-2.5 text-center font-heading text-sm font-bold cursor-pointer"
+                    whileHover={{ x: -2, y: -2 }}
+                    whileTap={{ x: 0, y: 0 }}
+                    transition={springTransition}
+                    onClick={handleClose}
+                  >
+                    Join {item.level} Meet 🎥
+                  </motion.a>
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <motion.a
-              href={ORIENTATION_MEET_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-stamp flex-1 px-6 py-3 text-center font-heading font-bold cursor-pointer hover:bg-sage hover:text-parchment active:bg-sage-dark transition-colors duration-200"
-              whileHover={{ x: -2, y: -2 }}
-              whileTap={{ x: 0, y: 0 }}
-              transition={springTransition}
-              onClick={handleClose}
-            >
-              Join Google Meet
-            </motion.a>
+          <div className="mt-6">
             <motion.button
               type="button"
               onClick={handleClose}
-              className="btn-stamp-outline flex-1 px-6 py-3 font-heading font-semibold cursor-pointer"
+              className="btn-stamp-outline px-6 py-2.5 font-heading text-sm font-semibold cursor-pointer"
               whileHover={{ x: -1, y: -1 }}
               whileTap={{ x: 0, y: 0 }}
               transition={springTransition}

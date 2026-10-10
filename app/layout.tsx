@@ -3,6 +3,7 @@ import { Playfair_Display, DM_Sans, Caveat } from "next/font/google";
 import { RegisterProvider } from "@/components/RegisterModal";
 import { CourseRegisterProvider } from "@/components/CourseRegisterModal";
 import PromoModalGate from "@/components/PromoModalGate";
+import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -83,12 +84,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
       className={`${playfair.variable} ${dmSans.variable} ${caveat.variable}`}
     >
       <body className="font-sans">
-        <RegisterProvider>
-          <CourseRegisterProvider>
-            <PromoModalGate />
-            {children}
-          </CourseRegisterProvider>
-        </RegisterProvider>
+        <SmoothScroll>
+          <RegisterProvider>
+            <CourseRegisterProvider>
+              <PromoModalGate />
+              {children}
+            </CourseRegisterProvider>
+          </RegisterProvider>
+        </SmoothScroll>
       </body>
     </html>
   );
